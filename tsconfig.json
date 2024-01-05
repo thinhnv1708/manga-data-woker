@@ -20,6 +20,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@configurations/*": ["src/configurations/*"],
+      "@frameworks/*": ["src/frameworks/*"],
       "@constants/*": ["src/constants/*"],
       "@core/*": ["src/core/*"],
       "@modules/*": ["src/modules/*"]

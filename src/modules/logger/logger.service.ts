@@ -11,7 +11,7 @@ export class LoggerService implements AbstractLoggerAdapter {
   private config: ILoggerConfig;
 
   constructor(configService: ConfigService) {
-    this.config = configService.get<ILoggerConfig>('LOG');
+    this.config = configService.get<ILoggerConfig>('LOGGER_CONFIG');
     this.logger = new ConsoleLogger();
   }
 

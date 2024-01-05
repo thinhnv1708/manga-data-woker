@@ -1,0 +1,22 @@
+import { AbstractGenreRepository } from '@core/abtracts';
+import { CreateGenreDto } from '@core/dtos';
+import { Genre } from '@core/entities';
+import { Injectable } from '@nestjs/common';
+import { GenreFactoryService } from './genreFactory.service';
+
+@Injectable()
+export class GenreManagerService {
+  constructor(
+    private readonly genreRepository: AbstractGenreRepository,
+    private readonly genreFactoryService: GenreFactoryService,
+  ) {}
+
+  async findGenre(id: string): Promise<Genre> {
+    return this.genreRepository.findOneById(id);
+  }
+
+  async createGenre(createGenreDto: CreateGenreDto): Promise<Genre> {
+    const newGenre = this.genreFactoryService.createNewGenre(createGenreDto);
+    return this.genreRepository.create(newGenre);
+  }
+}
