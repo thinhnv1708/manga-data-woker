@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ChapterFactoryService } from './chapterFactory.service';
-import { AbstractChapterRepository } from '@core/abtracts';
+import { AbstractChapterRepository } from '@core/abstract';
 import { CreateChapterDto } from '@core/dtos';
 import { Chapter } from '@core/entities';
 

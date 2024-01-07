@@ -1,4 +1,4 @@
-import { AbstractMangaRepository } from '@core/abtracts';
+import { AbstractMangaRepository } from '@core/abstract';
 import { CreateMangaDto } from '@core/dtos';
 import { Manga } from '@core/entities';
 import { Injectable } from '@nestjs/common';

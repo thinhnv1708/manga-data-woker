@@ -1,1 +1,1 @@
-export * from './chapterMaper.helper';
+export * from './chapterMapper.helper';

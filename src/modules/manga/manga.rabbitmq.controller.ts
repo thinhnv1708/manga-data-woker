@@ -1,12 +1,11 @@
 import { COMMONS } from '@constants/index';
-import { AbstractLoggerService } from '@core/abtracts';
+import { AbstractLoggerService } from '@core/abstract';
 import { CreateMangaDto } from '@core/dtos';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 import { MangaManagerService } from './mangaManager.service';
-import { createMangaJoiSchema } from './joiSchemas';
-const { RABBITMQ_PATTERNT } = COMMONS;
+const { RABBITMQ_PATTERN } = COMMONS;
 
 @Controller()
 export class MangaRabbitmqController {
@@ -15,7 +14,7 @@ export class MangaRabbitmqController {
     private readonly loggerService: AbstractLoggerService,
   ) {}
 
-  @MessagePattern(RABBITMQ_PATTERNT.MANGA_HANDLE_DATA)
+  @MessagePattern(RABBITMQ_PATTERN.MANGA_HANDLE_DATA)
   async handleMangaData(data: {
     title: string;
     subTitle: string;
@@ -26,7 +25,7 @@ export class MangaRabbitmqController {
   }): Promise<void> {
     this.loggerService.log(
       buildLogMessage(
-        `Pattern ${RABBITMQ_PATTERNT.MANGA_HANDLE_DATA}`,
+        `Pattern ${RABBITMQ_PATTERN.MANGA_HANDLE_DATA}`,
         JSON.stringify(data),
       ),
       buildContextLog('MangaRabbitmqController', 'handleMangaData'),

@@ -1,1 +1,1 @@
-export * from './mangaMaper.helper';
+export * from './mangaMapper.helper';
