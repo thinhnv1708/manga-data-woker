@@ -1,12 +1,12 @@
 import { ILoggerConfig } from '@configurations/interfaces';
 import { LOGGER } from '@constants/index';
-import { AbstractLoggerAdapter } from '@core/abtracts';
+import { AbstractLoggerService } from '@core/abtracts';
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 const { DEBUG_LEVEL } = LOGGER;
 
 @Injectable()
-export class LoggerService implements AbstractLoggerAdapter {
+export class LoggerService implements AbstractLoggerService {
   private logger: ConsoleLogger;
   private config: ILoggerConfig;
 

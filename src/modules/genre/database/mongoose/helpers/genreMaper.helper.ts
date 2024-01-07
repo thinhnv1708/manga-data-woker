@@ -8,13 +8,9 @@ export class GenreMapper {
    * Maps a genre document to a genre entity
    */
   toEntity(genreDocument: GenreDocument): Genre {
-    const { id, title, slug, createdAt, updatedAt } = genreDocument;
-    const newGenre = new Genre();
-    newGenre.setId(id);
-    newGenre.setTitle(title);
-    newGenre.setSlug(slug);
-    newGenre.setCreatedAt(createdAt);
-    newGenre.setUpdatedAt(updatedAt);
+    const { id, title, createdAt, updatedAt } = genreDocument;
+    const newGenre = new Genre(id, title, createdAt, updatedAt);
+
     return newGenre;
   }
 }

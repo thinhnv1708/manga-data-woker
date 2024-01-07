@@ -11,12 +11,8 @@ export class GenreManagerService {
     private readonly genreFactoryService: GenreFactoryService,
   ) {}
 
-  async findGenre(id: string): Promise<Genre> {
-    return this.genreRepository.findOneById(id);
-  }
-
-  async createGenre(createGenreDto: CreateGenreDto): Promise<Genre> {
+  async updateOrCreateGenre(createGenreDto: CreateGenreDto): Promise<Genre> {
     const newGenre = this.genreFactoryService.createNewGenre(createGenreDto);
-    return this.genreRepository.create(newGenre);
+    return this.genreRepository.updateOrCreate(newGenre);
   }
 }

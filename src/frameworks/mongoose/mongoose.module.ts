@@ -48,8 +48,6 @@ import {
 
         return <MongooseModuleFactoryOptions>{
           uri,
-          useUnifiedTopology: true,
-          useNewUrlParser: true,
         };
       },
       inject: [ConfigService],

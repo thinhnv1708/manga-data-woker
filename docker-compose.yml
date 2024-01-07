@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    networks:
+      - manga_network
+    ports:
+      - '27017:27017'
+    volumes:
+      - D:/WORK_SPACE/1.Project/data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    networks:
+      - manga_network
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+      RABBITMQ_DEFAULT_VHOST: manga
+
+  manga_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: manga_service
+    networks:
+      - manga_network
+    ports:
+      - '3000:3000'
+    environment:
+      - SERVICE_TAG=manga
+      - PORT=3000
+      - DEBUG_MODE=3
+      - MONGODB_DB_NAME=mongo
+      - MONGODB_SERVERS=mongo:27017
+      - RABBITMQ_BROKERS=rabbitmq:5672
+      - RABBITMQ_USER=admin
+      - RABBITMQ_PASSWORD=admin
+      - RABBITMQ_VHOST=manga
+      - RABBITMQ_QUEUE_NAME=manga
+
+networks:
+  manga_network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+

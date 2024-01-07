@@ -1,9 +1,15 @@
 export class Genre {
-  private id: string;
-  private title: string;
-  private slug: string;
-  private createdAt: Date;
-  private updatedAt: Date;
+  id: string;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+
+  constructor(id: string, title: string, createdAt: Date, updatedAt: Date) {
+    this.setId(id);
+    this.setTitle(title);
+    this.setCreatedAt(createdAt);
+    this.setUpdatedAt(updatedAt);
+  }
 
   getId(): string {
     return this.id;
@@ -19,14 +25,6 @@ export class Genre {
 
   setTitle(title: string): void {
     this.title = title;
-  }
-
-  getSlug(): string {
-    return this.slug;
-  }
-
-  setSlug(slug: string): void {
-    this.slug = slug;
   }
 
   getCreatedAt(): Date {

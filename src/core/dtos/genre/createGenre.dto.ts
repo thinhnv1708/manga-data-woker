@@ -1,3 +1,15 @@
 export class CreateGenreDto {
-  title: string;
+  private title: string;
+
+  constructor(title: string) {
+    this.setTitle(title);
+  }
+
+  getTitle(): string {
+    return this.title;
+  }
+
+  setTitle(title: string): void {
+    this.title = title;
+  }
 }

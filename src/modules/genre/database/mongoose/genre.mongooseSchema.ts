@@ -16,9 +16,6 @@ export class Genre extends Document {
   @Prop({ type: String })
   title: string;
 
-  @Prop({ type: String })
-  slug: string;
-
   @Prop({ type: Date })
   updatedAt: Date;
 
