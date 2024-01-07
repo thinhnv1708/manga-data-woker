@@ -1,10 +1,11 @@
 import { COMMONS } from '@constants/index';
-import { AbstractLoggerService } from '@core/abstract';
+import { AbstractLoggerService } from '@core/abstracts';
 import { CreateGenreDto } from '@core/dtos';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 import { GenreManagerService } from './genreManager.service';
+import { createGenreJoiSchema } from './joiSchemas';
 const { RABBITMQ_PATTERN } = COMMONS;
 
 @Controller()

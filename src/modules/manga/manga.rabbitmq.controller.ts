@@ -1,10 +1,11 @@
 import { COMMONS } from '@constants/index';
-import { AbstractLoggerService } from '@core/abstract';
+import { AbstractLoggerService } from '@core/abstracts';
 import { CreateMangaDto } from '@core/dtos';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 import { MangaManagerService } from './mangaManager.service';
+import { createMangaJoiSchema } from './joiSchemas';
 const { RABBITMQ_PATTERN } = COMMONS;
 
 @Controller()
@@ -36,7 +37,7 @@ export class MangaRabbitmqController {
     if (error) {
       this.loggerService.error(
         buildLogMessage(
-          `Pattern ${RABBITMQ_PATTERNT.GENRE_HANDLE_DATA}`,
+          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
           JSON.stringify(error),
         ),
         buildContextLog('MangaRabbitmqController', 'handleMangaData'),

@@ -1,4 +1,4 @@
-import { AbstractMangaRepository } from '@core/abstract';
+import { AbstractMangaRepository } from '@core/abstracts';
 import { Manga } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';

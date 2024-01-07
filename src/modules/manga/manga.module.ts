@@ -2,7 +2,7 @@ import { IdGeneratorService } from '@commonUsecases/index';
 import {
   AbstractIdGeneratorService,
   AbstractMangaRepository,
-} from '@core/abstract';
+} from '@core/abstracts';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import {

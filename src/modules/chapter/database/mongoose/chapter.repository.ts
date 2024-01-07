@@ -1,4 +1,4 @@
-import { AbstractChapterRepository } from '@core/abstract';
+import { AbstractChapterRepository } from '@core/abstracts';
 import { Chapter } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';

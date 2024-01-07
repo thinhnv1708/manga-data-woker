@@ -1,4 +1,4 @@
-import { AbstractIdGeneratorService } from '@core/abstract';
+import { AbstractIdGeneratorService } from '@core/abstracts';
 import { CreateGenreDto } from '@core/dtos';
 import { Genre } from '@core/entities';
 import { Injectable } from '@nestjs/common';

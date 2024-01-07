@@ -1,10 +1,11 @@
 import { COMMONS } from '@constants/index';
-import { AbstractLoggerService } from '@core/abstract';
+import { AbstractLoggerService } from '@core/abstracts';
 import { CreateChapterDto, CreateChapterPageDto } from '@core/dtos';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 import { ChapterManagerService } from './chapterManager.service';
+import { createChapterJoiSchema } from './joiSchemas';
 const { RABBITMQ_PATTERN } = COMMONS;
 
 @Controller()
@@ -33,7 +34,7 @@ export class ChapterRabbitmqController {
     if (error) {
       this.loggerService.error(
         buildLogMessage(
-          `Pattern ${RABBITMQ_PATTERNT.GENRE_HANDLE_DATA}`,
+          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
           JSON.stringify(error),
         ),
         buildContextLog('ChapterRabbitmqController', 'handleChapterData'),

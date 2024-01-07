@@ -1,5 +1,5 @@
 import { IAppConfig, IRabbitmqConfig } from '@configurations/interfaces';
-import { AbstractLoggerService } from '@core/abstract';
+import { AbstractLoggerService } from '@core/abstracts';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';

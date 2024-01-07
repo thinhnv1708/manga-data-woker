@@ -1,4 +1,4 @@
-import { AbstractLoggerService } from '@core/abstract';
+import { AbstractLoggerService } from '@core/abstracts';
 import { Global, Module } from '@nestjs/common';
 import { LoggerService } from './logger.service';
 
