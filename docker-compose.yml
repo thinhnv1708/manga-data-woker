@@ -44,6 +44,9 @@ services:
       - RABBITMQ_PASSWORD=admin
       - RABBITMQ_VHOST=manga
       - RABBITMQ_QUEUE_NAME=manga
+    depends_on:
+      - mongo
+      - rabbitmq
 
 networks:
   manga_network:
