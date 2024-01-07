@@ -5,6 +5,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 import { ChapterManagerService } from './chapterManager.service';
+import { createChapterJoiSchema } from './joiSchemas';
 const { RABBITMQ_PATTERNT } = COMMONS;
 
 @Controller()
@@ -28,13 +29,26 @@ export class ChapterRabbitmqController {
       buildContextLog('ChapterRabbitmqController', 'handleChapterData'),
     );
 
-    const { mangaId, order, pages } = data;
+    const { error, value } = createChapterJoiSchema.validate(data);
+
+    if (error) {
+      this.loggerService.error(
+        buildLogMessage(
+          `Pattern ${RABBITMQ_PATTERNT.GENRE_HANDLE_DATA}`,
+          JSON.stringify(error),
+        ),
+        buildContextLog('ChapterRabbitmqController', 'handleChapterData'),
+      );
+      return;
+    }
+
+    const { mangaId, order, pages } = value;
 
     const newPages = pages.map((page) => {
       const { position, source } = page;
       return new CreateChapterPageDto(position, source);
     });
-    
+
     const createChapterDto = new CreateChapterDto(mangaId, order, newPages);
 
     await this.chapterManagerService.updateOrCreateChapter(createChapterDto);

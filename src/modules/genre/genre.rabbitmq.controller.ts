@@ -5,6 +5,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 import { GenreManagerService } from './genreManager.service';
+import { createGenreJoiSchema } from './joiSchemas';
 const { RABBITMQ_PATTERNT } = COMMONS;
 
 @Controller()
@@ -24,7 +25,21 @@ export class GenreRabbitmqController {
       buildContextLog('GenreRabbitmqController', 'handleGenreData'),
     );
 
-    const { title } = data;
+    const { error, value } = createGenreJoiSchema.validate(data);
+
+    if (error) {
+      this.loggerService.error(
+        buildLogMessage(
+          `Pattern ${RABBITMQ_PATTERNT.GENRE_HANDLE_DATA}`,
+          JSON.stringify(error),
+        ),
+        buildContextLog('GenreRabbitmqController', 'handleGenreData'),
+      );
+      return;
+    }
+
+    const { title } = value;
+
     const createGenreDto = new CreateGenreDto(title);
 
     await this.genreManagerService.updateOrCreateGenre(createGenreDto);
