@@ -1,6 +1,6 @@
 import { ILoggerConfig } from '@configurations/interfaces';
 import { LOGGER } from '@constants/index';
-import { AbstractLoggerService } from '@core/abtracts';
+import { AbstractLoggerService } from '@core/abstract';
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 const { DEBUG_LEVEL } = LOGGER;

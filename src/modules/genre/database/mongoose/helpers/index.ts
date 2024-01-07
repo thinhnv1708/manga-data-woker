@@ -1,1 +1,1 @@
-export * from './genreMaper.helper';
+export * from './genreMapper.helper';

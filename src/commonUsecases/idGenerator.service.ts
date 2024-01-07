@@ -1,4 +1,4 @@
-import { AbstractIdGeneratorService } from '@core/abtracts';
+import { AbstractIdGeneratorService } from '@core/abstract';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

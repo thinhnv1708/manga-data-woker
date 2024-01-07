@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ExcuteProimseUtility } from './excutePromise.service';
+import { ExecutePromiseUtility } from './executePromise.service';
 
-@Module({ providers: [ExcuteProimseUtility], exports: [ExcuteProimseUtility] })
+@Module({
+  providers: [ExecutePromiseUtility],
+  exports: [ExecutePromiseUtility],
+})
 export class UtilityModule {}

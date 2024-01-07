@@ -2,7 +2,7 @@ import { IdGeneratorService } from '@commonUsecases/index';
 import {
   AbstractChapterRepository,
   AbstractIdGeneratorService,
-} from '@core/abtracts';
+} from '@core/abstract';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ChapterRabbitmqController } from './chapter.rabbitmq.controller';

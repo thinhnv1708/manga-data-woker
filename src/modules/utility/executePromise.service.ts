@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ExcuteProimseUtility {
-  excutePromise = <T, E = Error>(
+export class ExecutePromiseUtility {
+  executePromise = <T, E = Error>(
     promise: Promise<T>,
   ): Promise<[err: E, data: T]> => {
     return promise

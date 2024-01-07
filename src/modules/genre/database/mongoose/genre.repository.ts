@@ -1,4 +1,4 @@
-import { AbstractGenreRepository } from '@core/abtracts';
+import { AbstractGenreRepository } from '@core/abstract';
 import { Genre } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';

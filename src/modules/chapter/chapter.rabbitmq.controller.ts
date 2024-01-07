@@ -1,11 +1,11 @@
 import { COMMONS } from '@constants/index';
-import { AbstractLoggerService } from '@core/abtracts';
+import { AbstractLoggerService } from '@core/abstract';
 import { CreateChapterDto, CreateChapterPageDto } from '@core/dtos';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 import { ChapterManagerService } from './chapterManager.service';
-const { RABBITMQ_PATTERNT } = COMMONS;
+const { RABBITMQ_PATTERN } = COMMONS;
 
 @Controller()
 export class ChapterRabbitmqController {
@@ -14,7 +14,7 @@ export class ChapterRabbitmqController {
     private readonly loggerService: AbstractLoggerService,
   ) {}
 
-  @MessagePattern(RABBITMQ_PATTERNT.CHAPTER_HANDLE_DATA)
+  @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_DATA)
   async handleChapterData(data: {
     mangaId: string;
     order: number;
@@ -22,7 +22,7 @@ export class ChapterRabbitmqController {
   }): Promise<void> {
     this.loggerService.log(
       buildLogMessage(
-        `Pattern ${RABBITMQ_PATTERNT.CHAPTER_HANDLE_DATA}`,
+        `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_DATA}`,
         JSON.stringify(data),
       ),
       buildContextLog('ChapterRabbitmqController', 'handleChapterData'),
@@ -34,7 +34,7 @@ export class ChapterRabbitmqController {
       const { position, source } = page;
       return new CreateChapterPageDto(position, source);
     });
-    
+
     const createChapterDto = new CreateChapterDto(mangaId, order, newPages);
 
     await this.chapterManagerService.updateOrCreateChapter(createChapterDto);
