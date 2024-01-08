@@ -20,6 +20,8 @@
     "resolveJsonModule": true,
     "paths": {
       "@configurations/*": ["src/configurations/*"],
+      "@frameworksAndDevices/*": ["src/frameworksAndDevices/*"],
+      "@interfaceAdapters/*": ["src/interfaceAdapters/*"],
       "@frameworks/*": ["src/frameworks/*"],
       "@constants/*": ["src/constants/*"],
       "@commonUsecases/*": ["src/commonUsecases/*"],

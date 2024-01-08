@@ -4,15 +4,17 @@ import {
   mongodbConfig,
   rabbitmqConfig,
 } from '@configurations/index';
-import { MongooseModule } from '@frameworks/mongoose';
-import { ChapterModule } from '@modules/chapter/chapter.module';
-import { GenreModule } from '@modules/genre/genre.module';
-import { LoggerModule } from '@modules/logger/logger.module';
-import { MangaModule } from '@modules/manga/manga.module';
+import { MongooseModule } from '@frameworksAndDevices/databases/mongoose';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import {
+  ChapterModule,
+  GenreModule,
+  LoggerModule,
+  MangaModule,
+} from './modules';
 
 @Module({
   imports: [
@@ -21,8 +23,8 @@ import { AppService } from './app.service';
       load: [appConfig, loggerConfig, mongodbConfig, rabbitmqConfig],
       envFilePath: ['.development.env'],
     }),
-    LoggerModule,
     MongooseModule,
+    LoggerModule,
     GenreModule,
     MangaModule,
     ChapterModule,

@@ -1,5 +1,5 @@
 import { IAppConfig, IRabbitmqConfig } from '@configurations/interfaces';
-import { AbstractLoggerService } from '@core/abstracts';
+import { AbstractLogger } from '@core/abstracts';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
@@ -10,7 +10,7 @@ import { makeRabbitmqConfig } from './helpers';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const loggerService = app.get(AbstractLoggerService);
+  const logger = app.get(AbstractLogger);
   const appConfig = configService.get<IAppConfig>('APP_CONFIG');
   const rabbitConfig = configService.get<IRabbitmqConfig>('RABBITMQ_CONFIG');
   const { PORT } = appConfig;
@@ -31,7 +31,7 @@ async function bootstrap() {
 
   await app.startAllMicroservices();
   await app.listen(PORT, () => {
-    loggerService.log(
+    logger.log(
       `Server running on port ${PORT}`,
       'Bootstrap',
       LOGGER.DEBUG_LEVEL.FORCE,
