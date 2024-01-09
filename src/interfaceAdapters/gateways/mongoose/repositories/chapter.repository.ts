@@ -55,7 +55,7 @@ export class ChapterRepository implements AbstractChapterRepository {
           updatedAt,
         },
         {
-          returnOriginal: false,
+          new: true,
         },
       )
       .lean();

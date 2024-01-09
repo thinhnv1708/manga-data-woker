@@ -11,8 +11,8 @@ export const MangaCollectionName = 'Manga';
   versionKey: false,
 })
 export class Manga extends Document {
-  @Prop({ type: String })
-  id: string;
+  @Prop({ type: Number })
+  id: number;
 
   @Prop({ type: String })
   source: string;

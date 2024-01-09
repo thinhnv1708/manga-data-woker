@@ -39,11 +39,7 @@ export class GenreRepository implements AbstractGenreRepository {
     const updatedAt = genre.getUpdatedAt();
 
     const genreDocument = await this.model
-      .findOneAndUpdate(
-        { id },
-        { title, createdAt, updatedAt },
-        { returnOriginal: false },
-      )
+      .findOneAndUpdate({ id }, { title, createdAt, updatedAt }, { new: true })
       .lean();
 
     return this.mapper.toEntity(genreDocument);

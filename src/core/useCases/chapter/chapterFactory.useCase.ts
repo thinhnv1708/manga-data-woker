@@ -12,7 +12,7 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ChapterFactoryUseCase {
   constructor(
-    private readonly idManagerUseCase: AbstractIdManagerUseCase<number>,
+    private readonly idManagerUseCase: AbstractIdManagerUseCase,
     private readonly mangaRepository: AbstractMangaRepository,
   ) {}
 

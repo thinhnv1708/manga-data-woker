@@ -1,3 +1,3 @@
-export abstract class AbstractIdManagerUseCase<T> {
-  abstract generateId(): T;
+export abstract class AbstractIdManagerUseCase {
+  abstract generateId(): Promise<number>;
 }

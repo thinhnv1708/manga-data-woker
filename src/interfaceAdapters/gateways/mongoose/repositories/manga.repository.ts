@@ -56,29 +56,31 @@ export class MangaRepository implements AbstractMangaRepository {
     const createdAt = manga.getCreatedAt();
     const updatedAt = manga.getUpdatedAt();
 
-    const mangaDocument = await this.model.findOneAndUpdate(
-      { id },
-      {
-        title,
-        subTitle,
-        thumbnail,
-        description,
-        genres,
-        totalChapter,
-        status,
-        createdAt,
-        updatedAt,
-      },
-      {
-        returnOriginal: false,
-      },
-    );
+    const mangaDocument = await this.model
+      .findOneAndUpdate(
+        { id },
+        {
+          title,
+          subTitle,
+          thumbnail,
+          description,
+          genres,
+          totalChapter,
+          status,
+          createdAt,
+          updatedAt,
+        },
+        {
+          new: true,
+        },
+      )
+      .lean();
 
     return this.mapper.toEntity(mangaDocument);
   }
 
   async findMangaBySource(source: string): Promise<Manga> {
-    const mangaDocument = await this.model.findOne({ source });
+    const mangaDocument = await this.model.findOne({ source }).lean();
 
     return this.mapper.toEntity(mangaDocument);
   }

@@ -5,9 +5,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GenreFactoryUseCase {
-  constructor(
-    private readonly idManagerUseCase: AbstractIdManagerUseCase<number>,
-  ) {}
+  constructor(private readonly idManagerUseCase: AbstractIdManagerUseCase) {}
 
   async createNewGenre(saveGenreInput: ISaveGenreInput): Promise<Genre> {
     const { source, title } = saveGenreInput;

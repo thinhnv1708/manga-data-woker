@@ -16,10 +16,12 @@ import {
 import { GenreMapper } from '@interfaceAdapters/presenters/mongoose';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { IdGeneratorModule } from './idGenerator.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Genre.name, schema: GenreSchema }]),
+    IdGeneratorModule,
   ],
   providers: [
     { provide: AbstractIdManagerUseCase, useClass: GenreIdManagerUseCase },

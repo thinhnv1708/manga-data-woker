@@ -4,7 +4,7 @@ export type MangaGenreDocument = MangaGenre & Document;
 
 @Schema({
   versionKey: false,
-  id: false,
+  _id: false,
 })
 export class MangaGenre extends Document {
   @Prop({ type: Number })

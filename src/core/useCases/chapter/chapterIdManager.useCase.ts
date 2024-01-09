@@ -1,11 +1,17 @@
-import { AbstractIdManagerUseCase } from '@core/abstracts';
+import {
+  AbstractIdManagerRepository,
+  AbstractIdManagerUseCase,
+} from '@core/abstracts';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ChapterIdManagerUseCase implements AbstractIdManagerUseCase<number> {
-  constructor() {}
+export class ChapterIdManagerUseCase implements AbstractIdManagerUseCase {
+  constructor(
+    private readonly idManagerRepository: AbstractIdManagerRepository,
+  ) {}
 
-  generateId(): number {
-    return 1;
+  async generateId(): Promise<number> {
+    const entityName = 'Chapter';
+    return this.idManagerRepository.getId(entityName);
   }
 }

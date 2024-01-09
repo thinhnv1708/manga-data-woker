@@ -5,11 +5,15 @@ import { ChapterDocument } from '../../gateways/mongoose/schemas';
 @Injectable()
 export class ChapterMapper {
   /**
-   * Maps a genre document to a genre entity
+   * Maps a chapter document to a chapter entity
    */
-  toEntity(genreDocument: ChapterDocument): Chapter {
+  toEntity(chapterDocument: ChapterDocument): Chapter {
+    if (!chapterDocument) {
+      return null;
+    }
+
     const { id, source, manga, order, pages, createdAt, updatedAt } =
-      genreDocument;
+      chapterDocument;
 
     const newChapter = new Chapter(
       id,
