@@ -14,23 +14,71 @@ export class MangaRepository implements AbstractMangaRepository {
     private readonly mapper: MangaMapper,
   ) {}
 
-  async updateOrCreate(manga: Manga): Promise<Manga> {
+  async createManga(manga: Manga): Promise<Manga> {
+    const id = manga.getId();
+    const source = manga.getSource();
+    const title = manga.getTitle();
+    const subTitle = manga.getSubTitle();
+    const thumbnail = manga.getThumbnail();
+    const description = manga.getDescription();
+    const genres = manga.getGenres();
+    const totalChapter = manga.getTotalChapter();
+    const status = manga.getStatus();
+    const createdAt = manga.getCreatedAt();
+    const updatedAt = manga.getUpdatedAt();
+
+    const mangaDocument = await this.model.create({
+      id,
+      source,
+      title,
+      subTitle,
+      thumbnail,
+      description,
+      genres,
+      totalChapter,
+      status,
+      createdAt,
+      updatedAt,
+    });
+
+    return this.mapper.toEntity(mangaDocument);
+  }
+
+  async updateManga(manga: Manga): Promise<Manga> {
     const id = manga.getId();
     const title = manga.getTitle();
     const subTitle = manga.getSubTitle();
     const thumbnail = manga.getThumbnail();
     const description = manga.getDescription();
-    const genreIds = manga.getGenreIds();
+    const genres = manga.getGenres();
+    const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
+    const createdAt = manga.getCreatedAt();
+    const updatedAt = manga.getUpdatedAt();
 
     const mangaDocument = await this.model.findOneAndUpdate(
       { id },
-      { id, title, subTitle, thumbnail, description, genreIds, status },
       {
-        upsert: true,
+        title,
+        subTitle,
+        thumbnail,
+        description,
+        genres,
+        totalChapter,
+        status,
+        createdAt,
+        updatedAt,
+      },
+      {
         returnOriginal: false,
       },
     );
+
+    return this.mapper.toEntity(mangaDocument);
+  }
+
+  async findMangaBySource(source: string): Promise<Manga> {
+    const mangaDocument = await this.model.findOne({ source });
 
     return this.mapper.toEntity(mangaDocument);
   }

@@ -10,23 +10,26 @@ export class MangaMapper {
   toEntity(mangaDocument: MangaDocument): Manga {
     const {
       id,
+      source,
       title,
       subTitle,
       thumbnail,
       description,
-      genreIds,
+      genres,
       totalChapter,
       status,
       createdAt,
       updatedAt,
     } = mangaDocument;
+
     const newManga = new Manga(
       id,
+      source,
       title,
       subTitle,
       thumbnail,
       description,
-      genreIds,
+      genres,
       totalChapter,
       status,
       createdAt,

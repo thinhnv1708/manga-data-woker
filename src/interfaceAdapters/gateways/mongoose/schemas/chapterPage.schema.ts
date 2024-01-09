@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-export type ChapterDocument = Page & Document;
+export type ChapterPageDocument = ChapterPage & Document;
 
 @Schema({
   versionKey: false,
   id: false,
 })
-export class Page extends Document {
+export class ChapterPage extends Document {
   @Prop({ type: Number })
   position: number;
 
@@ -14,6 +14,6 @@ export class Page extends Document {
   source: string;
 }
 
-const _Schema = SchemaFactory.createForClass(Page);
+const _Schema = SchemaFactory.createForClass(ChapterPage);
 
-export const PageSchema = _Schema;
+export const ChapterPageSchema = _Schema;

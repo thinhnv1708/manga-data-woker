@@ -5,13 +5,16 @@ export type GenreDocument = Genre & Document;
 export const GenreCollectionName = 'Genre';
 
 @Schema({
-  timestamps: true,
+  timestamps: false,
   collection: GenreCollectionName,
   versionKey: false,
 })
 export class Genre extends Document {
+  @Prop({ type: Number })
+  id: number;
+
   @Prop({ type: String })
-  id: string;
+  source: string;
 
   @Prop({ type: String })
   title: string;
@@ -25,5 +28,6 @@ export class Genre extends Document {
 
 const _Schema = SchemaFactory.createForClass(Genre);
 _Schema.index({ id: 1 }, { unique: true });
+_Schema.index({ source: 1 }, { unique: true });
 
 export const GenreSchema = _Schema;

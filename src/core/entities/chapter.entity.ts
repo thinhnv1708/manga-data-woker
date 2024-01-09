@@ -1,63 +1,100 @@
-import { Page } from './page.entity';
+export interface IPage {
+  position: number;
+  source: string;
+}
+
+export interface IChapterManga {
+  id: number;
+  title: string;
+}
 
 export class Chapter {
-  private mangaId: string;
+  private id: number;
+  private source: string;
+  private manga: IChapterManga;
   private order: number;
-  private pages: Page[];
+  private pages: IPage[];
   private createdAt: Date;
   private updatedAt: Date;
 
   constructor(
-    mangaId: string,
+    id: number,
+    source: string,
+    manga: IChapterManga,
     order: number,
-    pages: Page[],
+    pages: IPage[],
     createdAt: Date,
     updatedAt: Date,
   ) {
-    this.setMangaId(mangaId);
-    this.setOrder(order);
-    this.setPages(pages);
-    this.setCreatedAt(createdAt);
-    this.setUpdatedAt(updatedAt);
+    this.setId(id)
+      .setSource(source)
+      .setManga(manga)
+      .setOrder(order)
+      .setPages(pages)
+      .setCreatedAt(createdAt)
+      .setUpdatedAt(updatedAt);
   }
 
-  getMangaId(): string {
-    return this.mangaId;
+  getId(): number {
+    return this.id;
   }
 
-  setMangaId(mangaId: string): void {
-    this.mangaId = mangaId;
+  setId(id: number): Chapter {
+    this.id = id;
+    return this;
+  }
+
+  getSource(): string {
+    return this.source;
+  }
+
+  setSource(source: string): Chapter {
+    this.source = source;
+    return this;
+  }
+
+  getManga(): IChapterManga {
+    return this.manga;
+  }
+
+  setManga(manga: IChapterManga): Chapter {
+    this.manga = manga;
+    return this;
   }
 
   getOrder(): number {
     return this.order;
   }
 
-  setOrder(order: number): void {
+  setOrder(order: number): Chapter {
     this.order = order;
+    return this;
   }
 
-  getPages(): Page[] {
+  getPages(): IPage[] {
     return this.pages;
   }
 
-  setPages(pages: Page[]): void {
+  setPages(pages: IPage[]): Chapter {
     this.pages = pages;
+    return this;
   }
 
   getCreatedAt(): Date {
     return this.createdAt;
   }
 
-  setCreatedAt(createdAt: Date): void {
+  setCreatedAt(createdAt: Date): Chapter {
     this.createdAt = createdAt;
+    return this;
   }
 
   getUpdatedAt(): Date {
     return this.updatedAt;
   }
 
-  setUpdatedAt(updatedAt: Date): void {
+  setUpdatedAt(updatedAt: Date): Chapter {
     this.updatedAt = updatedAt;
+    return this;
   }
 }

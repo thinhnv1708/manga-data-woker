@@ -1,45 +1,66 @@
 export class Genre {
-  id: string;
+  id: number;
+  source: string;
   title: string;
   createdAt: Date;
   updatedAt: Date;
 
-  constructor(id: string, title: string, createdAt: Date, updatedAt: Date) {
-    this.setId(id);
-    this.setTitle(title);
-    this.setCreatedAt(createdAt);
-    this.setUpdatedAt(updatedAt);
+  constructor(
+    id: number,
+    source: string,
+    title: string,
+    createdAt: Date,
+    updatedAt: Date,
+  ) {
+    this.setId(id)
+      .setSource(source)
+      .setTitle(title)
+      .setCreatedAt(createdAt)
+      .setUpdatedAt(updatedAt);
   }
 
-  getId(): string {
+  getId(): number {
     return this.id;
   }
 
-  setId(id: string): void {
+  setId(id: number): Genre {
     this.id = id;
+    return this;
+  }
+
+  getSource(): string {
+    return this.source;
+  }
+
+  setSource(source: string): Genre {
+    this.source = source;
+    return this;
   }
 
   getTitle(): string {
     return this.title;
   }
 
-  setTitle(title: string): void {
+  setTitle(title: string): Genre {
     this.title = title;
+    return this;
   }
 
   getCreatedAt(): Date {
     return this.createdAt;
   }
 
-  setCreatedAt(createdAt: Date): void {
+  setCreatedAt(createdAt: Date): Genre {
     this.createdAt = createdAt;
+    return this;
   }
 
   getUpdatedAt(): Date {
     return this.updatedAt;
   }
 
-  setUpdatedAt(updatedAt: Date): void {
+  setUpdatedAt(updatedAt: Date): Genre {
     this.updatedAt = updatedAt;
+    return this;
   }
 }

@@ -1,1 +1,1 @@
-export * from './createManga.joiSchema';
+export * from './saveManga.joiSchema';

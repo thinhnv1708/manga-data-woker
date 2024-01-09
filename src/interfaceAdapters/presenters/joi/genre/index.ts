@@ -1,1 +1,1 @@
-export * from './createGenre.joiSchema';
+export * from './saveGenre.joiSchema';

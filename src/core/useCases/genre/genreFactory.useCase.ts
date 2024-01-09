@@ -1,22 +1,31 @@
-import { AbstractIdGeneratorUseCase } from '@core/abstracts';
-import { CreateGenreDto } from '@core/dtos';
+import { AbstractIdManagerUseCase } from '@core/abstracts';
+import { ISaveGenreInput } from '@core/dtos/abstracts/genre';
 import { Genre } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GenreFactoryUseCase {
   constructor(
-    private readonly idGeneratorUseCase: AbstractIdGeneratorUseCase,
+    private readonly idManagerUseCase: AbstractIdManagerUseCase<number>,
   ) {}
 
-  createNewGenre(createGenreDto: CreateGenreDto): Genre {
-    const title = createGenreDto.getTitle();
-    const id = this.idGeneratorUseCase.generate();
+  async createNewGenre(saveGenreInput: ISaveGenreInput): Promise<Genre> {
+    const { source, title } = saveGenreInput;
+    const id = await this.idManagerUseCase.generateId();
     const createdAt = new Date();
     const updatedAt = new Date();
 
-    const newGenre = new Genre(id, title, createdAt, updatedAt);
+    return new Genre(id, source, title, createdAt, updatedAt);
+  }
 
-    return newGenre;
+  updateGenre(currentGenre: Genre, saveGenreInput: ISaveGenreInput): Genre {
+    const { title } = saveGenreInput;
+
+    const id = currentGenre.getId();
+    const source = currentGenre.getSource();
+    const createdAt = currentGenre.getCreatedAt();
+    const updatedAt = new Date();
+
+    return new Genre(id, source, title, createdAt, updatedAt);
   }
 }

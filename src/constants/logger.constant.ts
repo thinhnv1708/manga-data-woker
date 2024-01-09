@@ -28,4 +28,7 @@ export const LOG_CONTEXT = {
   RESPONSE_GRPC: 'ResponseGRPC',
   JOI_VALIDATION_PIPE: 'JoiValidationPipe',
   MONGO_REPOSITORY: 'MongoRepository',
+  GENRE_CONTROLLER_RABBITMQ: 'GenreControllerRabbitmq',
+  MANGA_CONTROLLER_RABBITMQ: 'MangaControllerRabbitmq',
+  CHAPTER_CONTROLLER_RABBITMQ: 'ChapterControllerRabbitmq',
 };

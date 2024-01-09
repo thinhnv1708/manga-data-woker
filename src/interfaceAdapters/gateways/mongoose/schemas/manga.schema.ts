@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { MangaGenre, MangaGenreSchema } from './mangaGenre.schema';
 
 export type MangaDocument = Manga & Document;
 export const MangaCollectionName = 'Manga';
@@ -14,6 +15,9 @@ export class Manga extends Document {
   id: string;
 
   @Prop({ type: String })
+  source: string;
+
+  @Prop({ type: String })
   title: string;
 
   @Prop({ type: String })
@@ -25,8 +29,8 @@ export class Manga extends Document {
   @Prop({ type: String })
   description: string;
 
-  @Prop({ type: [String] })
-  genreIds: string[];
+  @Prop({ type: [MangaGenreSchema] })
+  genres: MangaGenre[];
 
   @Prop({ type: Number })
   totalChapter: number;
@@ -43,5 +47,6 @@ export class Manga extends Document {
 
 const _Schema = SchemaFactory.createForClass(Manga);
 _Schema.index({ id: 1 }, { unique: true });
+_Schema.index({ source: 1 }, { unique: true });
 
 export const MangaSchema = _Schema;

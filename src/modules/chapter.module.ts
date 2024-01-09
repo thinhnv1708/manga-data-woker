@@ -1,10 +1,15 @@
 import {
   AbstractChapterRepository,
-  AbstractIdGeneratorUseCase,
+  AbstractIdManagerUseCase,
+  AbstractMangaRepository,
 } from '@core/abstracts';
-import { ChapterFactoryUseCase, ChapterManagerUseCase } from '@core/useCases';
-import { NanoIdGeneratorUseCase } from '@core/useCases/idGenerator';
+import {
+  ChapterFactoryUseCase,
+  ChapterIdManagerUseCase,
+  ChapterManagerUseCase,
+} from '@core/useCases';
 import { ChapterControllerRabbitmq } from '@interfaceAdapters/controllers/rabbitmq';
+import { MangaRepository } from '@interfaceAdapters/gateways/mongoose';
 import { ChapterRepository } from '@interfaceAdapters/gateways/mongoose/repositories/chapter.repository';
 import {
   Chapter,
@@ -13,13 +18,15 @@ import {
 import { ChapterMapper } from '@interfaceAdapters/presenters/mongoose';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { MangaModule } from './manga.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
+    MangaModule,
   ],
   providers: [
-    { provide: AbstractIdGeneratorUseCase, useClass: NanoIdGeneratorUseCase },
+    { provide: AbstractIdManagerUseCase, useClass: ChapterIdManagerUseCase },
     { provide: AbstractChapterRepository, useClass: ChapterRepository },
     ChapterMapper,
     ChapterManagerUseCase,

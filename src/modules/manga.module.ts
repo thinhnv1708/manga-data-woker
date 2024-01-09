@@ -1,10 +1,15 @@
 import {
-  AbstractIdGeneratorUseCase,
+  AbstractGenreRepository,
+  AbstractIdManagerUseCase,
   AbstractMangaRepository,
 } from '@core/abstracts';
-import { MangaFactoryUseCase, MangaManagerUseCase } from '@core/useCases';
-import { NanoIdGeneratorUseCase } from '@core/useCases/idGenerator';
+import {
+  MangaFactoryUseCase,
+  MangaIdManagerUseCase,
+  MangaManagerUseCase,
+} from '@core/useCases';
 import { MangaControllerRabbitmq } from '@interfaceAdapters/controllers/rabbitmq';
+import { GenreRepository } from '@interfaceAdapters/gateways/mongoose';
 import { MangaRepository } from '@interfaceAdapters/gateways/mongoose/repositories/manga.repository';
 import {
   Manga,
@@ -13,18 +18,21 @@ import {
 import { MangaMapper } from '@interfaceAdapters/presenters/mongoose';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GenreModule } from './genre.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Manga.name, schema: MangaSchema }]),
+    GenreModule,
   ],
   providers: [
-    { provide: AbstractIdGeneratorUseCase, useClass: NanoIdGeneratorUseCase },
+    { provide: AbstractIdManagerUseCase, useClass: MangaIdManagerUseCase },
     { provide: AbstractMangaRepository, useClass: MangaRepository },
     MangaMapper,
     MangaManagerUseCase,
     MangaFactoryUseCase,
   ],
   controllers: [MangaControllerRabbitmq],
+  exports: [AbstractMangaRepository],
 })
 export class MangaModule {}

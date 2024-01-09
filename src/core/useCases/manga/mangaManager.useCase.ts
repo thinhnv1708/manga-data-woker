@@ -1,5 +1,5 @@
 import { AbstractMangaRepository } from '@core/abstracts';
-import { CreateMangaDto } from '@core/dtos';
+import { ISaveMangaInput } from '@core/dtos/abstracts/manga';
 import { Manga } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { MangaFactoryUseCase } from './mangaFactory.useCase';
@@ -11,8 +11,34 @@ export class MangaManagerUseCase {
     private readonly mangaFactoryUseCase: MangaFactoryUseCase,
   ) {}
 
-  async updateOrCreateManga(createMangaDto: CreateMangaDto): Promise<Manga> {
-    const newManga = this.mangaFactoryUseCase.createNewManga(createMangaDto);
-    return this.mangaRepository.updateOrCreate(newManga);
+  async createManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
+    const newManga =
+      await this.mangaFactoryUseCase.createNewManga(saveMangaInput);
+
+    return this.mangaRepository.createManga(newManga);
+  }
+
+  async updateManga(
+    currentManga: Manga,
+    saveMangaInput: ISaveMangaInput,
+  ): Promise<Manga> {
+    const manga = await this.mangaFactoryUseCase.updateManga(
+      currentManga,
+      saveMangaInput,
+    );
+
+    return this.mangaRepository.updateManga(manga);
+  }
+
+  async handleSaveManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
+    const { source } = saveMangaInput;
+
+    const manga = await this.mangaRepository.findMangaBySource(source);
+
+    if (!manga) {
+      return this.createManga(saveMangaInput);
+    }
+
+    return this.updateManga(manga, saveMangaInput);
   }
 }

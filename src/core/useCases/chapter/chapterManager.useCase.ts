@@ -1,8 +1,11 @@
+import { AbstractChapterRepository } from '@core/abstracts';
+import {
+  ISaveChapterInput,
+  IUpdateChapterInput,
+} from '@core/dtos/abstracts/chapter';
+import { Chapter } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { ChapterFactoryUseCase } from './chapterFactory.useCase';
-import { AbstractChapterRepository } from '@core/abstracts';
-import { CreateChapterDto } from '@core/dtos';
-import { Chapter } from '@core/entities';
 
 @Injectable()
 export class ChapterManagerUseCase {
@@ -11,11 +14,38 @@ export class ChapterManagerUseCase {
     private readonly chapterFactoryUseCase: ChapterFactoryUseCase,
   ) {}
 
-  async updateOrCreateChapter(
-    createChapterDto: CreateChapterDto,
+  async handleSaveChapter(
+    saveChapterInput: ISaveChapterInput,
   ): Promise<Chapter> {
+    const { source } = saveChapterInput;
+    const chapter = await this.chapterRepository.findChapterBySource(source);
+
+    if (chapter) {
+      return;
+    }
+
     const newChapter =
-      this.chapterFactoryUseCase.createNewChapter(createChapterDto);
-    return this.chapterRepository.updateOrCreate(newChapter);
+      await this.chapterFactoryUseCase.createNewChapter(saveChapterInput);
+
+    return this.chapterRepository.createChapter(newChapter);
+  }
+
+  async updateChapter(
+    updateChapterInput: IUpdateChapterInput,
+  ): Promise<Chapter> {
+    const { source } = updateChapterInput;
+
+    const chapter = await this.chapterRepository.findChapterBySource(source);
+
+    if (!chapter) {
+      return;
+    }
+
+    const newChapter = await this.chapterFactoryUseCase.updateChapter(
+      chapter,
+      updateChapterInput,
+    );
+
+    return this.chapterRepository.updateChapterById(newChapter);
   }
 }

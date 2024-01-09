@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Page, PageSchema } from './page.schema';
+import { ChapterManga, ChapterMangaSchema } from './chapterManga.schema';
+import { ChapterPage, ChapterPageSchema } from './chapterPage.schema';
 export type ChapterDocument = Chapter & Document;
 export const ChapterCollectionName = 'Chapter';
 
@@ -10,17 +11,20 @@ export const ChapterCollectionName = 'Chapter';
   versionKey: false,
 })
 export class Chapter extends Document {
-  @Prop({ type: String })
-  title: string;
+  @Prop({ type: Number })
+  id: number;
 
   @Prop({ type: String })
-  mangaId: string;
+  source: string;
+
+  @Prop({ type: ChapterMangaSchema })
+  manga: ChapterManga;
 
   @Prop({ type: Number })
   order: number;
 
-  @Prop({ type: [PageSchema] })
-  pages: Page[];
+  @Prop({ type: [ChapterPageSchema] })
+  pages: ChapterPage[];
 
   @Prop({ type: Date })
   updatedAt: Date;
@@ -30,6 +34,7 @@ export class Chapter extends Document {
 }
 
 const _Schema = SchemaFactory.createForClass(Chapter);
-_Schema.index({ mangaId: 1, order: 1 }, { unique: true });
+_Schema.index({ id: 1 }, { unique: true });
+_Schema.index({ source: 1 }, { unique: true });
 
 export const ChapterSchema = _Schema;

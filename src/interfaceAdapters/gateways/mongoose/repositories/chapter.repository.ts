@@ -14,19 +14,57 @@ export class ChapterRepository implements AbstractChapterRepository {
     private readonly mapper: ChapterMapper,
   ) {}
 
-  async updateOrCreate(chapter: Chapter): Promise<Chapter> {
-    const mangaId = chapter.getMangaId();
+  async createChapter(chapter: Chapter): Promise<Chapter> {
+    const id = chapter.getId();
+    const source = chapter.getSource();
+    const manga = chapter.getManga();
     const order = chapter.getOrder();
     const pages = chapter.getPages();
+    const createdAt = chapter.getCreatedAt();
+    const updatedAt = chapter.getUpdatedAt();
 
-    const chapterDocument = await this.model.findOneAndUpdate(
-      { mangaId, order },
-      { mangaId, order, pages },
-      {
-        upsert: true,
-        returnOriginal: false,
-      },
-    );
+    const chapterDocument = await this.model.create({
+      id,
+      source,
+      manga,
+      order,
+      pages,
+      createdAt,
+      updatedAt,
+    });
+
+    return this.mapper.toEntity(chapterDocument);
+  }
+
+  async updateChapterById(chapter: Chapter): Promise<Chapter> {
+    const id = chapter.getId();
+    const manga = chapter.getManga();
+    const order = chapter.getOrder();
+    const pages = chapter.getPages();
+    const createdAt = chapter.getCreatedAt();
+    const updatedAt = chapter.getUpdatedAt();
+
+    const chapterDocument = await this.model
+      .findOneAndUpdate(
+        { id },
+        {
+          manga,
+          order,
+          pages,
+          createdAt,
+          updatedAt,
+        },
+        {
+          returnOriginal: false,
+        },
+      )
+      .lean();
+
+    return this.mapper.toEntity(chapterDocument);
+  }
+
+  async findChapterBySource(source: string): Promise<Chapter> {
+    const chapterDocument = await this.model.findOne({ source }).lean();
 
     return this.mapper.toEntity(chapterDocument);
   }

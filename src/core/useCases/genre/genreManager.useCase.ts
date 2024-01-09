@@ -1,5 +1,5 @@
 import { AbstractGenreRepository } from '@core/abstracts';
-import { CreateGenreDto } from '@core/dtos';
+import { ISaveGenreInput } from '@core/dtos/abstracts/genre';
 import { Genre } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { GenreFactoryUseCase } from './genreFactory.useCase';
@@ -11,8 +11,32 @@ export class GenreManagerUseCase {
     private readonly genreFactoryUseCase: GenreFactoryUseCase,
   ) {}
 
-  async updateOrCreateGenre(createGenreDto: CreateGenreDto): Promise<Genre> {
-    const newGenre = this.genreFactoryUseCase.createNewGenre(createGenreDto);
-    return this.genreRepository.updateOrCreate(newGenre);
+  async createGenre(saveGenreInput: ISaveGenreInput): Promise<Genre> {
+    const newGenre =
+      await this.genreFactoryUseCase.createNewGenre(saveGenreInput);
+    return this.genreRepository.createGenre(newGenre);
+  }
+
+  async updateGenre(
+    currentGenre: Genre,
+    saveGenreInput: ISaveGenreInput,
+  ): Promise<Genre> {
+    const genre = this.genreFactoryUseCase.updateGenre(
+      currentGenre,
+      saveGenreInput,
+    );
+    return this.genreRepository.updateGenreById(genre);
+  }
+
+  async handleSaveGenre(saveGenreInput: ISaveGenreInput): Promise<Genre> {
+    const { source } = saveGenreInput;
+
+    const genre = await this.genreRepository.findGenreBySource(source);
+
+    if (!genre) {
+      return this.createGenre(saveGenreInput);
+    }
+
+    return this.updateGenre(genre, saveGenreInput);
   }
 }

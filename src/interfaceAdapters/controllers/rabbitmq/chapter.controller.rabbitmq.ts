@@ -1,12 +1,19 @@
-import { COMMONS } from '@constants/index';
+import { COMMONS, LOGGER } from '@constants/index';
 import { AbstractLogger } from '@core/abstracts';
-import { CreateChapterDto, CreateChapterPageDto } from '@core/dtos';
+import {
+  ISaveChapterInput,
+  IUpdateChapterInput,
+} from '@core/dtos/abstracts/chapter';
 import { ChapterManagerUseCase } from '@core/useCases';
-import { createChapterJoiSchema } from '@interfaceAdapters/presenters/joi';
+import {
+  saveChapterJoiSchema,
+  updateChapterJoiSchema,
+} from '@interfaceAdapters/presenters/joi';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 const { RABBITMQ_PATTERN } = COMMONS;
+const { LOG_CONTEXT } = LOGGER;
 
 @Controller()
 export class ChapterControllerRabbitmq {
@@ -16,41 +23,86 @@ export class ChapterControllerRabbitmq {
   ) {}
 
   @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_DATA)
-  async handleChapterData(data: {
-    mangaId: string;
-    order: number;
-    pages: { position: number; source: string }[];
-  }): Promise<void> {
+  async handleChapterData(data: ISaveChapterInput): Promise<void> {
     this.logger.log(
       buildLogMessage(
         `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_DATA}`,
         JSON.stringify(data),
       ),
-      buildContextLog('ChapterRabbitmqController', 'handleChapterData'),
+      buildContextLog(
+        LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
+        'handleChapterData',
+      ),
     );
 
-    const { error, value } = createChapterJoiSchema.validate(data);
+    const { error, value } = saveChapterJoiSchema.validate(data);
 
     if (error) {
       this.logger.error(
         buildLogMessage(
           `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
-          JSON.stringify(error),
+          JSON.stringify(data),
+          error.message,
         ),
-        buildContextLog('ChapterRabbitmqController', 'handleChapterData'),
+        buildContextLog(
+          LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
+          'handleChapterData',
+        ),
       );
       return;
     }
 
-    const { mangaId, order, pages } = value;
+    await this.chapterManagerUseCase.handleSaveChapter(
+      <ISaveChapterInput>value,
+    );
+  }
 
-    const newPages = pages.map((page) => {
-      const { position, source } = page;
-      return new CreateChapterPageDto(position, source);
-    });
+  @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA)
+  async handleUpadteChapterData(data: IUpdateChapterInput): Promise<void> {
+    this.logger.log(
+      buildLogMessage(
+        `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
+        JSON.stringify(data),
+      ),
+      buildContextLog(
+        LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
+        'handleUpadteChapterData',
+      ),
+    );
 
-    const createChapterDto = new CreateChapterDto(mangaId, order, newPages);
+    const { error, value } = updateChapterJoiSchema.validate(data);
 
-    await this.chapterManagerUseCase.updateOrCreateChapter(createChapterDto);
+    if (error) {
+      this.logger.error(
+        buildLogMessage(
+          `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
+          JSON.stringify(data),
+          error.message,
+        ),
+        buildContextLog(
+          LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
+          'handleUpadteChapterData',
+        ),
+      );
+      return;
+    }
+
+    const chapter = await this.chapterManagerUseCase.updateChapter(
+      <IUpdateChapterInput>value,
+    );
+
+    if (!chapter) {
+      this.logger.error(
+        buildLogMessage(
+          `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
+          JSON.stringify(data),
+          'Chapter is not exists',
+        ),
+        buildContextLog(
+          LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
+          'handleUpadteChapterData',
+        ),
+      );
+    }
   }
 }

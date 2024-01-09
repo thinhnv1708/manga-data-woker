@@ -1,117 +1,145 @@
+export interface IMangaGenre {
+  id: number;
+  title: string;
+}
+
 export class Manga {
-  private id: string;
+  private id: number;
+  private source: string;
   private title: string;
   private subTitle: string;
   private thumbnail: string;
   private description: string;
-  private genreIds: string[];
+  private genres: IMangaGenre[];
   private totalChapter: number;
   private status: string;
   private createdAt: Date;
   private updatedAt: Date;
 
   constructor(
-    id: string,
+    id: number,
+    source: string,
     title: string,
     subTitle: string,
     thumbnail: string,
     description: string,
-    genreIds: string[],
+    genres: IMangaGenre[],
     totalChapter: number,
     status: string,
     createdAt: Date,
     updatedAt: Date,
   ) {
-    this.setId(id);
-    this.setTitle(title);
-    this.setSubTitle(subTitle);
-    this.setThumbnail(thumbnail);
-    this.setDescription(description);
-    this.setGenreIds(genreIds);
-    this.setTotalChapter(totalChapter);
-    this.setStatus(status);
-    this.setCreatedAt(createdAt);
-    this.setUpdatedAt(updatedAt);
+    this.setId(id)
+      .setSource(source)
+      .setTitle(title)
+      .setSubTitle(subTitle)
+      .setThumbnail(thumbnail)
+      .setDescription(description)
+      .setGenres(genres)
+      .setTotalChapter(totalChapter)
+      .setStatus(status)
+      .setCreatedAt(createdAt)
+      .setUpdatedAt(updatedAt);
   }
 
-  public setId(id: string): void {
+  public setId(id: number): Manga {
     this.id = id;
+
+    return this;
   }
 
-  public getId(): string {
+  public getId(): number {
     return this.id;
   }
 
-  public setTitle(title: string): void {
+  public setSource(source: string): Manga {
+    this.source = source;
+    return this;
+  }
+
+  public getSource(): string {
+    return this.source;
+  }
+
+  public setTitle(title: string): Manga {
     this.title = title;
+    return this;
   }
 
   public getTitle(): string {
     return this.title;
   }
 
-  public setSubTitle(subTitle: string): void {
+  public setSubTitle(subTitle: string): Manga {
     this.subTitle = subTitle;
+    return this;
   }
 
   public getSubTitle(): string {
     return this.subTitle;
   }
 
-  public setThumbnail(thumbnail: string): void {
+  public setThumbnail(thumbnail: string): Manga {
     this.thumbnail = thumbnail;
+    return this;
   }
 
   public getThumbnail(): string {
     return this.thumbnail;
   }
 
-  public setDescription(description: string): void {
+  public setDescription(description: string): Manga {
     this.description = description;
+    return this;
   }
 
   public getDescription(): string {
     return this.description;
   }
 
-  public setGenreIds(genreIds: string[]): void {
-    this.genreIds = genreIds;
+  public setGenres(genres: IMangaGenre[]): Manga {
+    this.genres = genres;
+    return this;
   }
 
-  public getGenreIds(): string[] {
-    return this.genreIds;
+  public getGenres(): IMangaGenre[] {
+    return this.genres;
   }
 
-  public setTotalChapter(totalChapter: number): void {
+  public setTotalChapter(totalChapter: number): Manga {
     if (totalChapter < 0) {
       throw new Error('Invalid totalChapter: ' + totalChapter);
     }
 
     this.totalChapter = totalChapter;
+    return this;
   }
 
   public getTotalChapter(): number {
     return this.totalChapter;
   }
 
-  public setStatus(status: string): void {
+  public setStatus(status: string): Manga {
     this.status = status;
+    return this;
   }
 
   public getStatus(): string {
     return this.status;
   }
 
-  public setCreatedAt(createdAt: Date): void {
+  public setCreatedAt(createdAt: Date): Manga {
     this.createdAt = createdAt;
+    return this;
   }
 
   public getCreatedAt(): Date {
     return this.createdAt;
   }
 
-  public setUpdatedAt(updatedAt: Date): void {
+  public setUpdatedAt(updatedAt: Date): Manga {
     this.updatedAt = updatedAt;
+    return this;
   }
 
   public getUpdatedAt(): Date {

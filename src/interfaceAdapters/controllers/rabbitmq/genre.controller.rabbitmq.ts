@@ -1,12 +1,13 @@
-import { COMMONS } from '@constants/index';
+import { COMMONS, LOGGER } from '@constants/index';
 import { AbstractLogger } from '@core/abstracts';
-import { CreateGenreDto } from '@core/dtos';
+import { ISaveGenreInput } from '@core/dtos/abstracts/genre';
 import { GenreManagerUseCase } from '@core/useCases';
-import { createGenreJoiSchema } from '@interfaceAdapters/presenters/joi';
+import { saveGenreJoiSchema } from '@interfaceAdapters/presenters/joi';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 const { RABBITMQ_PATTERN } = COMMONS;
+const { LOG_CONTEXT } = LOGGER;
 
 @Controller()
 export class GenreControllerRabbitmq {
@@ -16,32 +17,32 @@ export class GenreControllerRabbitmq {
   ) {}
 
   @MessagePattern(RABBITMQ_PATTERN.GENRE_HANDLE_DATA)
-  async handleGenreData(data: { title: string }): Promise<void> {
+  async handleGenreData(data: ISaveGenreInput): Promise<void> {
     this.logger.log(
       buildLogMessage(
         `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
         JSON.stringify(data),
       ),
-      buildContextLog('GenreRabbitmqController', 'handleGenreData'),
+      buildContextLog(LOG_CONTEXT.GENRE_CONTROLLER_RABBITMQ, 'handleGenreData'),
     );
 
-    const { error, value } = createGenreJoiSchema.validate(data);
+    const { error, value } = saveGenreJoiSchema.validate(data);
 
     if (error) {
       this.logger.error(
         buildLogMessage(
           `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
-          JSON.stringify(error),
+          JSON.stringify(data),
+          error.message,
         ),
-        buildContextLog('GenreRabbitmqController', 'handleGenreData'),
+        buildContextLog(
+          LOG_CONTEXT.GENRE_CONTROLLER_RABBITMQ,
+          'handleGenreData',
+        ),
       );
       return;
     }
 
-    const { title } = value;
-
-    const createGenreDto = new CreateGenreDto(title);
-
-    await this.genreManagerUseCase.updateOrCreateGenre(createGenreDto);
+    await this.genreManagerUseCase.handleSaveGenre(<ISaveGenreInput>value);
   }
 }

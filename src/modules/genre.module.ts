@@ -1,9 +1,12 @@
 import {
   AbstractGenreRepository,
-  AbstractIdGeneratorUseCase,
+  AbstractIdManagerUseCase,
 } from '@core/abstracts';
-import { GenreFactoryUseCase, GenreManagerUseCase } from '@core/useCases';
-import { NanoIdGeneratorUseCase } from '@core/useCases/idGenerator';
+import {
+  GenreFactoryUseCase,
+  GenreIdManagerUseCase,
+  GenreManagerUseCase,
+} from '@core/useCases';
 import { GenreControllerRabbitmq } from '@interfaceAdapters/controllers/rabbitmq';
 import { GenreRepository } from '@interfaceAdapters/gateways/mongoose/repositories/genre.repository';
 import {
@@ -19,12 +22,13 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forFeature([{ name: Genre.name, schema: GenreSchema }]),
   ],
   providers: [
-    { provide: AbstractIdGeneratorUseCase, useClass: NanoIdGeneratorUseCase },
+    { provide: AbstractIdManagerUseCase, useClass: GenreIdManagerUseCase },
     { provide: AbstractGenreRepository, useClass: GenreRepository },
     GenreMapper,
     GenreManagerUseCase,
     GenreFactoryUseCase,
   ],
   controllers: [GenreControllerRabbitmq],
+  exports: [AbstractGenreRepository],
 })
 export class GenreModule {}

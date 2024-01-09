@@ -1,4 +1,4 @@
-import { Chapter, Page } from '@core/entities';
+import { Chapter } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { ChapterDocument } from '../../gateways/mongoose/schemas';
 
@@ -8,18 +8,15 @@ export class ChapterMapper {
    * Maps a genre document to a genre entity
    */
   toEntity(genreDocument: ChapterDocument): Chapter {
-    const { mangaId, order, pages, createdAt, updatedAt } = genreDocument;
-
-    const newPages = pages.map((page) => {
-      const { position, source } = page;
-
-      return new Page(position, source);
-    });
+    const { id, source, manga, order, pages, createdAt, updatedAt } =
+      genreDocument;
 
     const newChapter = new Chapter(
-      mangaId,
+      id,
+      source,
+      manga,
       order,
-      newPages,
+      pages,
       createdAt,
       updatedAt,
     );
