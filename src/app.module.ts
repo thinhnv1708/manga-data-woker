@@ -12,7 +12,6 @@ import { AppService } from './app.service';
 import {
   ChapterModule,
   GenreModule,
-  HandleMangaDataAdapterModule,
   LoggerModule,
   MangaModule,
 } from './modules';
@@ -29,7 +28,6 @@ import {
     GenreModule,
     MangaModule,
     ChapterModule,
-    HandleMangaDataAdapterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
