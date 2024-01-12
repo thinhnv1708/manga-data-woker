@@ -25,6 +25,7 @@ export class GenreManagerUseCase {
       currentGenre,
       saveGenreInput,
     );
+
     return this.genreRepository.updateGenreById(genre);
   }
 

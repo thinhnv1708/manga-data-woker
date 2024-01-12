@@ -16,11 +16,11 @@ export class MangaControllerRabbitmq {
     private readonly logger: AbstractLogger,
   ) {}
 
-  @MessagePattern(RABBITMQ_PATTERN.MANGA_HANDLE_DATA)
+  @MessagePattern(RABBITMQ_PATTERN.MANGA_HANDLE_SAVE_DATA)
   async handleMangaData(data: ISaveMangaInput): Promise<void> {
     this.logger.log(
       buildLogMessage(
-        `Pattern ${RABBITMQ_PATTERN.MANGA_HANDLE_DATA}`,
+        `Pattern ${RABBITMQ_PATTERN.MANGA_HANDLE_SAVE_DATA}`,
         JSON.stringify(data),
       ),
       buildContextLog(LOG_CONTEXT.MANGA_CONTROLLER_RABBITMQ, 'handleMangaData'),
@@ -31,7 +31,7 @@ export class MangaControllerRabbitmq {
     if (error) {
       this.logger.error(
         buildLogMessage(
-          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
+          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_SAVE_DATA}`,
           JSON.stringify(data),
           error.message,
         ),

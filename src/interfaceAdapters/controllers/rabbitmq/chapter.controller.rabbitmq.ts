@@ -22,11 +22,11 @@ export class ChapterControllerRabbitmq {
     private readonly logger: AbstractLogger,
   ) {}
 
-  @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_DATA)
+  @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA)
   async handleChapterData(data: ISaveChapterInput): Promise<void> {
     this.logger.log(
       buildLogMessage(
-        `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_DATA}`,
+        `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA}`,
         JSON.stringify(data),
       ),
       buildContextLog(
@@ -40,7 +40,7 @@ export class ChapterControllerRabbitmq {
     if (error) {
       this.logger.error(
         buildLogMessage(
-          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
+          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_SAVE_DATA}`,
           JSON.stringify(data),
           error.message,
         ),

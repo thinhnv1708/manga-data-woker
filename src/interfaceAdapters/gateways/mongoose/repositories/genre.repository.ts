@@ -17,7 +17,7 @@ export class GenreRepository implements AbstractGenreRepository {
   async createGenre(genre: Genre): Promise<Genre> {
     const id = genre.getId();
     const source = genre.getSource();
-    const title = genre.getSource();
+    const title = genre.getTitle();
     const createdAt = genre.getCreatedAt();
     const updatedAt = genre.getUpdatedAt();
 
@@ -34,7 +34,7 @@ export class GenreRepository implements AbstractGenreRepository {
 
   async updateGenreById(genre: Genre): Promise<Genre> {
     const id = genre.getId();
-    const title = genre.getSource();
+    const title = genre.getTitle();
     const createdAt = genre.getCreatedAt();
     const updatedAt = genre.getUpdatedAt();
 

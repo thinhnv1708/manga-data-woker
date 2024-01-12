@@ -4,3 +4,4 @@ export * from './idManager.useCase.abstract';
 export * from './logger.abstract';
 export * from './manga.repository.abstract';
 export * from './idManager.repository.abstract';
+export * from './handleMangaData.gateway.adapter';

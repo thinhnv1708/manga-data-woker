@@ -16,11 +16,11 @@ export class GenreControllerRabbitmq {
     private readonly logger: AbstractLogger,
   ) {}
 
-  @MessagePattern(RABBITMQ_PATTERN.GENRE_HANDLE_DATA)
+  @MessagePattern(RABBITMQ_PATTERN.GENRE_HANDLE_SAVE_DATA)
   async handleGenreData(data: ISaveGenreInput): Promise<void> {
     this.logger.log(
       buildLogMessage(
-        `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
+        `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_SAVE_DATA}`,
         JSON.stringify(data),
       ),
       buildContextLog(LOG_CONTEXT.GENRE_CONTROLLER_RABBITMQ, 'handleGenreData'),
@@ -31,7 +31,7 @@ export class GenreControllerRabbitmq {
     if (error) {
       this.logger.error(
         buildLogMessage(
-          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_DATA}`,
+          `Pattern ${RABBITMQ_PATTERN.GENRE_HANDLE_SAVE_DATA}`,
           JSON.stringify(data),
           error.message,
         ),
