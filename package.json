@@ -26,6 +26,8 @@
     "@nestjs/microservices": "^10.3.0",
     "@nestjs/mongoose": "^10.0.2",
     "@nestjs/platform-express": "^10.0.0",
+    "agenda": "^5.0.0",
+    "agenda-nest": "^3.0.0-next",
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.3",
     "cheerio": "^1.0.0-rc.12",

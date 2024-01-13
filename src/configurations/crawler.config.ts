@@ -8,6 +8,6 @@ export default (): { PUPPETEER_CONFIG: IPuppeteer } => ({
     executablePath:
       'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     userDataDir:
-      'C:\\Users\\admin\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 3',
+      'C:\\Users\\Admin\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 3',
   },
 });

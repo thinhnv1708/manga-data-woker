@@ -15,6 +15,8 @@ import {
   LoggerModule,
   MangaModule,
 } from './modules';
+import { CrawlerModule } from '@modules/crawler/crawler.module';
+// import { AgendaModule } from 'agenda-nest';
 
 @Module({
   imports: [
@@ -28,6 +30,12 @@ import {
     GenreModule,
     MangaModule,
     ChapterModule,
+    // AgendaModule.forRoot({
+    //   db: {
+    //     address: mongodbConfig().MONGODB_CONFIG.SERVERS[0],
+    //   },
+    // }),
+    CrawlerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
