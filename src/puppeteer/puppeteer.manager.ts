@@ -66,8 +66,9 @@ export class PuppeteerManager implements IPuppeteerManager {
   }
 
   public async getGenres(config: { url: string }) {
+    let page: puppeteer.Page | null = null;
     try {
-      const page = await this.openNewPage({ url: config.url });
+      page = await this.openNewPage({ url: config.url });
       // await page.screenshot()
       const content = await page.content();
       const $ = cheerio.load(content);
@@ -90,12 +91,15 @@ export class PuppeteerManager implements IPuppeteerManager {
       return genres;
     } catch (error) {
       return [];
+    } finally {
+      page?.close?.();
     }
   }
 
   public async getDescriptionManga(config: { url: string }) {
+    let page: puppeteer.Page | null = null;
     try {
-      const page = await this.openNewPage({ url: config.url });
+      page = await this.openNewPage({ url: config.url });
       // await page.screenshot()
       const content = await page.content();
       const $ = cheerio.load(content);
@@ -133,11 +137,11 @@ export class PuppeteerManager implements IPuppeteerManager {
           $(el.parentNode)
             .find('.style-chap')
             .each((i, el) => {
-              extraData.push($(el).text());
+              extraData.push($(el).text().trim());
             });
           if (href.startsWith('http')) {
             chapters.push({
-              title: item.text(),
+              title: item.text().trim(),
               url: href,
               extraData: extraData,
             });
@@ -147,18 +151,20 @@ export class PuppeteerManager implements IPuppeteerManager {
       const info: ISaveMangaInput = {
         // currentTime: Date.now(),
         source: config.url,
-        title: title.text(),
-        subTitle: nameOther.text(),
+        title: title.text().trim(),
+        subTitle: nameOther.text().trim(),
         genreSources: genres,
-        status: status.text(),
-        description: summary.text(),
+        status: status.text().trim(),
+        description: summary.text().trim(),
         totalChapter: chapters.length,
         thumbnail: imageInfo.attr('src') || '',
       };
 
       return info;
     } catch (error) {
-      console.log(error);
+      return null;
+    } finally {
+      page?.close?.();
     }
   }
 }

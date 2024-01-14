@@ -7,5 +7,6 @@ import { HandleMangaDataAdapterModule } from '..';
 @Module({
   imports: [HandleMangaDataAdapterModule],
   providers: [CrawlerService],
+  exports: [CrawlerService],
 })
 export class CrawlerModule {}

@@ -14,12 +14,21 @@ export class CrawlerService {
   async handleCrawlGenres() {
     const puppeteerManger = await PuppeteerManager.getInstance();
     const genres = await puppeteerManger.getGenres({
-      url: 'https://www.toptruyenne.com/tim-truyen',
+      url: 'https://www.toptruyenhot.co/tim-truyen',
     });
     await Promise.all(
       genres.map((genre) =>
         this.handleMangaDataGatewayAdapter.handleSaveGenre(genre),
       ),
     );
+  }
+
+  async handleCrawlManga(config: { url: string }) {
+    const puppeteerManger = await PuppeteerManager.getInstance();
+    const manga = await puppeteerManger.getDescriptionManga({
+      url: config.url,
+    });
+    console.log(manga);
+    await this.handleMangaDataGatewayAdapter.handleSaveManga(manga);
   }
 }
