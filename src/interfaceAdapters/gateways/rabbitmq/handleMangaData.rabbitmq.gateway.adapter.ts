@@ -25,23 +25,14 @@ export class HandleMangaDataRabbitmqGatewayAdapter
   }
 
   async handleSaveManga(data: ISaveMangaInput): Promise<void> {
-    await this.client.emit<ISaveMangaInput>(
-      RABBITMQ_PATTERN.MANGA_HANDLE_SAVE_DATA,
-      data,
-    );
+    await this.client.emit(RABBITMQ_PATTERN.MANGA_HANDLE_SAVE_DATA, data);
   }
 
   async handleSaveChapter(data: ISaveChapterInput): Promise<void> {
-    await this.client.emit<ISaveChapterInput>(
-      RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA,
-      data,
-    );
+    await this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA, data);
   }
 
   async handleUpdateChapter(data: IUpdateChapterInput): Promise<void> {
-    await this.client.emit<IUpdateChapterInput>(
-      RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA,
-      data,
-    );
+    await this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA, data);
   }
 }
