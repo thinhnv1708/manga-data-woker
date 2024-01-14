@@ -57,8 +57,8 @@ export class ChapterFactoryUseCase {
     const manga = currentChapter.getManga();
     const order = currentChapter.getOrder();
     const createdAt = currentChapter.getCreatedAt();
-    const upadtedAt = new Date();
+    const updatedAt = new Date();
 
-    return new Chapter(id, source, manga, order, pages, createdAt, upadtedAt);
+    return new Chapter(id, source, manga, order, pages, createdAt, updatedAt);
   }
 }

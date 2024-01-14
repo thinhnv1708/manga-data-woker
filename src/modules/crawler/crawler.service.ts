@@ -25,10 +25,17 @@ export class CrawlerService {
 
   async handleCrawlManga(config: { url: string }) {
     const puppeteerManger = await PuppeteerManager.getInstance();
-    const manga = await puppeteerManger.getDescriptionManga({
+    const mangaDescription = await puppeteerManger.getDescriptionManga({
       url: config.url,
     });
-    console.log(manga);
-    await this.handleMangaDataGatewayAdapter.handleSaveManga(manga);
+    if (mangaDescription) return;
+    await this.handleMangaDataGatewayAdapter.handleSaveManga(
+      mangaDescription.manga,
+    );
+    await Promise.all(
+      mangaDescription.chapters.map((chapter) =>
+        this.handleMangaDataGatewayAdapter.handleSaveChapter(chapter),
+      ),
+    );
   }
 }

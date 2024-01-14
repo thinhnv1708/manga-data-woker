@@ -1,4 +1,5 @@
 import crawlerConfig from '@configurations/crawler.config';
+import { ISaveChapterInput } from '@core/dtos/abstracts/chapter';
 import { ISaveGenreInput } from '@core/dtos/abstracts/genre';
 import { ISaveMangaInput } from '@core/dtos/abstracts/manga';
 import { Injectable } from '@nestjs/common';
@@ -96,7 +97,10 @@ export class PuppeteerManager implements IPuppeteerManager {
     }
   }
 
-  public async getDescriptionManga(config: { url: string }) {
+  public async getDescriptionManga(config: { url: string }): Promise<{
+    manga: ISaveMangaInput;
+    chapters: ISaveChapterInput[];
+  } | null> {
     let page: puppeteer.Page | null = null;
     try {
       page = await this.openNewPage({ url: config.url });
@@ -114,7 +118,7 @@ export class PuppeteerManager implements IPuppeteerManager {
       const category = $('.content-left .category .detail-info', comicDetail);
       const summary = $('.summary-content .detail-summary', comicDetail);
       const imageInfo = $('.image-comic', comicDetail);
-      const chapters: any[] = [];
+      const chapters: ISaveChapterInput[] = [];
       const genres: string[] = [];
       category.find('.cat-detail').each((i, el) => {
         const item = $('a', el);
@@ -141,9 +145,11 @@ export class PuppeteerManager implements IPuppeteerManager {
             });
           if (href.startsWith('http')) {
             chapters.push({
-              title: item.text().trim(),
-              url: href,
-              extraData: extraData,
+              mangaSource: config.url,
+              order: parseFloat(item.attr('data-chapter')),
+              // title: item.text().trim(),
+              source: href,
+              // extraData: extraData,
             });
           }
         });
@@ -160,7 +166,12 @@ export class PuppeteerManager implements IPuppeteerManager {
         thumbnail: imageInfo.attr('src') || '',
       };
 
-      return info;
+      console.log(chapters);
+
+      return {
+        manga: info,
+        chapters: chapters,
+      };
     } catch (error) {
       return null;
     } finally {
