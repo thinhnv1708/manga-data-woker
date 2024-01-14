@@ -8,6 +8,6 @@ export const saveMangaJoiSchema = Joi.object<ISaveMangaInput>({
   thumbnail: Joi.string().required(),
   description: Joi.string().required(),
   totalChapter: Joi.number().required(),
-  genreSources: Joi.string().required(),
+  genreSources: Joi.array().items(Joi.string()).required(),
   status: Joi.string().required(),
 });
