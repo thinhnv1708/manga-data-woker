@@ -12,7 +12,7 @@ export class ChapterMapper {
       return null;
     }
 
-    const { id, source, manga, order, pages, createdAt, updatedAt } =
+    const { id, source, manga, order, pages, extraData, createdAt, updatedAt } =
       chapterDocument;
 
     const newChapter = new Chapter(
@@ -21,6 +21,7 @@ export class ChapterMapper {
       manga,
       order,
       pages,
+      extraData,
       createdAt,
       updatedAt,
     );

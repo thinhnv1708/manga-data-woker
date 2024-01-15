@@ -23,6 +23,9 @@ export class Chapter extends Document {
   @Prop({ type: Number })
   order: number;
 
+  @Prop({ type: [String] })
+  extraData: string[];
+
   @Prop({ type: [ChapterPageSchema] })
   pages: ChapterPage[];
 
