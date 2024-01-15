@@ -25,7 +25,7 @@ import { MangaModule } from './manga.module';
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
     IdGeneratorModule,
     MangaModule,
-    BullInitModule
+    BullInitModule,
   ],
   providers: [
     { provide: AbstractIdManagerUseCase, useClass: ChapterIdManagerUseCase },

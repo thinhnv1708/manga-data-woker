@@ -46,4 +46,16 @@ export class CrawlerService {
       } catch (error) {}
     }
   }
+
+  async handleCrawlMangaList(config: { url: string }) {
+    const puppeteerManger = await PuppeteerManager.getInstance();
+    const mangaList = await puppeteerManger.getListManga({
+      url: config.url,
+    });
+    Promise.all(
+      mangaList.listManga.map((manga) =>
+        this.handleMangaDataGatewayAdapter.handleSaveManga(manga),
+      ),
+    );
+  }
 }

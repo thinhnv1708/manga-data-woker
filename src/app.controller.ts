@@ -26,13 +26,19 @@ export class AppController {
 
   @Get('testManga')
   async testManga(): Promise<any> {
-    // const puppeteer = await PuppeteerManager.getInstance();
-    // const data = await puppeteer.getDescriptionManga({
-    //   url: 'https://www.toptruyenne.com/truyen-tranh/dao-hai-tac/77',
-    // });
-    // return { data: data };
     this.crawlerService.handleCrawlManga({
       url: 'https://www.toptruyenhot.co/truyen-tranh/dao-hai-tac/77',
     });
+  }
+
+  @Get('testListManga')
+  async testListManga(): Promise<any> {
+    for (let index = 0; index < 256; index++) {
+      await this.crawlerService.handleCrawlMangaList({
+        url: `https://www.toptruyenhot.co/tim-truyen?status=2&sort=1&page=${
+          index + 1
+        }`,
+      });
+    }
   }
 }

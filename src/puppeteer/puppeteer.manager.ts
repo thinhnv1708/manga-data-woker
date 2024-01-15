@@ -81,9 +81,10 @@ export class PuppeteerManager implements IPuppeteerManager {
           const title = genre.text().trim();
           if (!!title) {
             console.log('i:', i, title);
+            const url = genre.attr('href');
             genres.push({
               title: title,
-              path: genre.attr('href'),
+              path: new URL(url).pathname,
               // description: genre.attr('data-title'),
               // url: genre.attr('href'),
             });
@@ -177,6 +178,46 @@ export class PuppeteerManager implements IPuppeteerManager {
       return {
         manga: info,
         chapters: chapters,
+      };
+    } catch (error) {
+      page?.close?.();
+      return null;
+    } finally {
+      page?.close?.();
+    }
+  }
+
+  public async getListManga(config: { url: string }): Promise<{
+    listManga: any[];
+  } | null> {
+    let page: puppeteer.Page | null = null;
+    try {
+      page = await this.openNewPage({ url: config.url });
+      // await page.screenshot()
+      const content = await page.content();
+      const $ = cheerio.load(content);
+
+      const listManga: any[] = [];
+
+      $('.search-cm-detail .row')
+        .find('.item-manga .clearfix')
+        .each((i, el) => {
+          // console.log('Clearing', el);
+          const item = $('a', el);
+          const url = item.attr('href');
+          // const title = item.attr('title');
+          // const image = $('img', item);
+          // const thumbnail = image.attr('src');
+          url &&
+            listManga.push({
+              path: new URL(url).pathname,
+              // title: title,
+              // thumbnail: thumbnail,
+            });
+        });
+
+      return {
+        listManga: listManga,
       };
     } catch (error) {
       page?.close?.();

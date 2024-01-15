@@ -87,6 +87,9 @@ export class HandleMangaDataRabbitmqGatewayAdapter
       ),
     );
 
-    await this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA, data);
+    await this.client.emit(
+      RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA,
+      data,
+    );
   }
 }

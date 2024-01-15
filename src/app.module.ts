@@ -50,9 +50,9 @@ import { makeRedisConfig } from './helpers';
     GenreModule,
     MangaModule,
     ChapterModule,
-    // CrawlerModule,
+    CrawlerModule,
   ],
-  // controllers: [AppController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
