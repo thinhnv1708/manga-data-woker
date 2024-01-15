@@ -6,7 +6,7 @@ import {
 } from '@configurations/index';
 import { MongooseModule } from '@frameworksAndDevices/databases/mongoose';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {
@@ -16,7 +16,9 @@ import {
   MangaModule,
 } from './modules';
 import { CrawlerModule } from '@modules/crawler/crawler.module';
-// import { AgendaModule } from 'agenda-nest';
+import { AgendaModule } from 'agenda-nest';
+import { IMongodbConfig } from '@configurations/interfaces';
+import { makeMongodbConfig } from './helpers';
 
 @Module({
   imports: [
@@ -30,11 +32,20 @@ import { CrawlerModule } from '@modules/crawler/crawler.module';
     GenreModule,
     MangaModule,
     ChapterModule,
-    // AgendaModule.forRoot({
-    //   db: {
-    //     address: mongodbConfig().MONGODB_CONFIG.SERVERS[0],
-    //   },
-    // }),
+    AgendaModule.forRootAsync({
+      imports: [ConfigService],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const mongooseConfig =
+          configService.get<IMongodbConfig>('MONGODB_CONFIG');
+        const uri = makeMongodbConfig(mongooseConfig);
+        return {
+          db: {
+            address: uri,
+          },
+        };
+      },
+    }),
     CrawlerModule,
   ],
   controllers: [AppController],
