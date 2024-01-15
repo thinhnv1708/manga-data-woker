@@ -23,7 +23,7 @@ export class ChapterFactoryUseCase {
   async createNewChapter(
     saveChapterInput: ISaveChapterInput,
   ): Promise<Chapter> {
-    const { mangaSource, source, order } = saveChapterInput;
+    const { mangaSource, source, order, extraData } = saveChapterInput;
     const pages = [];
     const createdAt = new Date();
     const updatedAt = new Date();
@@ -39,6 +39,7 @@ export class ChapterFactoryUseCase {
       chapterManga,
       order,
       pages,
+      extraData,
       createdAt,
       updatedAt,
     );
@@ -56,9 +57,19 @@ export class ChapterFactoryUseCase {
     const source = currentChapter.getSource();
     const manga = currentChapter.getManga();
     const order = currentChapter.getOrder();
+    const extraData = currentChapter.getExtraData();
     const createdAt = currentChapter.getCreatedAt();
     const updatedAt = new Date();
 
-    return new Chapter(id, source, manga, order, pages, createdAt, updatedAt);
+    return new Chapter(
+      id,
+      source,
+      manga,
+      order,
+      pages,
+      extraData,
+      createdAt,
+      updatedAt,
+    );
   }
 }

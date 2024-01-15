@@ -14,6 +14,7 @@ export class Chapter {
   private manga: IChapterManga;
   private order: number;
   private pages: IPage[];
+  private extraData: string[];
   private createdAt: Date;
   private updatedAt: Date;
 
@@ -23,6 +24,7 @@ export class Chapter {
     manga: IChapterManga,
     order: number,
     pages: IPage[],
+    extraData: string[],
     createdAt: Date,
     updatedAt: Date,
   ) {
@@ -31,6 +33,7 @@ export class Chapter {
       .setManga(manga)
       .setOrder(order)
       .setPages(pages)
+      .setExtraData(extraData)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
   }
@@ -77,6 +80,15 @@ export class Chapter {
 
   setPages(pages: IPage[]): Chapter {
     this.pages = pages;
+    return this;
+  }
+
+  getExtraData(): string[] {
+    return this.extraData;
+  }
+
+  setExtraData(extraData: string[]): Chapter {
+    this.extraData = extraData;
     return this;
   }
 
