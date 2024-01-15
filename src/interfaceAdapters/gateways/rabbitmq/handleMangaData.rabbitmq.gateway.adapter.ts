@@ -78,7 +78,7 @@ export class HandleMangaDataRabbitmqGatewayAdapter
   ): Promise<void> {
     this.logger.log(
       buildLogMessage(
-        `Push message to ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
+        `Push message to ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA}`,
         JSON.stringify(data),
       ),
       buildContextLog(
@@ -87,6 +87,6 @@ export class HandleMangaDataRabbitmqGatewayAdapter
       ),
     );
 
-    await this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA, data);
+    await this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA, data);
   }
 }
