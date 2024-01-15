@@ -24,6 +24,8 @@ export class MangaRepository implements AbstractMangaRepository {
     const genres = manga.getGenres();
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
+    const compeletedMapDependencies = manga.getCompeletedMapDependencies();
+    const retryCount = manga.getRetryCount();
     const createdAt = manga.getCreatedAt();
     const updatedAt = manga.getUpdatedAt();
 
@@ -36,6 +38,8 @@ export class MangaRepository implements AbstractMangaRepository {
       description,
       genres,
       totalChapter,
+      compeletedMapDependencies,
+      retryCount,
       status,
       createdAt,
       updatedAt,
@@ -53,6 +57,8 @@ export class MangaRepository implements AbstractMangaRepository {
     const genres = manga.getGenres();
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
+    const compeletedMapDependencies = manga.getCompeletedMapDependencies();
+    const retryCount = manga.getRetryCount();
     const createdAt = manga.getCreatedAt();
     const updatedAt = manga.getUpdatedAt();
 
@@ -67,6 +73,8 @@ export class MangaRepository implements AbstractMangaRepository {
           genres,
           totalChapter,
           status,
+          compeletedMapDependencies,
+          retryCount,
           createdAt,
           updatedAt,
         },
@@ -80,6 +88,10 @@ export class MangaRepository implements AbstractMangaRepository {
   }
 
   async findMangaByPath(path: string): Promise<Manga> {
+    if (!path) {
+      return null;
+    }
+
     const mangaDocument = await this.model.findOne({ path }).lean();
 
     return this.mapper.toEntity(mangaDocument);

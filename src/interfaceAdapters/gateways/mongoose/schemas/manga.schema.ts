@@ -44,6 +44,9 @@ export class Manga extends Document {
   @Prop({ type: Boolean })
   compeletedMapDependencies: boolean;
 
+  @Prop({ type: Number })
+  retryCount: number;
+
   @Prop({ type: Date })
   updatedAt: Date;
 

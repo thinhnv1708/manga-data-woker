@@ -46,12 +46,20 @@ export class GenreRepository implements AbstractGenreRepository {
   }
 
   async findGenreByPath(path: string): Promise<Genre> {
+    if (!path) {
+      return null;
+    }
+
     const genreDocument = await this.model.findOne({ path }).lean();
 
     return this.mapper.toEntity(genreDocument);
   }
 
   async findGenresByPaths(paths: string[]): Promise<Genre[]> {
+    if (!paths || paths.length === 0) {
+      return [];
+    }
+
     const genreDocuments = await this.model
       .find({ path: { $in: paths } })
       .lean();

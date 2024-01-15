@@ -1,4 +1,7 @@
-import { AbstractAddJobAdapter, AbstractChapterRepository } from '@core/abstracts';
+import {
+  AbstractAddJobAdapter,
+  AbstractChapterRepository,
+} from '@core/abstracts';
 import {
   ISaveChapterInput,
   IUpdatePagesInChapterInput,
@@ -65,16 +68,18 @@ export class ChapterManagerUseCase {
 
   async afterHandleSaveChapter(
     saveChapterInput: ISaveChapterInput,
+    retrySaveDataMaxAttempts: number,
   ): Promise<Chapter> {
     const chapter = await this.handleSaveChapter(saveChapterInput);
 
     const compeletedMapDependencies = chapter.getCompeletedMapDependencies();
+    const retryCount = chapter.getRetryCount();
 
-    if (!compeletedMapDependencies) {
+    if (!compeletedMapDependencies && retryCount <= retrySaveDataMaxAttempts) {
+      chapter.setRetryCount(retryCount + 1);
       await this.addJobAdapter.retrySaveChapterJob(saveChapterInput);
     }
 
     return chapter;
   }
-
 }

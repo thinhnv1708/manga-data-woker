@@ -15,6 +15,7 @@ export class Manga {
   private totalChapter: number;
   private status: string;
   private compeletedMapDependencies: boolean;
+  private retryCount: number;
   private createdAt: Date;
   private updatedAt: Date;
 
@@ -30,6 +31,7 @@ export class Manga {
     totalChapter: number,
     status: string,
     compeletedMapDependencies: boolean,
+    retryCount: number,
     createdAt: Date,
     updatedAt: Date,
   ) {
@@ -44,6 +46,7 @@ export class Manga {
       .setTotalChapter(totalChapter)
       .setStatus(status)
       .setCompeletedMapDependencies(compeletedMapDependencies)
+      .setRetryCount(retryCount)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
   }
@@ -152,6 +155,15 @@ export class Manga {
 
   public getCompeletedMapDependencies(): boolean {
     return this.compeletedMapDependencies;
+  }
+
+  public setRetryCount(retryCount: number): Manga {
+    this.retryCount = retryCount;
+    return this;
+  }
+
+  public getRetryCount(): number {
+    return this.retryCount;
   }
 
   public setCreatedAt(createdAt: Date): Manga {

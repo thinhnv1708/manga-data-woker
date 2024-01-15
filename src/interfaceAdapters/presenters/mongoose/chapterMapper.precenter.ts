@@ -22,6 +22,7 @@ export class ChapterMapper {
       extraData,
       completedCrawler,
       compeletedMapDependencies,
+      retryCount,
       createdAt,
       updatedAt,
     } = chapterDocument;
@@ -36,6 +37,7 @@ export class ChapterMapper {
       extraData,
       completedCrawler,
       compeletedMapDependencies,
+      retryCount,
       createdAt,
       updatedAt,
     );

@@ -24,6 +24,7 @@ export class MangaMapper {
       totalChapter,
       status,
       compeletedMapDependencies,
+      retryCount,
       createdAt,
       updatedAt,
     } = mangaDocument;
@@ -40,6 +41,7 @@ export class MangaMapper {
       totalChapter,
       status,
       compeletedMapDependencies,
+      retryCount,
       createdAt,
       updatedAt,
     );

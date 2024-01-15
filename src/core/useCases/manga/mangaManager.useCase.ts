@@ -46,13 +46,21 @@ export class MangaManagerUseCase {
     return this.updateManga(manga, saveMangaInput);
   }
 
-  async afterHandleSaveManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
+  async afterHandleSaveManga(
+    saveMangaInput: ISaveMangaInput,
+    retrySaveDataMaxAttempts: number,
+  ): Promise<Manga> {
     const manga = await this.handleSaveManga(saveMangaInput);
 
     const compeletedMapDependencies = manga.getCompeletedMapDependencies();
+    const retryCount = manga.getRetryCount();
 
-    if (!compeletedMapDependencies) {
-      await this.addJobAdapter.retrySaveMangaJob(saveMangaInput)
+    if (!compeletedMapDependencies && retryCount <= retrySaveDataMaxAttempts) {
+      manga.setRetryCount(retryCount + 1);
+
+      await this.mangaRepository.updateManga(manga);
+
+      await this.addJobAdapter.retrySaveMangaJob(saveMangaInput);
     }
 
     return manga;

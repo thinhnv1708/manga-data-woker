@@ -26,6 +26,10 @@ export class MangaFactoryUseCase {
     genrePaths: string[],
     genresMapped: IMangaGenre[],
   ): boolean {
+    if (!genrePaths || genrePaths.length === 0) {
+      return false;
+    }
+
     return genrePaths.length === genresMapped.length;
   }
 
@@ -40,6 +44,7 @@ export class MangaFactoryUseCase {
       genrePaths,
       status,
     } = saveMangaInput;
+
     const createdAt = new Date();
     const updatedAt = new Date();
 
@@ -51,6 +56,7 @@ export class MangaFactoryUseCase {
       genrePaths,
       mangaGenres,
     );
+    const retryCount = 0;
     const id = await this.idManagerUseCase.generateId();
 
     return new Manga(
@@ -65,6 +71,7 @@ export class MangaFactoryUseCase {
       totalChapter,
       status,
       compeletedMapDependencies,
+      retryCount,
       createdAt,
       updatedAt,
     );
@@ -97,6 +104,8 @@ export class MangaFactoryUseCase {
       mangaGenres,
     );
 
+    const retryCount = currentManga.getRetryCount();
+
     return new Manga(
       id,
       path,
@@ -109,6 +118,7 @@ export class MangaFactoryUseCase {
       totalChapter,
       status,
       compeletedMapDependencies,
+      retryCount,
       createdAt,
       updatedAt,
     );

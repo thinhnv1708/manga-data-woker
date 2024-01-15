@@ -9,5 +9,8 @@ export default (): {
     RETRY_SAVE_DATA_DELAY_SECONDS: process.env.RETRY_SAVE_DATA_DELAY_SECONDS
       ? Number(process.env.RETRY_SAVE_DATA_DELAY_SECONDS)
       : 60,
+    RETRY_SAVE_DATA_MAX_ATTEMPTS: process.env.RETRY_SAVE_DATA_MAX_ATTEMPTS
+      ? Number(process.env.RETRY_SAVE_DATA_MAX_ATTEMPTS)
+      : 10,
   },
 });
