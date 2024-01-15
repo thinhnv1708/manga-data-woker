@@ -57,13 +57,13 @@ export class ChapterControllerRabbitmq {
     );
   }
 
-  @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA)
+  @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA)
   async handleUpadtePagesInChapter(
     data: IUpdatePagesInChapterInput,
   ): Promise<void> {
     this.logger.log(
       buildLogMessage(
-        `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
+        `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA}`,
         JSON.stringify(data),
       ),
       buildContextLog(
@@ -77,7 +77,7 @@ export class ChapterControllerRabbitmq {
     if (error) {
       this.logger.error(
         buildLogMessage(
-          `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
+          `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA}`,
           JSON.stringify(data),
           error.message,
         ),
@@ -96,7 +96,7 @@ export class ChapterControllerRabbitmq {
     if (!chapter) {
       this.logger.error(
         buildLogMessage(
-          `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
+          `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA}`,
           JSON.stringify(data),
           'Chapter is not exists',
         ),
