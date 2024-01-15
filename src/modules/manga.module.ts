@@ -16,6 +16,7 @@ import {
 import { MangaMapper } from '@interfaceAdapters/presenters/mongoose';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { BullInitModule } from './bullInit.module';
 import { GenreModule } from './genre.module';
 import { IdGeneratorModule } from './idGenerator.module';
 
@@ -24,6 +25,7 @@ import { IdGeneratorModule } from './idGenerator.module';
     MongooseModule.forFeature([{ name: Manga.name, schema: MangaSchema }]),
     IdGeneratorModule,
     GenreModule,
+    BullInitModule,
   ],
   providers: [
     { provide: AbstractIdManagerUseCase, useClass: MangaIdManagerUseCase },

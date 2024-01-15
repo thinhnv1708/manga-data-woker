@@ -1,4 +1,7 @@
-import { AbstractMangaRepository } from '@core/abstracts';
+import {
+  AbstractAddJobAdapter,
+  AbstractMangaRepository,
+} from '@core/abstracts';
 import { ISaveMangaInput } from '@core/dtos/abstracts/manga';
 import { Manga } from '@core/entities';
 import { Injectable } from '@nestjs/common';
@@ -9,6 +12,7 @@ export class MangaManagerUseCase {
   constructor(
     private readonly mangaRepository: AbstractMangaRepository,
     private readonly mangaFactoryUseCase: MangaFactoryUseCase,
+    // private readonly addJobAdapter: AbstractAddJobAdapter,
   ) {}
 
   async createManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
@@ -40,5 +44,13 @@ export class MangaManagerUseCase {
     }
 
     return this.updateManga(manga, saveMangaInput);
+  }
+
+  async afterHandleSaveManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
+    const manga = await this.handleSaveManga(saveMangaInput);
+
+    const compeletedMapDependencies = manga.getCompeletedMapDependencies();
+
+    return manga;
   }
 }

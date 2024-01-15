@@ -11,4 +11,6 @@ export const BULL_QUEUE_NAMES = {
   GENRE: 'genre',
   MANGA: 'manga',
   CHAPTER: 'chapter',
+  RETRY_SAVE_MANGA: 'retrySaveManga',
+  RETRY_SAVE_CHAPTER: 'retrySaveChapter',
 };
