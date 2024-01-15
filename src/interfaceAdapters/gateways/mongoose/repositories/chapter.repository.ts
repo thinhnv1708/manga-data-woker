@@ -20,6 +20,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const manga = chapter.getManga();
     const order = chapter.getOrder();
     const pages = chapter.getPages();
+    const extraData = chapter.getExtraData();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
 
@@ -29,6 +30,7 @@ export class ChapterRepository implements AbstractChapterRepository {
       manga,
       order,
       pages,
+      extraData,
       createdAt,
       updatedAt,
     });
@@ -41,6 +43,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const manga = chapter.getManga();
     const order = chapter.getOrder();
     const pages = chapter.getPages();
+    const extraData = chapter.getExtraData();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
 
@@ -51,6 +54,7 @@ export class ChapterRepository implements AbstractChapterRepository {
           manga,
           order,
           pages,
+          extraData,
           createdAt,
           updatedAt,
         },
