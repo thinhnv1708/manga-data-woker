@@ -14,7 +14,7 @@ export class Genre extends Document {
   id: number;
 
   @Prop({ type: String })
-  source: string;
+  path: string;
 
   @Prop({ type: String })
   title: string;
@@ -28,6 +28,6 @@ export class Genre extends Document {
 
 const _Schema = SchemaFactory.createForClass(Genre);
 _Schema.index({ id: 1 }, { unique: true });
-_Schema.index({ source: 1 }, { unique: true });
+_Schema.index({ path: 1 }, { unique: true });
 
 export const GenreSchema = _Schema;

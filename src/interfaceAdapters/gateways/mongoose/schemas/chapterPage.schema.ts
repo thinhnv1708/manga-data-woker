@@ -11,7 +11,7 @@ export class ChapterPage extends Document {
   position: number;
 
   @Prop({ type: String })
-  source: string;
+  path: string;
 }
 
 const _Schema = SchemaFactory.createForClass(ChapterPage);

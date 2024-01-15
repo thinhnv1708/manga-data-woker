@@ -16,21 +16,23 @@ export class ChapterRepository implements AbstractChapterRepository {
 
   async createChapter(chapter: Chapter): Promise<Chapter> {
     const id = chapter.getId();
-    const source = chapter.getSource();
+    const path = chapter.getPath();
     const manga = chapter.getManga();
     const order = chapter.getOrder();
     const pages = chapter.getPages();
     const extraData = chapter.getExtraData();
+    const completedCrawler = chapter.getCompeletedCrawler();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
 
     const chapterDocument = await this.model.create({
       id,
-      source,
+      path,
       manga,
       order,
       pages,
       extraData,
+      completedCrawler,
       createdAt,
       updatedAt,
     });
@@ -44,6 +46,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const order = chapter.getOrder();
     const pages = chapter.getPages();
     const extraData = chapter.getExtraData();
+    const completedCrawler = chapter.getCompeletedCrawler();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
 
@@ -55,6 +58,7 @@ export class ChapterRepository implements AbstractChapterRepository {
           order,
           pages,
           extraData,
+          completedCrawler,
           createdAt,
           updatedAt,
         },
@@ -70,10 +74,11 @@ export class ChapterRepository implements AbstractChapterRepository {
   async updatePagesInChapter(
     chapterId: number,
     pages: IPage[],
+    completedCrawler: boolean,
   ): Promise<Chapter> {
     const chapterDocument = await this.model.findOneAndUpdate(
       { id: chapterId },
-      { pages },
+      { pages, completedCrawler },
       {
         new: true,
       },
@@ -82,9 +87,19 @@ export class ChapterRepository implements AbstractChapterRepository {
     return this.mapper.toEntity(chapterDocument);
   }
 
-  async findChapterBySource(source: string): Promise<Chapter> {
-    const chapterDocument = await this.model.findOne({ source }).lean();
+  async findChapterByPath(path: string): Promise<Chapter> {
+    const chapterDocument = await this.model.findOne({ path }).lean();
 
     return this.mapper.toEntity(chapterDocument);
+  }
+
+  async findCompletedCrawlerChapters(
+    NumberOfLastChapters: number = 0,
+  ): Promise<Chapter[]> {
+    return;
+    // const chapterDocuments = await this.model
+    //   .find()
+    //   .sort({ order: -1 })
+    //   .limit(NumberOfLastChapters);
   }
 }

@@ -16,7 +16,7 @@ export class MangaRepository implements AbstractMangaRepository {
 
   async createManga(manga: Manga): Promise<Manga> {
     const id = manga.getId();
-    const source = manga.getSource();
+    const path = manga.getPath();
     const title = manga.getTitle();
     const subTitle = manga.getSubTitle();
     const thumbnail = manga.getThumbnail();
@@ -29,7 +29,7 @@ export class MangaRepository implements AbstractMangaRepository {
 
     const mangaDocument = await this.model.create({
       id,
-      source,
+      path,
       title,
       subTitle,
       thumbnail,
@@ -79,8 +79,8 @@ export class MangaRepository implements AbstractMangaRepository {
     return this.mapper.toEntity(mangaDocument);
   }
 
-  async findMangaBySource(source: string): Promise<Manga> {
-    const mangaDocument = await this.model.findOne({ source }).lean();
+  async findMangaByPath(path: string): Promise<Manga> {
+    const mangaDocument = await this.model.findOne({ path }).lean();
 
     return this.mapper.toEntity(mangaDocument);
   }

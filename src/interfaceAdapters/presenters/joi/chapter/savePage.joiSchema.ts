@@ -3,5 +3,5 @@ import * as Joi from 'joi';
 
 export const savePageJoiSchema = Joi.object<ISavePageInput>({
   position: Joi.number().required(),
-  source: Joi.string().required(),
+  path: Joi.string().required(),
 });

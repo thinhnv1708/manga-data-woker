@@ -15,7 +15,10 @@ export class Chapter extends Document {
   id: number;
 
   @Prop({ type: String })
-  source: string;
+  path: string;
+
+  @Prop({ type: String })
+  mangaPath: string;
 
   @Prop({ type: ChapterMangaSchema })
   manga: ChapterManga;
@@ -29,6 +32,12 @@ export class Chapter extends Document {
   @Prop({ type: [ChapterPageSchema] })
   pages: ChapterPage[];
 
+  @Prop({ type: Boolean, default: false })
+  completedCrawler: boolean;
+
+  @Prop({ type: Boolean })
+  compeletedMapDependencies: boolean;
+
   @Prop({ type: Date })
   updatedAt: Date;
 
@@ -38,6 +47,6 @@ export class Chapter extends Document {
 
 const _Schema = SchemaFactory.createForClass(Chapter);
 _Schema.index({ id: 1 }, { unique: true });
-_Schema.index({ source: 1 }, { unique: true });
+_Schema.index({ path: 1 }, { unique: true });
 
 export const ChapterSchema = _Schema;

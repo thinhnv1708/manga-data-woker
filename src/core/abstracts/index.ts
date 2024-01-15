@@ -7,3 +7,4 @@ export * from './idManager.repository.abstract';
 export * from './handleMangaData.gateway.adapter';
 export * from './crawler.repository.abstract';
 export * from './crawler.useCase.abstract';
+export * from './addJob.repository.abstract';

@@ -16,14 +16,14 @@ export class GenreRepository implements AbstractGenreRepository {
 
   async createGenre(genre: Genre): Promise<Genre> {
     const id = genre.getId();
-    const source = genre.getSource();
+    const path = genre.getPath();
     const title = genre.getTitle();
     const createdAt = genre.getCreatedAt();
     const updatedAt = genre.getUpdatedAt();
 
     const genreDocument = await this.model.create({
       id,
-      source,
+      path,
       title,
       createdAt,
       updatedAt,
@@ -45,15 +45,15 @@ export class GenreRepository implements AbstractGenreRepository {
     return this.mapper.toEntity(genreDocument);
   }
 
-  async findGenreBySource(source: string): Promise<Genre> {
-    const genreDocument = await this.model.findOne({ source }).lean();
+  async findGenreByPath(path: string): Promise<Genre> {
+    const genreDocument = await this.model.findOne({ path }).lean();
 
     return this.mapper.toEntity(genreDocument);
   }
 
-  async findGenresBySources(sources: string[]): Promise<Genre[]> {
+  async findGenresByPaths(paths: string[]): Promise<Genre[]> {
     const genreDocuments = await this.model
-      .find({ source: { $in: sources } })
+      .find({ path: { $in: paths } })
       .lean();
 
     return genreDocuments.map((genreDocument) =>

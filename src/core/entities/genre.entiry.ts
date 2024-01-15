@@ -1,19 +1,19 @@
 export class Genre {
   id: number;
-  source: string;
+  path: string;
   title: string;
   createdAt: Date;
   updatedAt: Date;
 
   constructor(
     id: number,
-    source: string,
+    path: string,
     title: string,
     createdAt: Date,
     updatedAt: Date,
   ) {
     this.setId(id)
-      .setSource(source)
+      .setPath(path)
       .setTitle(title)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
@@ -28,12 +28,12 @@ export class Genre {
     return this;
   }
 
-  getSource(): string {
-    return this.source;
+  getPath(): string {
+    return this.path;
   }
 
-  setSource(source: string): Genre {
-    this.source = source;
+  setPath(path: string): Genre {
+    this.path = path;
     return this;
   }
 

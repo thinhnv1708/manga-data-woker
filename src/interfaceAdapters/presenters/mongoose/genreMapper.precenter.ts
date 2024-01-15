@@ -12,8 +12,8 @@ export class GenreMapper {
       return null;
     }
 
-    const { id, source, title, createdAt, updatedAt } = genreDocument;
-    const newGenre = new Genre(id, source, title, createdAt, updatedAt);
+    const { id, path, title, createdAt, updatedAt } = genreDocument;
+    const newGenre = new Genre(id, path, title, createdAt, updatedAt);
 
     return newGenre;
   }

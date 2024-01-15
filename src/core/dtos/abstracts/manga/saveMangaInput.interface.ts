@@ -1,10 +1,10 @@
 export interface ISaveMangaInput {
-  source: string;
+  path: string;
   title: string;
   subTitle: string;
   thumbnail: string;
   description: string;
   totalChapter: number;
-  genreSources: string[];
+  genrePaths: string[];
   status: string;
 }

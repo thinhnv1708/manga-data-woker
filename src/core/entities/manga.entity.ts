@@ -5,39 +5,45 @@ export interface IMangaGenre {
 
 export class Manga {
   private id: number;
-  private source: string;
+  private path: string;
   private title: string;
   private subTitle: string;
   private thumbnail: string;
   private description: string;
+  private genrePaths: string[];
   private genres: IMangaGenre[];
   private totalChapter: number;
   private status: string;
+  private compeletedMapDependencies: boolean;
   private createdAt: Date;
   private updatedAt: Date;
 
   constructor(
     id: number,
-    source: string,
+    path: string,
     title: string,
     subTitle: string,
     thumbnail: string,
     description: string,
+    genrePaths: string[],
     genres: IMangaGenre[],
     totalChapter: number,
     status: string,
+    compeletedMapDependencies: boolean,
     createdAt: Date,
     updatedAt: Date,
   ) {
     this.setId(id)
-      .setSource(source)
+      .setPath(path)
       .setTitle(title)
       .setSubTitle(subTitle)
       .setThumbnail(thumbnail)
       .setDescription(description)
+      .setGenrePaths(genrePaths)
       .setGenres(genres)
       .setTotalChapter(totalChapter)
       .setStatus(status)
+      .setCompeletedMapDependencies(compeletedMapDependencies)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
   }
@@ -52,13 +58,13 @@ export class Manga {
     return this.id;
   }
 
-  public setSource(source: string): Manga {
-    this.source = source;
+  public setPath(path: string): Manga {
+    this.path = path;
     return this;
   }
 
-  public getSource(): string {
-    return this.source;
+  public getPath(): string {
+    return this.path;
   }
 
   public setTitle(title: string): Manga {
@@ -97,6 +103,15 @@ export class Manga {
     return this.description;
   }
 
+  public setGenrePaths(genrePaths: string[]): Manga {
+    this.genrePaths = genrePaths;
+    return this;
+  }
+
+  public getGenrePaths(): string[] {
+    return this.genrePaths;
+  }
+
   public setGenres(genres: IMangaGenre[]): Manga {
     this.genres = genres;
     return this;
@@ -126,6 +141,17 @@ export class Manga {
 
   public getStatus(): string {
     return this.status;
+  }
+
+  public setCompeletedMapDependencies(
+    compeletedMapDependencies: boolean,
+  ): Manga {
+    this.compeletedMapDependencies = compeletedMapDependencies;
+    return this;
+  }
+
+  public getCompeletedMapDependencies(): boolean {
+    return this.compeletedMapDependencies;
   }
 
   public setCreatedAt(createdAt: Date): Manga {

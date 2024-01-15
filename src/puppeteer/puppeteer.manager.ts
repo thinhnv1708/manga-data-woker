@@ -83,7 +83,7 @@ export class PuppeteerManager implements IPuppeteerManager {
             console.log('i:', i, title);
             genres.push({
               title: title,
-              source: genre.attr('href'),
+              path: genre.attr('href'),
               // description: genre.attr('data-title'),
               // url: genre.attr('href'),
             });
@@ -151,10 +151,10 @@ export class PuppeteerManager implements IPuppeteerManager {
             });
           if (href.startsWith('http')) {
             chapters.push({
-              mangaSource: config.url,
+              mangaPath: config.url,
               order: parseFloat(item.attr('data-chapter')),
               // title: item.text().trim(),
-              source: href,
+              path: href,
               extraData: extraData,
             });
           }
@@ -162,10 +162,10 @@ export class PuppeteerManager implements IPuppeteerManager {
 
       const info: ISaveMangaInput = {
         // currentTime: Date.now(),
-        source: config.url,
+        path: config.url,
         title: title.text().trim(),
         subTitle: nameOther.text().trim(),
-        genreSources: genres,
+        genrePaths: genres,
         status: status.text().trim(),
         description: summary.text().trim(),
         totalChapter: chapters.length,

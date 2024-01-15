@@ -30,9 +30,9 @@ export class GenreManagerUseCase {
   }
 
   async handleSaveGenre(saveGenreInput: ISaveGenreInput): Promise<Genre> {
-    const { source } = saveGenreInput;
+    const { path } = saveGenreInput;
 
-    const genre = await this.genreRepository.findGenreBySource(source);
+    const genre = await this.genreRepository.findGenreByPath(path);
 
     if (!genre) {
       return this.createGenre(saveGenreInput);

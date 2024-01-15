@@ -14,42 +14,57 @@ export class MangaFactoryUseCase {
   ) {}
 
   private mapGenreEntityToMangaGenre(genres: Genre[]): IMangaGenre[] {
-    return genres.map((genre) => {
-      const { id, title } = genre;
-      return { id, title };
-    });
+    return genres
+      .map((genre) => {
+        const { id, title } = genre;
+        return { id, title };
+      })
+      .filter((genre) => genre.title);
+  }
+
+  private getCompeletedMapDependencies(
+    genrePaths: string[],
+    genresMapped: IMangaGenre[],
+  ): boolean {
+    return genrePaths.length === genresMapped.length;
   }
 
   async createNewManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
     const {
-      source,
+      path,
       title,
       subTitle,
       thumbnail,
       description,
       totalChapter,
-      genreSources,
+      genrePaths,
       status,
     } = saveMangaInput;
     const createdAt = new Date();
     const updatedAt = new Date();
 
-    const genres = await this.genreRepository.findGenresBySources(genreSources);
+    const genres = await this.genreRepository.findGenresByPaths(genrePaths);
 
     const mangaGenres = this.mapGenreEntityToMangaGenre(genres);
 
+    const compeletedMapDependencies = this.getCompeletedMapDependencies(
+      genrePaths,
+      mangaGenres,
+    );
     const id = await this.idManagerUseCase.generateId();
 
     return new Manga(
       id,
-      source,
+      path,
       title,
       subTitle,
       thumbnail,
       description,
+      genrePaths,
       mangaGenres,
       totalChapter,
       status,
+      compeletedMapDependencies,
       createdAt,
       updatedAt,
     );
@@ -65,28 +80,35 @@ export class MangaFactoryUseCase {
       thumbnail,
       description,
       totalChapter,
-      genreSources,
+      genrePaths,
       status,
     } = saveMangaInput;
 
-    const genres = await this.genreRepository.findGenresBySources(genreSources);
+    const genres = await this.genreRepository.findGenresByPaths(genrePaths);
 
     const id = currentManga.getId();
-    const source = currentManga.getSource();
+    const path = currentManga.getPath();
     const createdAt = currentManga.getCreatedAt();
     const updatedAt = new Date();
     const mangaGenres = this.mapGenreEntityToMangaGenre(genres);
 
+    const compeletedMapDependencies = this.getCompeletedMapDependencies(
+      genrePaths,
+      mangaGenres,
+    );
+
     return new Manga(
       id,
-      source,
+      path,
       title,
       subTitle,
       thumbnail,
       description,
+      genrePaths,
       mangaGenres,
       totalChapter,
       status,
+      compeletedMapDependencies,
       createdAt,
       updatedAt,
     );

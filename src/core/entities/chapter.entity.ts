@@ -1,6 +1,6 @@
 export interface IPage {
   position: number;
-  source: string;
+  path: string;
 }
 
 export interface IChapterManga {
@@ -10,30 +10,38 @@ export interface IChapterManga {
 
 export class Chapter {
   private id: number;
-  private source: string;
+  private path: string;
+  private mangaPath: string;
   private manga: IChapterManga;
   private order: number;
   private pages: IPage[];
   private extraData: string[];
+  private compeletedCrawler: boolean;
   private createdAt: Date;
   private updatedAt: Date;
 
   constructor(
     id: number,
-    source: string,
+    path: string,
+    mangaPath: string,
     manga: IChapterManga,
     order: number,
     pages: IPage[],
     extraData: string[],
+    compeletedCrawler: boolean,
+    compeletedMapDependencies: boolean,
     createdAt: Date,
     updatedAt: Date,
   ) {
     this.setId(id)
-      .setSource(source)
+      .setPath(path)
+      .setMangaPath(mangaPath)
       .setManga(manga)
       .setOrder(order)
       .setPages(pages)
       .setExtraData(extraData)
+      .setCompeletedCrawler(compeletedCrawler)
+      .setCompeletedMapDependencies(compeletedMapDependencies)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
   }
@@ -47,12 +55,21 @@ export class Chapter {
     return this;
   }
 
-  getSource(): string {
-    return this.source;
+  getPath(): string {
+    return this.path;
   }
 
-  setSource(source: string): Chapter {
-    this.source = source;
+  setPath(path: string): Chapter {
+    this.path = path;
+    return this;
+  }
+
+  getMangaPath(): string {
+    return this.mangaPath;
+  }
+
+  setMangaPath(mangaPath: string): Chapter {
+    this.mangaPath = mangaPath;
     return this;
   }
 
@@ -89,6 +106,24 @@ export class Chapter {
 
   setExtraData(extraData: string[]): Chapter {
     this.extraData = extraData;
+    return this;
+  }
+
+  getCompeletedCrawler(): boolean {
+    return this.compeletedCrawler;
+  }
+
+  setCompeletedCrawler(compeletedCrawler: boolean): Chapter {
+    this.compeletedCrawler = compeletedCrawler;
+    return this;
+  }
+
+  getCompeletedMapDependencies(): boolean {
+    return this.compeletedCrawler;
+  }
+
+  setCompeletedMapDependencies(compeletedMapDependencies: boolean): Chapter {
+    this.compeletedCrawler = compeletedMapDependencies;
     return this;
   }
 

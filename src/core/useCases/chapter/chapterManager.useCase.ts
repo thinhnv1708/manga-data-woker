@@ -17,8 +17,8 @@ export class ChapterManagerUseCase {
   async handleSaveChapter(
     saveChapterInput: ISaveChapterInput,
   ): Promise<Chapter> {
-    const { source } = saveChapterInput;
-    const chapter = await this.chapterRepository.findChapterBySource(source);
+    const { path } = saveChapterInput;
+    const chapter = await this.chapterRepository.findChapterByPath(path);
 
     if (chapter) {
       return this.updateChapter(chapter, saveChapterInput);
@@ -45,16 +45,20 @@ export class ChapterManagerUseCase {
   async updatePagesInChapter(
     updatePagesChapterInput: IUpdatePagesInChapterInput,
   ): Promise<Chapter> {
-    const { source, pages } = updatePagesChapterInput;
+    const { path, pages } = updatePagesChapterInput;
 
-    const chapter = await this.chapterRepository.findChapterBySource(source);
+    const chapter = await this.chapterRepository.findChapterByPath(path);
 
     if (!chapter) {
       return;
     }
 
     const chapterId = chapter.getId();
-
-    return this.chapterRepository.updatePagesInChapter(chapterId, pages);
+    const completedCrawler = true;
+    await this.chapterRepository.updatePagesInChapter(
+      chapterId,
+      pages,
+      completedCrawler,
+    );
   }
 }

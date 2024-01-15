@@ -6,3 +6,9 @@ export const RABBITMQ_PATTERN = {
 };
 
 export const RABBITMQ_PUBLISHER = 'manga';
+
+export const BULL_QUEUE_NAMES = {
+  GENRE: 'genre',
+  MANGA: 'manga',
+  CHAPTER: 'chapter',
+};

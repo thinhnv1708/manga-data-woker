@@ -15,7 +15,7 @@ export class Manga extends Document {
   id: number;
 
   @Prop({ type: String })
-  source: string;
+  path: string;
 
   @Prop({ type: String })
   title: string;
@@ -29,6 +29,9 @@ export class Manga extends Document {
   @Prop({ type: String })
   description: string;
 
+  @Prop({ type: [String] })
+  genrePaths: string[];
+
   @Prop({ type: [MangaGenreSchema] })
   genres: MangaGenre[];
 
@@ -37,6 +40,9 @@ export class Manga extends Document {
 
   @Prop({ type: String })
   status: string;
+
+  @Prop({ type: Boolean })
+  compeletedMapDependencies: boolean;
 
   @Prop({ type: Date })
   updatedAt: Date;
@@ -47,6 +53,6 @@ export class Manga extends Document {
 
 const _Schema = SchemaFactory.createForClass(Manga);
 _Schema.index({ id: 1 }, { unique: true });
-_Schema.index({ source: 1 }, { unique: true });
+_Schema.index({ path: 1 }, { unique: true });
 
 export const MangaSchema = _Schema;

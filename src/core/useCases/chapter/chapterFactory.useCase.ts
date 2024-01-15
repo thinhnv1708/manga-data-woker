@@ -17,26 +17,38 @@ export class ChapterFactoryUseCase {
     return manga ? { id: manga.getId(), title: manga.getTitle() } : null;
   }
 
+  private getCompeletedMapDependencies(chapterManga: IChapterManga): boolean {
+    return !!chapterManga.title;
+  }
+
   async createNewChapter(
     saveChapterInput: ISaveChapterInput,
   ): Promise<Chapter> {
-    const { mangaSource, source, order, extraData } = saveChapterInput;
+    const { mangaPath, path, order, extraData } = saveChapterInput;
     const pages = [];
+    const completedCrawler = false;
     const createdAt = new Date();
     const updatedAt = new Date();
 
-    const manga = await this.mangaRepository.findMangaBySource(mangaSource);
+    const manga = await this.mangaRepository.findMangaByPath(mangaPath);
 
     const chapterManga = this.mapChapterManga(manga);
 
     const id = await this.idManagerUseCase.generateId();
+
+    const compeletedMapDependencies =
+      this.getCompeletedMapDependencies(chapterManga);
+
     const newChapter = new Chapter(
       id,
-      source,
+      path,
+      mangaPath,
       chapterManga,
       order,
       pages,
       extraData,
+      completedCrawler,
+      compeletedMapDependencies,
       createdAt,
       updatedAt,
     );
@@ -48,24 +60,30 @@ export class ChapterFactoryUseCase {
     currentChapter: Chapter,
     saveChapterInput: ISaveChapterInput,
   ): Promise<Chapter> {
-    const { mangaSource, order, extraData } = saveChapterInput;
+    const { mangaPath, order, extraData } = saveChapterInput;
 
     const id = currentChapter.getId();
-    const source = currentChapter.getSource();
+    const path = currentChapter.getPath();
     const pages = currentChapter.getPages();
+    const completedCrawler = currentChapter.getCompeletedCrawler();
     const createdAt = currentChapter.getCreatedAt();
     const updatedAt = new Date();
 
-    const manga = await this.mangaRepository.findMangaBySource(mangaSource);
+    const manga = await this.mangaRepository.findMangaByPath(mangaPath);
     const chapterManga = this.mapChapterManga(manga);
+    const compeletedMapDependencies =
+      this.getCompeletedMapDependencies(chapterManga);
 
     return new Chapter(
       id,
-      source,
+      path,
+      mangaPath,
       chapterManga,
       order,
       pages,
       extraData,
+      completedCrawler,
+      compeletedMapDependencies,
       createdAt,
       updatedAt,
     );

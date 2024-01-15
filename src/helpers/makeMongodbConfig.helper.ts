@@ -5,7 +5,7 @@ export const makeMongodbConfig = (mongooseConfig: IMongodbConfig): string => {
     SERVERS: servers,
     USERNAME: user,
     PASSWORD: password,
-    AUTH_SOURCE: authSource,
+    AUTH_SOURCE: authPath,
     REPL: repl,
     DB_NAME: dbName,
   } = mongooseConfig;
@@ -23,7 +23,7 @@ export const makeMongodbConfig = (mongooseConfig: IMongodbConfig): string => {
           0,
           url.length - 1,
         )}/${dbName}?authSource=` +
-        (authSource ? authSource : 'admin') +
+        (authPath ? authPath : 'admin') +
         (repl ? `&replicaSet=${repl}` : '')
       );
     } else {

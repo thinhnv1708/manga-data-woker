@@ -4,6 +4,6 @@ import { savePageJoiSchema } from './savePage.joiSchema';
 
 export const updatePagesInChapterJoiSchema =
   Joi.object<IUpdatePagesInChapterInput>({
-    source: Joi.string().required(),
+    path: Joi.string().required(),
     pages: Joi.array().items(savePageJoiSchema).required(),
   });

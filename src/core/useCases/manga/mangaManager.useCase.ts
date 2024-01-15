@@ -31,9 +31,9 @@ export class MangaManagerUseCase {
   }
 
   async handleSaveManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
-    const { source } = saveMangaInput;
+    const { path } = saveMangaInput;
 
-    const manga = await this.mangaRepository.findMangaBySource(source);
+    const manga = await this.mangaRepository.findMangaByPath(path);
 
     if (!manga) {
       return this.createManga(saveMangaInput);

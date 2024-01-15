@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/bull": "^10.0.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
@@ -30,6 +31,7 @@
     "agenda-nest": "^3.0.0-next",
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.3",
+    "bull": "^4.12.1",
     "cheerio": "^1.0.0-rc.12",
     "joi": "^17.11.0",
     "mongoose": "^8.0.3",

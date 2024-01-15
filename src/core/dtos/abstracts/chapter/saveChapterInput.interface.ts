@@ -1,6 +1,6 @@
 export interface ISaveChapterInput {
-  mangaSource: string;
-  source: string;
+  mangaPath: string;
+  path: string;
   order: number;
   extraData: string[];
 }

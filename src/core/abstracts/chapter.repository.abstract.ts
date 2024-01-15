@@ -1,11 +1,15 @@
 import { Chapter, IPage } from '@core/entities';
 
 export abstract class AbstractChapterRepository {
-  abstract findChapterBySource(source: string): Promise<Chapter>;
+  abstract findChapterByPath(path: string): Promise<Chapter>;
   abstract createChapter(chapter: Chapter): Promise<Chapter>;
   abstract updateChapterById(chapter: Chapter): Promise<Chapter>;
   abstract updatePagesInChapter(
     chapterId: number,
     pages: IPage[],
+    completedCrawler: boolean,
   ): Promise<Chapter>;
+  abstract findCompletedCrawlerChapters(
+    NumberOfLastChapters?: number,
+  ): Promise<Chapter[]>;
 }

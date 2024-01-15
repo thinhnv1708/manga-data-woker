@@ -1,4 +1,4 @@
-import { IMangaGenre, Manga } from '@core/entities';
+import { Manga } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 import { MangaDocument } from '../../gateways/mongoose/schemas';
 
@@ -14,28 +14,32 @@ export class MangaMapper {
 
     const {
       id,
-      source,
+      path,
       title,
       subTitle,
       thumbnail,
       description,
+      genrePaths,
       genres,
       totalChapter,
       status,
+      compeletedMapDependencies,
       createdAt,
       updatedAt,
     } = mangaDocument;
 
     const newManga = new Manga(
       id,
-      source,
+      path,
       title,
       subTitle,
       thumbnail,
       description,
+      genrePaths,
       genres,
       totalChapter,
       status,
+      compeletedMapDependencies,
       createdAt,
       updatedAt,
     );

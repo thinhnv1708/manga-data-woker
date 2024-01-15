@@ -3,6 +3,7 @@ import {
   loggerConfig,
   mongodbConfig,
   rabbitmqConfig,
+  redisConfig,
 } from '@configurations/index';
 import { MongooseModule } from '@frameworksAndDevices/databases/mongoose';
 import { Module } from '@nestjs/common';
@@ -15,40 +16,43 @@ import {
   LoggerModule,
   MangaModule,
 } from './modules';
+import { BullModule } from '@nestjs/bull';
 import { CrawlerModule } from '@modules/crawler/crawler.module';
-import { AgendaModule } from 'agenda-nest';
-import { IMongodbConfig } from '@configurations/interfaces';
-import { makeMongodbConfig } from './helpers';
+import { IRedisConfig } from '@configurations/interfaces';
+import { makeRedisConfig } from './helpers';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, loggerConfig, mongodbConfig, rabbitmqConfig],
+      load: [
+        appConfig,
+        loggerConfig,
+        mongodbConfig,
+        rabbitmqConfig,
+        redisConfig,
+      ],
       envFilePath: ['.development.env'],
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const redisConfig = configService.get<IRedisConfig>('REDIS');
+
+        return {
+          redis: makeRedisConfig(redisConfig),
+        };
+      },
+      inject: [ConfigService],
     }),
     MongooseModule,
     LoggerModule,
     GenreModule,
     MangaModule,
     ChapterModule,
-    AgendaModule.forRootAsync({
-      imports: [ConfigService],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const mongooseConfig =
-          configService.get<IMongodbConfig>('MONGODB_CONFIG');
-        const uri = makeMongodbConfig(mongooseConfig);
-        return {
-          db: {
-            address: uri,
-          },
-        };
-      },
-    }),
-    CrawlerModule,
+    // CrawlerModule,
   ],
-  controllers: [AppController],
+  // controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
