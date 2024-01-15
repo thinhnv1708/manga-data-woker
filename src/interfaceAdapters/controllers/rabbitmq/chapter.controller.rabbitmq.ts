@@ -2,12 +2,12 @@ import { COMMONS, LOGGER } from '@constants/index';
 import { AbstractLogger } from '@core/abstracts';
 import {
   ISaveChapterInput,
-  IUpdateChapterInput,
+  IUpdatePagesInChapterInput,
 } from '@core/dtos/abstracts/chapter';
 import { ChapterManagerUseCase } from '@core/useCases';
 import {
   saveChapterJoiSchema,
-  updateChapterJoiSchema,
+  updatePagesInChapterJoiSchema,
 } from '@interfaceAdapters/presenters/joi';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
@@ -58,7 +58,9 @@ export class ChapterControllerRabbitmq {
   }
 
   @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA)
-  async handleUpadteChapterData(data: IUpdateChapterInput): Promise<void> {
+  async handleUpadtePagesInChapter(
+    data: IUpdatePagesInChapterInput,
+  ): Promise<void> {
     this.logger.log(
       buildLogMessage(
         `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,
@@ -70,7 +72,7 @@ export class ChapterControllerRabbitmq {
       ),
     );
 
-    const { error, value } = updateChapterJoiSchema.validate(data);
+    const { error, value } = updatePagesInChapterJoiSchema.validate(data);
 
     if (error) {
       this.logger.error(
@@ -87,8 +89,8 @@ export class ChapterControllerRabbitmq {
       return;
     }
 
-    const chapter = await this.chapterManagerUseCase.updateChapter(
-      <IUpdateChapterInput>value,
+    const chapter = await this.chapterManagerUseCase.updatePagesInChapter(
+      <IUpdatePagesInChapterInput>value,
     );
 
     if (!chapter) {

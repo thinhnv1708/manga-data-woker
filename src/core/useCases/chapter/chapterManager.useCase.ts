@@ -1,7 +1,7 @@
 import { AbstractChapterRepository } from '@core/abstracts';
 import {
   ISaveChapterInput,
-  IUpdateChapterInput,
+  IUpdatePagesInChapterInput,
 } from '@core/dtos/abstracts/chapter';
 import { Chapter } from '@core/entities';
 import { Injectable } from '@nestjs/common';
@@ -21,7 +21,7 @@ export class ChapterManagerUseCase {
     const chapter = await this.chapterRepository.findChapterBySource(source);
 
     if (chapter) {
-      return;
+      return this.updateChapter(chapter, saveChapterInput);
     }
 
     const newChapter =
@@ -31,9 +31,21 @@ export class ChapterManagerUseCase {
   }
 
   async updateChapter(
-    updateChapterInput: IUpdateChapterInput,
+    currentChapter: Chapter,
+    saveChapterInput: ISaveChapterInput,
   ): Promise<Chapter> {
-    const { source } = updateChapterInput;
+    const chapter = await this.chapterFactoryUseCase.updateChapter(
+      currentChapter,
+      saveChapterInput,
+    );
+
+    return this.chapterRepository.updateChapterById(chapter);
+  }
+
+  async updatePagesInChapter(
+    updatePagesChapterInput: IUpdatePagesInChapterInput,
+  ): Promise<Chapter> {
+    const { source, pages } = updatePagesChapterInput;
 
     const chapter = await this.chapterRepository.findChapterBySource(source);
 
@@ -41,11 +53,8 @@ export class ChapterManagerUseCase {
       return;
     }
 
-    const newChapter = await this.chapterFactoryUseCase.updateChapter(
-      chapter,
-      updateChapterInput,
-    );
+    const chapterId = chapter.getId();
 
-    return this.chapterRepository.updateChapterById(newChapter);
+    return this.chapterRepository.updatePagesInChapter(chapterId, pages);
   }
 }

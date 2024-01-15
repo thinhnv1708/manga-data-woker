@@ -31,4 +31,5 @@ export const LOG_CONTEXT = {
   GENRE_CONTROLLER_RABBITMQ: 'GenreControllerRabbitmq',
   MANGA_CONTROLLER_RABBITMQ: 'MangaControllerRabbitmq',
   CHAPTER_CONTROLLER_RABBITMQ: 'ChapterControllerRabbitmq',
+  HANDLE_PUSH_MANGA_DATA_RABBITMQ: 'HandlePushMangaDataRabbitMq',
 };
