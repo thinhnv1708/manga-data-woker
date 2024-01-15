@@ -1,4 +1,6 @@
 import { COMMONS } from '@constants/index';
+import { AbstractAddJobAdapter } from '@core/abstracts';
+import { BullAddJobAdapter } from '@interfaceAdapters/gateways/bull';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 
@@ -10,5 +12,7 @@ import { Module } from '@nestjs/common';
       })),
     ),
   ],
+  providers: [{ provide: AbstractAddJobAdapter, useClass: BullAddJobAdapter }],
+  exports: [AbstractAddJobAdapter],
 })
 export class BullInitModule {}
