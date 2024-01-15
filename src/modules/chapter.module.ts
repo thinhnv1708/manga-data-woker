@@ -16,6 +16,7 @@ import {
 import { ChapterMapper } from '@interfaceAdapters/presenters/mongoose';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { BullInitModule } from './bullInit.module';
 import { IdGeneratorModule } from './idGenerator.module';
 import { MangaModule } from './manga.module';
 
@@ -24,6 +25,7 @@ import { MangaModule } from './manga.module';
     MongooseModule.forFeature([{ name: Chapter.name, schema: ChapterSchema }]),
     IdGeneratorModule,
     MangaModule,
+    BullInitModule
   ],
   providers: [
     { provide: AbstractIdManagerUseCase, useClass: ChapterIdManagerUseCase },

@@ -1,4 +1,4 @@
-import { AbstractChapterRepository } from '@core/abstracts';
+import { AbstractAddJobAdapter, AbstractChapterRepository } from '@core/abstracts';
 import {
   ISaveChapterInput,
   IUpdatePagesInChapterInput,
@@ -12,6 +12,7 @@ export class ChapterManagerUseCase {
   constructor(
     private readonly chapterRepository: AbstractChapterRepository,
     private readonly chapterFactoryUseCase: ChapterFactoryUseCase,
+    private readonly addJobAdapter: AbstractAddJobAdapter,
   ) {}
 
   async handleSaveChapter(
@@ -61,4 +62,19 @@ export class ChapterManagerUseCase {
       completedCrawler,
     );
   }
+
+  async afterHandleSaveChapter(
+    saveChapterInput: ISaveChapterInput,
+  ): Promise<Chapter> {
+    const chapter = await this.handleSaveChapter(saveChapterInput);
+
+    const compeletedMapDependencies = chapter.getCompeletedMapDependencies();
+
+    if (!compeletedMapDependencies) {
+      await this.addJobAdapter.retrySaveChapterJob(saveChapterInput);
+    }
+
+    return chapter;
+  }
+
 }

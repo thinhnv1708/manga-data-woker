@@ -12,7 +12,7 @@ export class MangaManagerUseCase {
   constructor(
     private readonly mangaRepository: AbstractMangaRepository,
     private readonly mangaFactoryUseCase: MangaFactoryUseCase,
-    // private readonly addJobAdapter: AbstractAddJobAdapter,
+    private readonly addJobAdapter: AbstractAddJobAdapter,
   ) {}
 
   async createManga(saveMangaInput: ISaveMangaInput): Promise<Manga> {
@@ -50,6 +50,10 @@ export class MangaManagerUseCase {
     const manga = await this.handleSaveManga(saveMangaInput);
 
     const compeletedMapDependencies = manga.getCompeletedMapDependencies();
+
+    if (!compeletedMapDependencies) {
+      await this.addJobAdapter.retrySaveMangaJob(saveMangaInput)
+    }
 
     return manga;
   }

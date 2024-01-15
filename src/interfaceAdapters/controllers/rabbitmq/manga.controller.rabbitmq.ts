@@ -43,6 +43,6 @@ export class MangaControllerRabbitmq {
       return;
     }
 
-    await this.mangaManagerUseCase.handleSaveManga(<ISaveMangaInput>value);
+    await this.mangaManagerUseCase.afterHandleSaveManga(<ISaveMangaInput>value);
   }
 }

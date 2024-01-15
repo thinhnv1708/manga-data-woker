@@ -52,7 +52,7 @@ export class ChapterControllerRabbitmq {
       return;
     }
 
-    await this.chapterManagerUseCase.handleSaveChapter(
+    await this.chapterManagerUseCase.afterHandleSaveChapter(
       <ISaveChapterInput>value,
     );
   }
