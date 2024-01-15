@@ -39,7 +39,7 @@ export class PuppeteerManager implements IPuppeteerManager {
       this.browser = await puppeteer.launch({
         executablePath: crawlerConfig().PUPPETEER_CONFIG.executablePath,
         userDataDir: crawlerConfig().PUPPETEER_CONFIG.userDataDir,
-        headless: false, // Chạy ẩn
+        headless: true, // Chạy ẩn
         ignoreHTTPSErrors: true, // Bỏ qua lỗi https
         args: ['--disable-dev-shm-usage', '--no-sandbox'],
       });
@@ -53,7 +53,7 @@ export class PuppeteerManager implements IPuppeteerManager {
     await page.goto(config.url);
     await page.setViewport({
       width: 1280,
-      height: 720,
+      height: 1520,
       deviceScaleFactor: 1,
     });
     await page.setUserAgent(
@@ -103,7 +103,9 @@ export class PuppeteerManager implements IPuppeteerManager {
   } | null> {
     let page: puppeteer.Page | null = null;
     try {
+      console.log('cdcdcdd');
       page = await this.openNewPage({ url: config.url });
+      console.log('cdcdcdd');
       // await page.screenshot()
       const content = await page.content();
       const $ = cheerio.load(content);
@@ -113,6 +115,7 @@ export class PuppeteerManager implements IPuppeteerManager {
         '.content-left .name-other .detail-info',
         comicDetail,
       );
+      console.log('cdcdcd');
       // const authors = $('.content-left .author .detail-info', comicDetail);
       const status = $('.content-left .status .detail-info', comicDetail);
       const category = $('.content-left .category .detail-info', comicDetail);
@@ -132,6 +135,8 @@ export class PuppeteerManager implements IPuppeteerManager {
         }
       });
 
+      console.log('cdcdcd1');
+
       $('#list-chapter-dt nav ul', comicDetail)
         .find('li .chapters')
         .each((i, el) => {
@@ -141,7 +146,8 @@ export class PuppeteerManager implements IPuppeteerManager {
           $(el.parentNode)
             .find('.style-chap')
             .each((i, el) => {
-              extraData.push($(el).text().trim());
+              const title = $(el).text().trim() || '';
+              title && extraData.push(title);
             });
           if (href.startsWith('http')) {
             chapters.push({
@@ -149,7 +155,7 @@ export class PuppeteerManager implements IPuppeteerManager {
               order: parseFloat(item.attr('data-chapter')),
               // title: item.text().trim(),
               source: href,
-              // extraData: extraData,
+              extraData: extraData,
             });
           }
         });
@@ -173,6 +179,7 @@ export class PuppeteerManager implements IPuppeteerManager {
         chapters: chapters,
       };
     } catch (error) {
+      page?.close?.();
       return null;
     } finally {
       page?.close?.();

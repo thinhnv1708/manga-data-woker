@@ -28,14 +28,22 @@ export class CrawlerService {
     const mangaDescription = await puppeteerManger.getDescriptionManga({
       url: config.url,
     });
-    if (mangaDescription) return;
-    await this.handleMangaDataGatewayAdapter.handleSaveManga(
-      mangaDescription.manga,
-    );
-    await Promise.all(
-      mangaDescription.chapters.map((chapter) =>
-        this.handleMangaDataGatewayAdapter.handleSaveChapter(chapter),
-      ),
-    );
+    console.log('mangaDescription0', mangaDescription);
+    if (mangaDescription?.manga) {
+      try {
+        await this.handleMangaDataGatewayAdapter.handleSaveManga(
+          mangaDescription.manga,
+        );
+      } catch (error) {}
+
+      try {
+        console.log('mangaDescription1', mangaDescription);
+        Promise.all(
+          mangaDescription.chapters.map((chapter) =>
+            this.handleMangaDataGatewayAdapter.handleSaveChapter(chapter),
+          ),
+        );
+      } catch (error) {}
+    }
   }
 }
