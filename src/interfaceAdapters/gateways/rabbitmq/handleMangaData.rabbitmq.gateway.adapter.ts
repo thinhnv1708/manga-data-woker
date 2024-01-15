@@ -5,7 +5,7 @@ import {
 } from '@core/abstracts';
 import {
   ISaveChapterInput,
-  IUpdateChapterInput,
+  IUpdatePagesInChapterInput,
 } from '@core/dtos/abstracts/chapter';
 import { ISaveGenreInput } from '@core/dtos/abstracts/genre';
 import { ISaveMangaInput } from '@core/dtos/abstracts/manga';
@@ -73,7 +73,9 @@ export class HandleMangaDataRabbitmqGatewayAdapter
     await this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA, data);
   }
 
-  async handleUpdateChapter(data: IUpdateChapterInput): Promise<void> {
+  async handleUpdatePagesInChapter(
+    data: IUpdatePagesInChapterInput,
+  ): Promise<void> {
     this.logger.log(
       buildLogMessage(
         `Push message to ${RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_DATA}`,

@@ -1,5 +1,5 @@
 import { AbstractChapterRepository } from '@core/abstracts';
-import { Chapter } from '@core/entities';
+import { Chapter, IPage } from '@core/entities';
 import { ChapterMapper } from '@interfaceAdapters/presenters/mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -63,6 +63,21 @@ export class ChapterRepository implements AbstractChapterRepository {
         },
       )
       .lean();
+
+    return this.mapper.toEntity(chapterDocument);
+  }
+
+  async updatePagesInChapter(
+    chapterId: number,
+    pages: IPage[],
+  ): Promise<Chapter> {
+    const chapterDocument = await this.model.findOneAndUpdate(
+      { id: chapterId },
+      { pages },
+      {
+        new: true,
+      },
+    );
 
     return this.mapper.toEntity(chapterDocument);
   }

@@ -2,10 +2,7 @@ import {
   AbstractIdManagerUseCase,
   AbstractMangaRepository,
 } from '@core/abstracts';
-import {
-  ISaveChapterInput,
-  IUpdateChapterInput,
-} from '@core/dtos/abstracts/chapter';
+import { ISaveChapterInput } from '@core/dtos/abstracts/chapter';
 import { Chapter, IChapterManga, Manga } from '@core/entities';
 import { Injectable } from '@nestjs/common';
 
@@ -49,27 +46,28 @@ export class ChapterFactoryUseCase {
 
   async updateChapter(
     currentChapter: Chapter,
-    updateChapterInput: IUpdateChapterInput,
+    saveChapterInput: ISaveChapterInput,
   ): Promise<Chapter> {
-    const { pages } = updateChapterInput;
+    const { mangaSource, order, extraData } = saveChapterInput;
 
     const id = currentChapter.getId();
     const source = currentChapter.getSource();
-    const manga = currentChapter.getManga();
-    const order = currentChapter.getOrder();
-    const extraData = currentChapter.getExtraData();
+    const pages = currentChapter.getPages();
     const createdAt = currentChapter.getCreatedAt();
-    const upadtedAt = new Date();
+    const updatedAt = new Date();
+
+    const manga = await this.mangaRepository.findMangaBySource(mangaSource);
+    const chapterManga = this.mapChapterManga(manga);
 
     return new Chapter(
       id,
       source,
-      manga,
+      chapterManga,
       order,
       pages,
       extraData,
       createdAt,
-      upadtedAt,
+      updatedAt,
     );
   }
 }

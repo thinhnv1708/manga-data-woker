@@ -1,6 +1,6 @@
 import { ISavePageInput } from './savePageInput.interface';
 
-export interface IUpdateChapterInput {
+export interface IUpdatePagesInChapterInput {
   source: string;
   pages: ISavePageInput[];
 }
