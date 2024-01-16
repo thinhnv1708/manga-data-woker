@@ -91,7 +91,7 @@ export class ChapterFactoryUseCase {
       extraData,
       completedCrawler,
       compeletedMapDependencies,
-      retryCount,
+      retryCount + 1,
       createdAt,
       updatedAt,
     );
