@@ -20,6 +20,7 @@ import { BullModule } from '@nestjs/bull';
 import { CrawlerModule } from '@modules/crawler/crawler.module';
 import { IRedisConfig } from '@configurations/interfaces';
 import { makeRedisConfig } from './helpers';
+import { BullInitModule } from '@modules/bullInit.module';
 
 @Module({
   imports: [
@@ -38,7 +39,6 @@ import { makeRedisConfig } from './helpers';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         const redisConfig = configService.get<IRedisConfig>('REDIS');
-
         return {
           redis: makeRedisConfig(redisConfig),
         };
@@ -51,6 +51,7 @@ import { makeRedisConfig } from './helpers';
     MangaModule,
     ChapterModule,
     CrawlerModule,
+    BullInitModule,
   ],
   controllers: [AppController],
   providers: [AppService],

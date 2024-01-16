@@ -72,13 +72,13 @@ export class ChapterManagerUseCase {
   ): Promise<Chapter> {
     const chapter = await this.handleSaveChapter(saveChapterInput);
 
-    const compeletedMapDependencies = chapter.getCompeletedMapDependencies();
+    const completedMapDependencies = chapter.getcompletedMapDependencies();
     const retryCount = chapter.getRetryCount();
     const { mangaPath } = saveChapterInput;
 
     if (
       mangaPath &&
-      !compeletedMapDependencies &&
+      !completedMapDependencies &&
       retryCount <= retrySaveDataMaxAttempts
     ) {
       chapter.setRetryCount(retryCount + 1);

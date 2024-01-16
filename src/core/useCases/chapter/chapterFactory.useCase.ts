@@ -17,7 +17,7 @@ export class ChapterFactoryUseCase {
     return manga ? { id: manga.getId(), title: manga.getTitle() } : null;
   }
 
-  private getCompeletedMapDependencies(chapterManga: IChapterManga): boolean {
+  private getcompletedMapDependencies(chapterManga: IChapterManga): boolean {
     if (!chapterManga) {
       return false;
     }
@@ -40,8 +40,8 @@ export class ChapterFactoryUseCase {
 
     const id = await this.idManagerUseCase.generateId();
 
-    const compeletedMapDependencies =
-      this.getCompeletedMapDependencies(chapterManga);
+    const completedMapDependencies =
+      this.getcompletedMapDependencies(chapterManga);
     const retryCount = 0;
 
     const newChapter = new Chapter(
@@ -53,7 +53,7 @@ export class ChapterFactoryUseCase {
       pages,
       extraData,
       completedCrawler,
-      compeletedMapDependencies,
+      completedMapDependencies,
       retryCount,
       createdAt,
       updatedAt,
@@ -77,8 +77,8 @@ export class ChapterFactoryUseCase {
 
     const manga = await this.mangaRepository.findMangaByPath(mangaPath);
     const chapterManga = this.mapChapterManga(manga);
-    const compeletedMapDependencies =
-      this.getCompeletedMapDependencies(chapterManga);
+    const completedMapDependencies =
+      this.getcompletedMapDependencies(chapterManga);
     const retryCount = currentChapter.getRetryCount();
 
     return new Chapter(
@@ -90,7 +90,7 @@ export class ChapterFactoryUseCase {
       pages,
       extraData,
       completedCrawler,
-      compeletedMapDependencies,
+      completedMapDependencies,
       retryCount,
       createdAt,
       updatedAt,

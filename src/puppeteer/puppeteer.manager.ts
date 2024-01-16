@@ -132,7 +132,7 @@ export class PuppeteerManager implements IPuppeteerManager {
         const item = $('a', el);
         const href = item.attr('href');
         if (href.startsWith('http')) {
-          genres.push(href);
+          genres.push(new URL(href).pathname);
           // genres.push({
           //   title: item.text(),
           //   url: href,
@@ -156,10 +156,10 @@ export class PuppeteerManager implements IPuppeteerManager {
             });
           if (href.startsWith('http')) {
             chapters.push({
-              mangaPath: config.url,
+              mangaPath: new URL(config.url).pathname,
               order: parseFloat(item.attr('data-chapter')),
               // title: item.text().trim(),
-              path: href,
+              path: new URL(href).pathname,
               extraData: extraData,
             });
           }
@@ -167,7 +167,7 @@ export class PuppeteerManager implements IPuppeteerManager {
 
       const info: ISaveMangaInput = {
         // currentTime: Date.now(),
-        path: config.url,
+        path: new URL(config.url).pathname,
         title: title.text().trim(),
         subTitle: nameOther.text().trim(),
         genrePaths: genres,

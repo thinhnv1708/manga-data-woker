@@ -52,13 +52,13 @@ export class MangaManagerUseCase {
   ): Promise<Manga> {
     const manga = await this.handleSaveManga(saveMangaInput);
 
-    const compeletedMapDependencies = manga.getCompeletedMapDependencies();
+    const completedMapDependencies = manga.getcompletedMapDependencies();
     const retryCount = manga.getRetryCount();
     const { genrePaths } = saveMangaInput;
 
     if (
       genrePaths?.length > 0 &&
-      !compeletedMapDependencies &&
+      !completedMapDependencies &&
       retryCount <= retrySaveDataMaxAttempts
     ) {
       manga.setRetryCount(retryCount + 1);

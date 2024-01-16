@@ -36,7 +36,7 @@ export class Chapter extends Document {
   completedCrawler: boolean;
 
   @Prop({ type: Boolean })
-  compeletedMapDependencies: boolean;
+  completedMapDependencies: boolean;
 
   @Prop({ type: Number })
   retryCount: number;

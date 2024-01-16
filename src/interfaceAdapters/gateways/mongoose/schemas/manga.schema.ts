@@ -42,7 +42,7 @@ export class Manga extends Document {
   status: string;
 
   @Prop({ type: Boolean })
-  compeletedMapDependencies: boolean;
+  completedMapDependencies: boolean;
 
   @Prop({ type: Number })
   retryCount: number;

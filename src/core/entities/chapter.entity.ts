@@ -30,7 +30,7 @@ export class Chapter {
     pages: IPage[],
     extraData: string[],
     compeletedCrawler: boolean,
-    compeletedMapDependencies: boolean,
+    completedMapDependencies: boolean,
     retryCount: number,
     createdAt: Date,
     updatedAt: Date,
@@ -43,7 +43,7 @@ export class Chapter {
       .setPages(pages)
       .setExtraData(extraData)
       .setCompeletedCrawler(compeletedCrawler)
-      .setCompeletedMapDependencies(compeletedMapDependencies)
+      .setcompletedMapDependencies(completedMapDependencies)
       .setRetryCount(retryCount)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
@@ -121,12 +121,12 @@ export class Chapter {
     return this;
   }
 
-  getCompeletedMapDependencies(): boolean {
+  getcompletedMapDependencies(): boolean {
     return this.compeletedCrawler;
   }
 
-  setCompeletedMapDependencies(compeletedMapDependencies: boolean): Chapter {
-    this.compeletedCrawler = compeletedMapDependencies;
+  setcompletedMapDependencies(completedMapDependencies: boolean): Chapter {
+    this.compeletedCrawler = completedMapDependencies;
     return this;
   }
 

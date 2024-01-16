@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { AbstractHandleMangaDataGatewayAdapter } from '@core/abstracts';
 import { Injectable } from '@nestjs/common';
 import { PuppeteerManager } from 'src/puppeteer/puppeteer.manager';
+import { getSource } from 'src/utils/source.util';
 // const puppeteerManger = PuppeteerManager.getInstance();
 
 @Injectable()
@@ -14,7 +16,7 @@ export class CrawlerService {
   async handleCrawlGenres() {
     const puppeteerManger = await PuppeteerManager.getInstance();
     const genres = await puppeteerManger.getGenres({
-      url: 'https://www.toptruyenhot.co/tim-truyen',
+      url: getSource('/tim-truyen'),
     });
     await Promise.all(
       genres.map((genre) =>
@@ -28,7 +30,6 @@ export class CrawlerService {
     const mangaDescription = await puppeteerManger.getDescriptionManga({
       url: config.url,
     });
-    console.log('mangaDescription0', mangaDescription);
     if (mangaDescription?.manga) {
       try {
         await this.handleMangaDataGatewayAdapter.handleSaveManga(
@@ -37,7 +38,6 @@ export class CrawlerService {
       } catch (error) {}
 
       try {
-        console.log('mangaDescription1', mangaDescription);
         Promise.all(
           mangaDescription.chapters.map((chapter) =>
             this.handleMangaDataGatewayAdapter.handleSaveChapter(chapter),
