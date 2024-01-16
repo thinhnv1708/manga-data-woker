@@ -106,7 +106,9 @@ export class MangaRepository implements AbstractMangaRepository {
     const skip = (newPage - 1) * limit;
 
     const mangaDocuments = await this.model
-      .find()
+      .find({
+        $or: [{ title: { $exists: false } }, { title: { $in: [null, ''] } }],
+      })
       .skip(skip)
       .limit(newLimit)
       .select({ path: 1 })
@@ -116,7 +118,11 @@ export class MangaRepository implements AbstractMangaRepository {
   }
 
   async findTotalMangaPathsMissingTitle(): Promise<number> {
-    const totalDocuments = await this.model.countDocuments().lean();
+    const totalDocuments = await this.model
+      .countDocuments({
+        $or: [{ title: { $exists: false } }, { title: { $in: [null, ''] } }],
+      })
+      .lean();
 
     return totalDocuments;
   }
