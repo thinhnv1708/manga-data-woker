@@ -38,7 +38,7 @@ export class CrawlerService {
       } catch (error) {}
 
       try {
-        Promise.all(
+        await Promise.all(
           mangaDescription.chapters.map((chapter) =>
             this.handleMangaDataGatewayAdapter.handleSaveChapter(chapter),
           ),

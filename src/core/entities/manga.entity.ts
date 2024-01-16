@@ -45,7 +45,7 @@ export class Manga {
       .setGenres(genres)
       .setTotalChapter(totalChapter)
       .setStatus(status)
-      .setcompletedMapDependencies(completedMapDependencies)
+      .setCompletedMapDependencies(completedMapDependencies)
       .setRetryCount(retryCount)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
@@ -146,14 +146,12 @@ export class Manga {
     return this.status;
   }
 
-  public setcompletedMapDependencies(
-    completedMapDependencies: boolean,
-  ): Manga {
+  public setCompletedMapDependencies(completedMapDependencies: boolean): Manga {
     this.completedMapDependencies = completedMapDependencies;
     return this;
   }
 
-  public getcompletedMapDependencies(): boolean {
+  public getCompletedMapDependencies(): boolean {
     return this.completedMapDependencies;
   }
 

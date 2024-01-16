@@ -22,7 +22,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const pages = chapter.getPages();
     const extraData = chapter.getExtraData();
     const completedCrawler = chapter.getCompeletedCrawler();
-    const completedMapDependencies = chapter.getcompletedMapDependencies();
+    const completedMapDependencies = chapter.getCompletedMapDependencies();
     const retryCount = chapter.getRetryCount();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
@@ -51,7 +51,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const pages = chapter.getPages();
     const extraData = chapter.getExtraData();
     const completedCrawler = chapter.getCompeletedCrawler();
-    const completedMapDependencies = chapter.getcompletedMapDependencies();
+    const completedMapDependencies = chapter.getCompletedMapDependencies();
     const retryCount = chapter.getRetryCount();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();

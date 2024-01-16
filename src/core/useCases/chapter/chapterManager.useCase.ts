@@ -72,7 +72,7 @@ export class ChapterManagerUseCase {
   ): Promise<Chapter> {
     const chapter = await this.handleSaveChapter(saveChapterInput);
 
-    const completedMapDependencies = chapter.getcompletedMapDependencies();
+    const completedMapDependencies = chapter.getCompletedMapDependencies();
     const retryCount = chapter.getRetryCount();
     const { mangaPath } = saveChapterInput;
 

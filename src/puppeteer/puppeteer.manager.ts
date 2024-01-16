@@ -108,9 +108,7 @@ export class PuppeteerManager implements IPuppeteerManager {
   } | null> {
     let page: puppeteer.Page | null = null;
     try {
-      console.log('cdcdcdd');
       page = await this.openNewPage({ url: config.url });
-      console.log('cdcdcdd');
       // await page.screenshot()
       const content = await page.content();
       const $ = cheerio.load(content);
@@ -120,7 +118,6 @@ export class PuppeteerManager implements IPuppeteerManager {
         '.content-left .name-other .detail-info',
         comicDetail,
       );
-      console.log('cdcdcd');
       // const authors = $('.content-left .author .detail-info', comicDetail);
       const status = $('.content-left .status .detail-info', comicDetail);
       const category = $('.content-left .category .detail-info', comicDetail);
@@ -139,8 +136,6 @@ export class PuppeteerManager implements IPuppeteerManager {
           // });
         }
       });
-
-      console.log('cdcdcd1');
 
       $('#list-chapter-dt nav ul', comicDetail)
         .find('li .chapters')
@@ -177,7 +172,7 @@ export class PuppeteerManager implements IPuppeteerManager {
         thumbnail: imageInfo.attr('src') || '',
       };
 
-      console.log(chapters);
+      // console.log(chapters);
 
       return {
         manga: info,

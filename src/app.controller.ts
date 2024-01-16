@@ -40,9 +40,12 @@ export class AppController {
 
   @Get('testListManga')
   async testListManga(): Promise<any> {
-    const data = await this.mangaRepository.findMangaPathsMissingTitle(1, 100);
-    data?.map((path) =>
-      this.bullAddJobAdapter.addMangaJob('manga-crawler', { id: path }),
+    const data = await this.mangaRepository.findMangaPathsMissingTitle(1, 200);
+    data?.map((path, i) =>
+      this.bullAddJobAdapter.addMangaJob('manga-crawler', {
+        id: path,
+        index: i,
+      }),
     );
     return data;
   }

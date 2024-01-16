@@ -9,12 +9,13 @@ const { BULL_QUEUE_NAMES } = COMMONS;
 export class MangaBullConsumer {
   constructor(private crawlerService: CrawlerService) {}
   @Process()
-  async handle(job: Job) {
+  handle(job: Job) {
     myQueue.enqueue(
       createAction({
-        promiseCallback: this.crawlerService.handleCrawlManga({
-          url: getSource(job.data?.id),
-        }),
+        promiseCallback: async () =>
+          this.crawlerService.handleCrawlManga({
+            url: getSource(job.data?.id),
+          }),
         onSuccess: () => {
           console.log('SuccessJob:', job.data);
         },
@@ -32,7 +33,7 @@ class ActionQueue {
   running: number;
 
   constructor(maxConcurrent) {
-    this.maxConcurrent = maxConcurrent || 5;
+    this.maxConcurrent = maxConcurrent || 7;
     this.queue = [];
     this.running = 0;
   }
@@ -56,16 +57,22 @@ class ActionQueue {
   }
 }
 
-const myQueue = new ActionQueue(5);
+const myQueue = new ActionQueue(7);
 
 const createAction = ({ promiseCallback, onSuccess, onError }) => {
-  return async function (callback) {
-    try {
-      await promiseCallback();
-      onSuccess();
-      callback();
-    } catch (error) {
-      onError();
-    }
+  return function (callback) {
+    promiseCallback()
+      .then(() => {
+        onSuccess();
+        setTimeout(() => {
+          callback();
+        }, 100);
+      })
+      .catch(() => {
+        onError();
+        setTimeout(() => {
+          callback();
+        }, 100);
+      });
   };
 };
