@@ -42,8 +42,8 @@ export class Chapter {
       .setOrder(order)
       .setPages(pages)
       .setExtraData(extraData)
-      .setcompletedCrawler(completedCrawler)
-      .setcompletedMapDependencies(completedMapDependencies)
+      .setCompletedCrawler(completedCrawler)
+      .setCompletedMapDependencies(completedMapDependencies)
       .setRetryCount(retryCount)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
@@ -112,20 +112,20 @@ export class Chapter {
     return this;
   }
 
-  getcompletedCrawler(): boolean {
+  getCompletedCrawler(): boolean {
     return this.completedCrawler;
   }
 
-  setcompletedCrawler(completedCrawler: boolean): Chapter {
+  setCompletedCrawler(completedCrawler: boolean): Chapter {
     this.completedCrawler = completedCrawler;
     return this;
   }
 
-  getcompletedMapDependencies(): boolean {
+  getCompletedMapDependencies(): boolean {
     return this.completedCrawler;
   }
 
-  setcompletedMapDependencies(completedMapDependencies: boolean): Chapter {
+  setCompletedMapDependencies(completedMapDependencies: boolean): Chapter {
     this.completedCrawler = completedMapDependencies;
     return this;
   }
