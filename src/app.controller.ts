@@ -33,21 +33,35 @@ export class AppController {
 
   @Get('testManga')
   async testManga(): Promise<any> {
-    this.crawlerService.handleCrawlManga({
-      url: getSource('/truyen-tranh/dao-hai-tac/77'),
-    });
+    // this.crawlerService.handleCrawlManga({
+    //   url: getSource('/truyen-tranh/dao-hai-tac/77'),
+    // });
+    const data = await this.mangaRepository.findTotalMangaPathsMissingTitle();
+    return data;
   }
 
   @Get('testListManga')
   async testListManga(): Promise<any> {
-    const data = await this.mangaRepository.findMangaPathsMissingTitle(1, 200);
-    data?.map((path, i) =>
+    const data1 = await this.mangaRepository.findMangaPathsMissingTitle(
+      1,
+      1000,
+    );
+    const data2 = await this.mangaRepository.findMangaPathsMissingTitle(
+      2,
+      1000,
+    );
+    const data3 = await this.mangaRepository.findMangaPathsMissingTitle(
+      3,
+      1000,
+    );
+
+    [...data1, ...data2, ...data3]?.map((path, i) =>
       this.bullAddJobAdapter.addMangaJob('manga-crawler', {
         id: path,
         index: i,
       }),
     );
-    return data;
+    return [];
   }
 
   // @Get('initCreateFullManga')
