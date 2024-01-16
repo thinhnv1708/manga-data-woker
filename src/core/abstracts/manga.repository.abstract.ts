@@ -8,4 +8,5 @@ export abstract class AbstractMangaRepository {
     page: number,
     limit: number,
   ): Promise<string[]>;
+  abstract findTotalMangaPathsMissingTitle(): Promise<number>;
 }

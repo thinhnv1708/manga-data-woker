@@ -114,4 +114,10 @@ export class MangaRepository implements AbstractMangaRepository {
 
     return mangaDocuments.map((mangaDocument) => mangaDocument.path);
   }
+
+  async findTotalMangaPathsMissingTitle(): Promise<number> {
+    const totalDocuments = await this.model.countDocuments().lean();
+
+    return totalDocuments;
+  }
 }
