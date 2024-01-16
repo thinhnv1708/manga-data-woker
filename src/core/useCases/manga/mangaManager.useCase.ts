@@ -54,8 +54,13 @@ export class MangaManagerUseCase {
 
     const compeletedMapDependencies = manga.getCompeletedMapDependencies();
     const retryCount = manga.getRetryCount();
+    const { genrePaths } = saveMangaInput;
 
-    if (!compeletedMapDependencies && retryCount <= retrySaveDataMaxAttempts) {
+    if (
+      genrePaths?.length > 0 &&
+      !compeletedMapDependencies &&
+      retryCount <= retrySaveDataMaxAttempts
+    ) {
       manga.setRetryCount(retryCount + 1);
 
       await this.mangaRepository.updateManga(manga);
