@@ -118,7 +118,7 @@ export class MangaFactoryUseCase {
       totalChapter,
       status,
       completedMapDependencies,
-      retryCount,
+      retryCount + 1,
       createdAt,
       updatedAt,
     );

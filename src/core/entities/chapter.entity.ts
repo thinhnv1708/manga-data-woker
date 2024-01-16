@@ -16,7 +16,8 @@ export class Chapter {
   private order: number;
   private pages: IPage[];
   private extraData: string[];
-  private compeletedCrawler: boolean;
+  private completedCrawler: boolean;
+  private completedMapDependencies: boolean;
   private retryCount: number;
   private createdAt: Date;
   private updatedAt: Date;
@@ -29,7 +30,7 @@ export class Chapter {
     order: number,
     pages: IPage[],
     extraData: string[],
-    compeletedCrawler: boolean,
+    completedCrawler: boolean,
     completedMapDependencies: boolean,
     retryCount: number,
     createdAt: Date,
@@ -42,7 +43,7 @@ export class Chapter {
       .setOrder(order)
       .setPages(pages)
       .setExtraData(extraData)
-      .setCompeletedCrawler(compeletedCrawler)
+      .setCompletedCrawler(completedCrawler)
       .setCompletedMapDependencies(completedMapDependencies)
       .setRetryCount(retryCount)
       .setCreatedAt(createdAt)
@@ -53,7 +54,7 @@ export class Chapter {
     return this.id;
   }
 
-  setId(id: number): Chapter {
+  setId(id: number): this {
     this.id = id;
     return this;
   }
@@ -62,7 +63,7 @@ export class Chapter {
     return this.path;
   }
 
-  setPath(path: string): Chapter {
+  setPath(path: string): this {
     this.path = path;
     return this;
   }
@@ -71,7 +72,7 @@ export class Chapter {
     return this.mangaPath;
   }
 
-  setMangaPath(mangaPath: string): Chapter {
+  setMangaPath(mangaPath: string): this {
     this.mangaPath = mangaPath;
     return this;
   }
@@ -80,7 +81,7 @@ export class Chapter {
     return this.manga;
   }
 
-  setManga(manga: IChapterManga): Chapter {
+  setManga(manga: IChapterManga): this {
     this.manga = manga;
     return this;
   }
@@ -89,7 +90,7 @@ export class Chapter {
     return this.order;
   }
 
-  setOrder(order: number): Chapter {
+  setOrder(order: number): this {
     this.order = order;
     return this;
   }
@@ -98,7 +99,7 @@ export class Chapter {
     return this.pages;
   }
 
-  setPages(pages: IPage[]): Chapter {
+  setPages(pages: IPage[]): this {
     this.pages = pages;
     return this;
   }
@@ -107,26 +108,26 @@ export class Chapter {
     return this.extraData;
   }
 
-  setExtraData(extraData: string[]): Chapter {
+  setExtraData(extraData: string[]): this {
     this.extraData = extraData;
     return this;
   }
 
-  getCompeletedCrawler(): boolean {
-    return this.compeletedCrawler;
+  getCompletedCrawler(): boolean {
+    return this.completedCrawler;
   }
 
-  setCompeletedCrawler(compeletedCrawler: boolean): Chapter {
-    this.compeletedCrawler = compeletedCrawler;
+  setCompletedCrawler(completedCrawler: boolean): this {
+    this.completedCrawler = completedCrawler;
     return this;
   }
 
   getCompletedMapDependencies(): boolean {
-    return this.compeletedCrawler;
+    return this.completedMapDependencies;
   }
 
-  setCompletedMapDependencies(completedMapDependencies: boolean): Chapter {
-    this.compeletedCrawler = completedMapDependencies;
+  setCompletedMapDependencies(completedMapDependencies: boolean): this {
+    this.completedMapDependencies = completedMapDependencies;
     return this;
   }
 
@@ -134,7 +135,7 @@ export class Chapter {
     return this.retryCount;
   }
 
-  setRetryCount(retryCount: number): Chapter {
+  setRetryCount(retryCount: number): this {
     this.retryCount = retryCount;
     return this;
   }
@@ -143,7 +144,7 @@ export class Chapter {
     return this.createdAt;
   }
 
-  setCreatedAt(createdAt: Date): Chapter {
+  setCreatedAt(createdAt: Date): this {
     this.createdAt = createdAt;
     return this;
   }
@@ -152,7 +153,7 @@ export class Chapter {
     return this.updatedAt;
   }
 
-  setUpdatedAt(updatedAt: Date): Chapter {
+  setUpdatedAt(updatedAt: Date): this {
     this.updatedAt = updatedAt;
     return this;
   }

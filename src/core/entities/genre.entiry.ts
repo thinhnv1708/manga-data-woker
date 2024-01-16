@@ -23,7 +23,7 @@ export class Genre {
     return this.id;
   }
 
-  setId(id: number): Genre {
+  setId(id: number): this {
     this.id = id;
     return this;
   }
@@ -32,7 +32,7 @@ export class Genre {
     return this.path;
   }
 
-  setPath(path: string): Genre {
+  setPath(path: string): this {
     this.path = path;
     return this;
   }
@@ -41,7 +41,7 @@ export class Genre {
     return this.title;
   }
 
-  setTitle(title: string): Genre {
+  setTitle(title: string): this {
     this.title = title;
     return this;
   }
@@ -50,7 +50,7 @@ export class Genre {
     return this.createdAt;
   }
 
-  setCreatedAt(createdAt: Date): Genre {
+  setCreatedAt(createdAt: Date): this {
     this.createdAt = createdAt;
     return this;
   }
@@ -59,7 +59,7 @@ export class Genre {
     return this.updatedAt;
   }
 
-  setUpdatedAt(updatedAt: Date): Genre {
+  setUpdatedAt(updatedAt: Date): this {
     this.updatedAt = updatedAt;
     return this;
   }

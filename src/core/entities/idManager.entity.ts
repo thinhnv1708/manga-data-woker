@@ -10,7 +10,7 @@ export class IdManager {
     return this.entityName;
   }
 
-  setEntityName(entityName: string): IdManager {
+  setEntityName(entityName: string): this {
     this.entityName = entityName;
     return this;
   }
@@ -19,7 +19,7 @@ export class IdManager {
     return this.currentId;
   }
 
-  private setCurrentId(currentId: number): IdManager {
+  private setCurrentId(currentId: number): this {
     this.currentId = currentId;
     return this;
   }

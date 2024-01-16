@@ -71,7 +71,7 @@ export class ChapterFactoryUseCase {
     const id = currentChapter.getId();
     const path = currentChapter.getPath();
     const pages = currentChapter.getPages();
-    const completedCrawler = currentChapter.getCompeletedCrawler();
+    const completedCrawler = currentChapter.getCompletedCrawler();
     const createdAt = currentChapter.getCreatedAt();
     const updatedAt = new Date();
 
@@ -91,7 +91,7 @@ export class ChapterFactoryUseCase {
       extraData,
       completedCrawler,
       completedMapDependencies,
-      retryCount,
+      retryCount + 1,
       createdAt,
       updatedAt,
     );
