@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ChapterDocument, Chapter as MongooseChapter } from '../schemas';
+import { getPageLimit } from 'src/utils';
 
 @Injectable()
 export class ChapterRepository implements AbstractChapterRepository {
@@ -101,13 +102,31 @@ export class ChapterRepository implements AbstractChapterRepository {
     return this.mapper.toEntity(chapterDocument);
   }
 
-  async findCompletedCrawlerChapters(
-    NumberOfLastChapters: number = 0,
+  async findTotalNotCompletedMapDependenciesChapters(): Promise<number> {
+    const totalDocuments = await this.model
+      .countDocuments({ completedMapDependencies: false })
+      .lean();
+
+    return totalDocuments;
+  }
+
+  async findNotCompletedMapDependenciesChapters(
+    page: number,
+    limit: number,
   ): Promise<Chapter[]> {
-    return;
-    // const chapterDocuments = await this.model
-    //   .find()
-    //   .sort({ order: -1 })
-    //   .limit(NumberOfLastChapters);
+    const [newPage, newLimit] = getPageLimit(page, limit);
+    const skip = (newPage - 1) * limit;
+
+    const chapterDocuments = await this.model
+      .find({
+        completedMapDependencies: false,
+      })
+      .skip(skip)
+      .limit(newLimit)
+      .lean();
+
+    return chapterDocuments.map((chapterDocument) =>
+      this.mapper.toEntity(chapterDocument),
+    );
   }
 }

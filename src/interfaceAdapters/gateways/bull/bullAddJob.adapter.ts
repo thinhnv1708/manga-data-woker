@@ -31,19 +31,19 @@ export class BullAddJobAdapter implements AbstractAddJobAdapter {
   async addGenreJob(jobName: string, data: any): Promise<void> {}
   async addChapterJob(jobName: string, data: any): Promise<void> {}
 
-  async retrySaveMangaJob(saveMangaInput: ISaveMangaInput): Promise<void> {
-    await this.retrySaveMangaQueue.add(saveMangaInput, {
-      removeOnComplete: true,
-      delay: this.retrySaveMangaDelayMs,
-    });
-  }
+  // async retrySaveMangaJob(saveMangaInput: ISaveMangaInput): Promise<void> {
+  //   await this.retrySaveMangaQueue.add(saveMangaInput, {
+  //     removeOnComplete: true,
+  //     delay: this.retrySaveMangaDelayMs,
+  //   });
+  // }
 
-  async retrySaveChapterJob(
-    saveChapterInput: ISaveChapterInput,
-  ): Promise<void> {
-    await this.retrySaveChapterQueue.add(saveChapterInput, {
-      removeOnComplete: true,
-      delay: this.retrySaveMangaDelayMs,
-    });
+  async retrySaveChapterJob(page: number, limit: number): Promise<void> {
+    await this.retrySaveChapterQueue.add(
+      { page, limit },
+      {
+        removeOnComplete: true,
+      },
+    );
   }
 }
