@@ -74,8 +74,13 @@ export class ChapterManagerUseCase {
 
     const compeletedMapDependencies = chapter.getCompeletedMapDependencies();
     const retryCount = chapter.getRetryCount();
+    const { mangaPath } = saveChapterInput;
 
-    if (!compeletedMapDependencies && retryCount <= retrySaveDataMaxAttempts) {
+    if (
+      mangaPath &&
+      !compeletedMapDependencies &&
+      retryCount <= retrySaveDataMaxAttempts
+    ) {
       chapter.setRetryCount(retryCount + 1);
       await this.addJobAdapter.retrySaveChapterJob(saveChapterInput);
     }
