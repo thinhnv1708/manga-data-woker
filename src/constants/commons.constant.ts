@@ -14,3 +14,5 @@ export const BULL_QUEUE_NAMES = {
   RETRY_SAVE_MANGA: 'retrySaveManga',
   RETRY_SAVE_CHAPTER: 'retrySaveChapter',
 };
+
+export const MANGA_HIDDEN_STATUS = 'hidden';

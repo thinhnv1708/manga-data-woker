@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MangaDocument, Manga as MongooseManga } from '../schemas';
 import { getPageLimit } from 'src/utils';
+import { COMMONS } from '@constants/index';
 
 @Injectable()
 export class MangaRepository implements AbstractMangaRepository {
@@ -13,7 +14,9 @@ export class MangaRepository implements AbstractMangaRepository {
     @InjectModel(MongooseManga.name)
     private readonly model: Model<MangaDocument>,
     private readonly mapper: MangaMapper,
-  ) {}
+  ) {
+    this.findTotalMangaPathsMissingTitle().then(console.log);
+  }
 
   async createManga(manga: Manga): Promise<Manga> {
     const id = manga.getId();
@@ -22,6 +25,7 @@ export class MangaRepository implements AbstractMangaRepository {
     const subTitle = manga.getSubTitle();
     const thumbnail = manga.getThumbnail();
     const description = manga.getDescription();
+    const genrePaths = manga.getGenrePaths();
     const genres = manga.getGenres();
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
@@ -37,6 +41,7 @@ export class MangaRepository implements AbstractMangaRepository {
       subTitle,
       thumbnail,
       description,
+      genrePaths,
       genres,
       totalChapter,
       completedMapDependencies,
@@ -55,6 +60,7 @@ export class MangaRepository implements AbstractMangaRepository {
     const subTitle = manga.getSubTitle();
     const thumbnail = manga.getThumbnail();
     const description = manga.getDescription();
+    const genrePaths = manga.getGenrePaths();
     const genres = manga.getGenres();
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
@@ -71,6 +77,7 @@ export class MangaRepository implements AbstractMangaRepository {
           subTitle,
           thumbnail,
           description,
+          genrePaths,
           genres,
           totalChapter,
           status,
@@ -107,6 +114,7 @@ export class MangaRepository implements AbstractMangaRepository {
 
     const mangaDocuments = await this.model
       .find({
+        status: { $ne: COMMONS.MANGA_HIDDEN_STATUS },
         $or: [{ title: { $exists: false } }, { title: { $in: [null, ''] } }],
       })
       .skip(skip)
@@ -120,6 +128,7 @@ export class MangaRepository implements AbstractMangaRepository {
   async findTotalMangaPathsMissingTitle(): Promise<number> {
     const totalDocuments = await this.model
       .countDocuments({
+        status: { $ne: COMMONS.MANGA_HIDDEN_STATUS },
         $or: [{ title: { $exists: false } }, { title: { $in: [null, ''] } }],
       })
       .lean();

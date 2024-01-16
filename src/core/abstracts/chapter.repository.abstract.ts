@@ -9,7 +9,9 @@ export abstract class AbstractChapterRepository {
     pages: IPage[],
     completedCrawler: boolean,
   ): Promise<Chapter>;
-  abstract findCompletedCrawlerChapters(
-    NumberOfLastChapters?: number,
+  abstract findTotalNotCompletedMapDependenciesChapters(): Promise<number>;
+  abstract findNotCompletedMapDependenciesChapters(
+    page: number,
+    limit: number,
   ): Promise<Chapter[]>;
 }
