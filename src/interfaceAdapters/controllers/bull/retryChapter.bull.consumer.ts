@@ -15,7 +15,7 @@ export class RetryChapterBullConsumer {
   ): Promise<void> {
     const { page, limit } = job.data;
 
-    await this.chapterRetryUseCase.handleRetry(page, limit);
+    // await this.chapterRetryUseCase.handleRetry(page, limit);
 
     return done();
   }

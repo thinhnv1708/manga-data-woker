@@ -13,7 +13,11 @@ export class ChapterRetryUseCase {
     private readonly handleMangaDataGatewayAdapter: AbstractHandleMangaDataGatewayAdapter,
   ) {}
 
-  async handleRetry(page: number, limit: number): Promise<void> {
+  async handleRetry(
+    page: number,
+    limit: number,
+    retryVersion: number,
+  ): Promise<void> {
     const chapters =
       await this.chapterRepository.findNotCompletedMapDependenciesChapters(
         page,
@@ -43,7 +47,5 @@ export class ChapterRetryUseCase {
     if (saveChaptersData.length < currentIndex) {
       return;
     }
-
-    
   }
 }
