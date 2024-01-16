@@ -55,20 +55,24 @@ export class PuppeteerManager implements IPuppeteerManager {
 
   public async openNewPage(config: { url: string }): Promise<puppeteer.Page> {
     const page = await this.browser.newPage();
-    await page.goto(config.url);
-    await page.setViewport({
-      width: 1280,
-      height: 1520,
-      deviceScaleFactor: 1,
-    });
-    await page.setUserAgent(
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
-    );
-    await page.goto(config.url, {
-      waitUntil: 'networkidle2',
-    });
-    await page.waitForSelector('main[class="main"]');
-    return page;
+    try {
+      await page.goto(config.url);
+      await page.setViewport({
+        width: 1280,
+        height: 1520,
+        deviceScaleFactor: 1,
+      });
+      await page.setUserAgent(
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
+      );
+      await page.goto(config.url, {
+        waitUntil: 'networkidle2',
+      });
+      await page.waitForSelector('main[class="main"]');
+      return page;
+    } catch (error) {
+      page.close();
+    }
   }
 
   public async getGenres(config: { url: string }) {
@@ -120,13 +124,13 @@ export class PuppeteerManager implements IPuppeteerManager {
         return {
           manga: {
             path: new URL(config.url).pathname,
-            title: '',
-            subTitle: '',
+            title: null,
+            subTitle: null,
             genrePaths: [],
             status: MANGA_HIDDEN_STATUS,
-            description: '',
-            totalChapter: 0,
-            thumbnail: '',
+            description: null,
+            totalChapter: null,
+            thumbnail: null,
           },
           chapters: [],
         };

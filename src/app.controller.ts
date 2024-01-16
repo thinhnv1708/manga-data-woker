@@ -42,7 +42,10 @@ export class AppController {
 
   @Get('testListManga')
   async testListManga(): Promise<any> {
-    const data1 = await this.mangaRepository.findMangaPathsMissingTitle(1, 10);
+    const data1 = await this.mangaRepository.findMangaPathsMissingTitle(
+      1,
+      1000,
+    );
     // const data2 = await this.mangaRepository.findMangaPathsMissingTitle(
     //   2,
     //   1000,
