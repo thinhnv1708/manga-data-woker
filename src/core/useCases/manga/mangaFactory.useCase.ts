@@ -22,7 +22,7 @@ export class MangaFactoryUseCase {
       .filter((genre) => genre.title);
   }
 
-  private getCompeletedMapDependencies(
+  private getcompletedMapDependencies(
     genrePaths: string[],
     genresMapped: IMangaGenre[],
   ): boolean {
@@ -52,7 +52,7 @@ export class MangaFactoryUseCase {
 
     const mangaGenres = this.mapGenreEntityToMangaGenre(genres);
 
-    const compeletedMapDependencies = this.getCompeletedMapDependencies(
+    const completedMapDependencies = this.getcompletedMapDependencies(
       genrePaths,
       mangaGenres,
     );
@@ -70,7 +70,7 @@ export class MangaFactoryUseCase {
       mangaGenres,
       totalChapter,
       status,
-      compeletedMapDependencies,
+      completedMapDependencies,
       retryCount,
       createdAt,
       updatedAt,
@@ -99,7 +99,7 @@ export class MangaFactoryUseCase {
     const updatedAt = new Date();
     const mangaGenres = this.mapGenreEntityToMangaGenre(genres);
 
-    const compeletedMapDependencies = this.getCompeletedMapDependencies(
+    const completedMapDependencies = this.getcompletedMapDependencies(
       genrePaths,
       mangaGenres,
     );
@@ -117,7 +117,7 @@ export class MangaFactoryUseCase {
       mangaGenres,
       totalChapter,
       status,
-      compeletedMapDependencies,
+      completedMapDependencies,
       retryCount + 1,
       createdAt,
       updatedAt,

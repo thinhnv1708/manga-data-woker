@@ -16,7 +16,7 @@ export class Chapter {
   private order: number;
   private pages: IPage[];
   private extraData: string[];
-  private compeletedCrawler: boolean;
+  private completedCrawler: boolean;
   private retryCount: number;
   private createdAt: Date;
   private updatedAt: Date;
@@ -29,8 +29,8 @@ export class Chapter {
     order: number,
     pages: IPage[],
     extraData: string[],
-    compeletedCrawler: boolean,
-    compeletedMapDependencies: boolean,
+    completedCrawler: boolean,
+    completedMapDependencies: boolean,
     retryCount: number,
     createdAt: Date,
     updatedAt: Date,
@@ -42,8 +42,8 @@ export class Chapter {
       .setOrder(order)
       .setPages(pages)
       .setExtraData(extraData)
-      .setCompeletedCrawler(compeletedCrawler)
-      .setCompeletedMapDependencies(compeletedMapDependencies)
+      .setcompletedCrawler(completedCrawler)
+      .setcompletedMapDependencies(completedMapDependencies)
       .setRetryCount(retryCount)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
@@ -112,21 +112,21 @@ export class Chapter {
     return this;
   }
 
-  getCompeletedCrawler(): boolean {
-    return this.compeletedCrawler;
+  getcompletedCrawler(): boolean {
+    return this.completedCrawler;
   }
 
-  setCompeletedCrawler(compeletedCrawler: boolean): Chapter {
-    this.compeletedCrawler = compeletedCrawler;
+  setcompletedCrawler(completedCrawler: boolean): Chapter {
+    this.completedCrawler = completedCrawler;
     return this;
   }
 
-  getCompeletedMapDependencies(): boolean {
-    return this.compeletedCrawler;
+  getcompletedMapDependencies(): boolean {
+    return this.completedCrawler;
   }
 
-  setCompeletedMapDependencies(compeletedMapDependencies: boolean): Chapter {
-    this.compeletedCrawler = compeletedMapDependencies;
+  setcompletedMapDependencies(completedMapDependencies: boolean): Chapter {
+    this.completedCrawler = completedMapDependencies;
     return this;
   }
 
