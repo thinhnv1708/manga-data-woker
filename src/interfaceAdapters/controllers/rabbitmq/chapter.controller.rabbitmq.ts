@@ -1,4 +1,3 @@
-import { IAppConfig } from '@configurations/interfaces';
 import { COMMONS, LOGGER } from '@constants/index';
 import { AbstractLogger } from '@core/abstracts';
 import {
@@ -11,7 +10,6 @@ import {
   updatePagesInChapterJoiSchema,
 } from '@interfaceAdapters/presenters/joi';
 import { Controller } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { MessagePattern } from '@nestjs/microservices';
 import { buildContextLog, buildLogMessage } from 'src/utils';
 const { RABBITMQ_PATTERN } = COMMONS;
@@ -20,14 +18,12 @@ const { LOG_CONTEXT } = LOGGER;
 @Controller()
 export class ChapterControllerRabbitmq {
   constructor(
-    private readonly configService: ConfigService,
     private readonly chapterManagerUseCase: ChapterManagerUseCase,
     private readonly logger: AbstractLogger,
   ) {}
 
   @MessagePattern(RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA)
   async handleChapterData(data: ISaveChapterInput): Promise<void> {
-    const appConfig = this.configService.get<IAppConfig>('APP_CONFIG');
     this.logger.log(
       buildLogMessage(
         `Pattern ${RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA}`,
@@ -56,9 +52,8 @@ export class ChapterControllerRabbitmq {
       return;
     }
 
-    await this.chapterManagerUseCase.afterHandleSaveChapter(
+    await this.chapterManagerUseCase.handleSaveChapter(
       <ISaveChapterInput>value,
-      appConfig.RETRY_SAVE_DATA_MAX_ATTEMPTS,
     );
   }
 

@@ -1,5 +1,6 @@
 import { COMMONS } from '@constants/index';
 import { AbstractAddJobAdapter } from '@core/abstracts';
+import { RetryMangaBullConsumer } from '@interfaceAdapters/controllers/bull';
 import { BullAddJobAdapter } from '@interfaceAdapters/gateways/bull';
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
@@ -12,7 +13,10 @@ import { Module } from '@nestjs/common';
       })),
     ),
   ],
-  providers: [{ provide: AbstractAddJobAdapter, useClass: BullAddJobAdapter }],
+  providers: [
+    { provide: AbstractAddJobAdapter, useClass: BullAddJobAdapter },
+    RetryMangaBullConsumer,
+  ],
   exports: [AbstractAddJobAdapter],
 })
 export class BullInitModule {}

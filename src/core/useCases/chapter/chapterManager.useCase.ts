@@ -65,26 +65,4 @@ export class ChapterManagerUseCase {
       completedCrawler,
     );
   }
-
-  async afterHandleSaveChapter(
-    saveChapterInput: ISaveChapterInput,
-    retrySaveDataMaxAttempts: number,
-  ): Promise<Chapter> {
-    const chapter = await this.handleSaveChapter(saveChapterInput);
-
-    const completedMapDependencies = chapter.getCompletedMapDependencies();
-    const retryCount = chapter.getRetryCount();
-    const { mangaPath } = saveChapterInput;
-
-    if (
-      mangaPath &&
-      !completedMapDependencies &&
-      retryCount <= retrySaveDataMaxAttempts
-    ) {
-      chapter.setRetryCount(retryCount + 1);
-      await this.addJobAdapter.retrySaveChapterJob(saveChapterInput);
-    }
-
-    return chapter;
-  }
 }

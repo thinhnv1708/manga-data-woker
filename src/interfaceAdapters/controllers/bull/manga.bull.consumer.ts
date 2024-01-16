@@ -57,7 +57,7 @@ class ActionQueue {
   }
 }
 
-const myQueue = new ActionQueue(7);
+const myQueue = new ActionQueue(15);
 
 const createAction = ({ promiseCallback, onSuccess, onError }) => {
   return function (callback) {
