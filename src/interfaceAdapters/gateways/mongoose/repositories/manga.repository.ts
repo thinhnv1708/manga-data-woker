@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MangaDocument, Manga as MongooseManga } from '../schemas';
+import { getPageLimit } from 'src/utils';
 
 @Injectable()
 export class MangaRepository implements AbstractMangaRepository {
@@ -95,5 +96,22 @@ export class MangaRepository implements AbstractMangaRepository {
     const mangaDocument = await this.model.findOne({ path }).lean();
 
     return this.mapper.toEntity(mangaDocument);
+  }
+
+  async findMangaPathsMissingTitle(
+    page: number,
+    limit: number,
+  ): Promise<string[]> {
+    const [newPage, newLimit] = getPageLimit(page, limit);
+    const skip = (newPage - 1) * limit;
+
+    const mangaDocuments = await this.model
+      .find()
+      .skip(skip)
+      .limit(newLimit)
+      .select({ path: 1 })
+      .lean();
+
+    return mangaDocuments.map((mangaDocument) => mangaDocument.path);
   }
 }
