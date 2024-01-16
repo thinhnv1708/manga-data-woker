@@ -14,4 +14,9 @@ export abstract class AbstractChapterRepository {
     page: number,
     limit: number,
   ): Promise<Chapter[]>;
+
+  abstract findTotalAndMarkRetryVersion(): Promise<{
+    total: number;
+    retryVersion: number;
+  }>;
 }

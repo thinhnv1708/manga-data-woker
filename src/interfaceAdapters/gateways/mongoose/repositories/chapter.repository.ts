@@ -129,4 +129,25 @@ export class ChapterRepository implements AbstractChapterRepository {
       this.mapper.toEntity(chapterDocument),
     );
   }
+
+  async findTotalAndMarkRetryVersion(): Promise<{
+    total: number;
+    retryVersion: number;
+  }> {
+    const markNumber = Date.now();
+
+    const result = await this.model
+      .updateMany(
+        {
+          completedMapDependencies: false,
+        },
+        { retryVersion: markNumber },
+      )
+      .lean();
+
+    return {
+      total: result.modifiedCount,
+      retryVersion: markNumber,
+    };
+  }
 }
