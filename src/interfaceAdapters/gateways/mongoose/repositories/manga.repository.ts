@@ -14,9 +14,7 @@ export class MangaRepository implements AbstractMangaRepository {
     @InjectModel(MongooseManga.name)
     private readonly model: Model<MangaDocument>,
     private readonly mapper: MangaMapper,
-  ) {
-    this.findTotalMangaPathsMissingTitle().then(console.log);
-  }
+  ) {}
 
   async createManga(manga: Manga): Promise<Manga> {
     const id = manga.getId();

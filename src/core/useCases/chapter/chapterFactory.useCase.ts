@@ -33,6 +33,7 @@ export class ChapterFactoryUseCase {
     const completedCrawler = false;
     const createdAt = new Date();
     const updatedAt = new Date();
+    const retryVerison = null;
 
     const manga = await this.mangaRepository.findMangaByPath(mangaPath);
 
@@ -55,6 +56,7 @@ export class ChapterFactoryUseCase {
       completedCrawler,
       completedMapDependencies,
       retryCount,
+      retryVerison,
       createdAt,
       updatedAt,
     );
@@ -80,6 +82,7 @@ export class ChapterFactoryUseCase {
     const completedMapDependencies =
       this.getCompletedMapDependencies(chapterManga);
     const retryCount = currentChapter.getRetryCount();
+    const retryVersion = currentChapter.getRetryVersion();
 
     return new Chapter(
       id,
@@ -92,6 +95,7 @@ export class ChapterFactoryUseCase {
       completedCrawler,
       completedMapDependencies,
       retryCount + 1,
+      retryVersion,
       createdAt,
       updatedAt,
     );
