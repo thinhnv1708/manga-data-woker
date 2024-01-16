@@ -22,6 +22,7 @@ export class MangaRepository implements AbstractMangaRepository {
     const subTitle = manga.getSubTitle();
     const thumbnail = manga.getThumbnail();
     const description = manga.getDescription();
+    const genrePaths = manga.getGenrePaths();
     const genres = manga.getGenres();
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
@@ -37,6 +38,7 @@ export class MangaRepository implements AbstractMangaRepository {
       subTitle,
       thumbnail,
       description,
+      genrePaths,
       genres,
       totalChapter,
       completedMapDependencies,
@@ -55,6 +57,7 @@ export class MangaRepository implements AbstractMangaRepository {
     const subTitle = manga.getSubTitle();
     const thumbnail = manga.getThumbnail();
     const description = manga.getDescription();
+    const genrePaths = manga.getGenrePaths();
     const genres = manga.getGenres();
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
@@ -71,6 +74,7 @@ export class MangaRepository implements AbstractMangaRepository {
           subTitle,
           thumbnail,
           description,
+          genrePaths,
           genres,
           totalChapter,
           status,
