@@ -11,6 +11,10 @@ interface IPuppeteerManager {
   openNewPage(config: { url: string }): Promise<puppeteer.Page>;
 }
 
+const isNumber = (value) => {
+  return typeof value === 'number' && isFinite(value);
+};
+
 @Injectable()
 export class PuppeteerManager implements IPuppeteerManager {
   //Instance Của lớp PuppeteerManager
@@ -222,6 +226,30 @@ export class PuppeteerManager implements IPuppeteerManager {
     } catch (error) {
       page?.close?.();
       return null;
+    } finally {
+      page?.close?.();
+    }
+  }
+
+  public async getTotalPage(config: { url: string }): Promise<number> {
+    let page: puppeteer.Page | null = null;
+    try {
+      page = await this.openNewPage({ url: config.url });
+      // await page.screenshot()
+      const content = await page.content();
+      const $ = cheerio.load(content);
+      let max: number = 1;
+      $('.paginate .pagination .page-item')
+        .find('.page-link')
+        .each((i, el) => {
+          const number = Number($(el).text().trim());
+          if (isNumber(number)) {
+            max = Math.max(max, number);
+          }
+        });
+      return max;
+    } catch (error) {
+      return 1;
     } finally {
       page?.close?.();
     }
