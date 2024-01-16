@@ -1,4 +1,5 @@
 import crawlerConfig from '@configurations/crawler.config';
+import { MANGA_HIDDEN_STATUS } from '@constants/commons.constant';
 import { ISaveChapterInput } from '@core/dtos/abstracts/chapter';
 import { ISaveGenreInput } from '@core/dtos/abstracts/genre';
 import { ISaveMangaInput } from '@core/dtos/abstracts/manga';
@@ -112,6 +113,25 @@ export class PuppeteerManager implements IPuppeteerManager {
       // await page.screenshot()
       const content = await page.content();
       const $ = cheerio.load(content);
+      const err = $('.error-404');
+
+      if (!!err.text()) {
+        // console.log('Err:', err.text());
+        return {
+          manga: {
+            path: new URL(config.url).pathname,
+            title: '',
+            subTitle: '',
+            genrePaths: [],
+            status: MANGA_HIDDEN_STATUS,
+            description: '',
+            totalChapter: 0,
+            thumbnail: '',
+          },
+          chapters: [],
+        };
+      }
+
       const comicDetail = $('#comic-detail .row');
       const title = $('.content-left .title-manga', comicDetail);
       const nameOther = $(

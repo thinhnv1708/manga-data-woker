@@ -42,26 +42,23 @@ export class AppController {
 
   @Get('testListManga')
   async testListManga(): Promise<any> {
-    const data1 = await this.mangaRepository.findMangaPathsMissingTitle(
-      1,
-      1000,
-    );
-    const data2 = await this.mangaRepository.findMangaPathsMissingTitle(
-      2,
-      1000,
-    );
-    const data3 = await this.mangaRepository.findMangaPathsMissingTitle(
-      3,
-      1000,
-    );
+    const data1 = await this.mangaRepository.findMangaPathsMissingTitle(1, 10);
+    // const data2 = await this.mangaRepository.findMangaPathsMissingTitle(
+    //   2,
+    //   1000,
+    // );
+    // const data3 = await this.mangaRepository.findMangaPathsMissingTitle(
+    //   3,
+    //   1000,
+    // );
 
-    [...data1, ...data2, ...data3]?.map((path, i) =>
+    data1?.map((path, i) =>
       this.bullAddJobAdapter.addMangaJob('manga-crawler', {
         id: path,
         index: i,
       }),
     );
-    return [];
+    return data1;
   }
 
   // @Get('initCreateFullManga')
