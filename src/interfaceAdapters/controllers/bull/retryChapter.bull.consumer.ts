@@ -6,16 +6,19 @@ const { BULL_QUEUE_NAMES } = COMMONS;
 
 @Processor(BULL_QUEUE_NAMES.RETRY_SAVE_CHAPTER)
 export class RetryChapterBullConsumer {
-  constructor(private readonly chapterRetryUseCase: ChapterRetryUseCase) {}
+  constructor(private readonly chapterRetryUseCase: ChapterRetryUseCase) {
+    console.log('vao dayyyyyy');
+  }
 
   @Process()
   async handleChunkChapters(
-    job: Job<{ page: number; limit: number }>,
+    job: Job<{ retryVersion: number; page: number; limit: number }>,
     done: DoneCallback,
   ): Promise<void> {
-    const { page, limit } = job.data;
+    const { retryVersion, page, limit } = job.data;
+    console.log('nhan queue', job.data);
 
-    // await this.chapterRetryUseCase.handleRetry(page, limit);
+    await this.chapterRetryUseCase.handleRetry(retryVersion, page, limit);
 
     return done();
   }

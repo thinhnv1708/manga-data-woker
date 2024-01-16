@@ -18,6 +18,7 @@ export class ChapterRepository implements AbstractChapterRepository {
   async createChapter(chapter: Chapter): Promise<Chapter> {
     const id = chapter.getId();
     const path = chapter.getPath();
+    const mangaPath = chapter.getMangaPath();
     const manga = chapter.getManga();
     const order = chapter.getOrder();
     const pages = chapter.getPages();
@@ -31,6 +32,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const chapterDocument = await this.model.create({
       id,
       path,
+      mangaPath,
       manga,
       order,
       pages,
@@ -47,6 +49,7 @@ export class ChapterRepository implements AbstractChapterRepository {
 
   async updateChapterById(chapter: Chapter): Promise<Chapter> {
     const id = chapter.getId();
+    const mangaPath = chapter.getMangaPath();
     const manga = chapter.getManga();
     const order = chapter.getOrder();
     const pages = chapter.getPages();
@@ -61,6 +64,7 @@ export class ChapterRepository implements AbstractChapterRepository {
       .findOneAndUpdate(
         { id },
         {
+          mangaPath,
           manga,
           order,
           pages,
@@ -102,15 +106,8 @@ export class ChapterRepository implements AbstractChapterRepository {
     return this.mapper.toEntity(chapterDocument);
   }
 
-  async findTotalNotCompletedMapDependenciesChapters(): Promise<number> {
-    const totalDocuments = await this.model
-      .countDocuments({ completedMapDependencies: false })
-      .lean();
-
-    return totalDocuments;
-  }
-
-  async findNotCompletedMapDependenciesChapters(
+  async findChaptersByRetryVersion(
+    retryVersion: number,
     page: number,
     limit: number,
   ): Promise<Chapter[]> {
@@ -119,7 +116,7 @@ export class ChapterRepository implements AbstractChapterRepository {
 
     const chapterDocuments = await this.model
       .find({
-        completedMapDependencies: false,
+        retryVersion,
       })
       .skip(skip)
       .limit(newLimit)

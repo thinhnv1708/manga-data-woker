@@ -78,9 +78,16 @@ export class ChapterFactoryUseCase {
     const updatedAt = new Date();
 
     const manga = await this.mangaRepository.findMangaByPath(mangaPath);
+
+    console.log('manga', manga);
+
     const chapterManga = this.mapChapterManga(manga);
+
+    console.log('chapterManga', chapterManga);
     const completedMapDependencies =
       this.getCompletedMapDependencies(chapterManga);
+
+    console.log('completedMapDependencies', completedMapDependencies);
     const retryCount = currentChapter.getRetryCount();
     const retryVersion = currentChapter.getRetryVersion();
 

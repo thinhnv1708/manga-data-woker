@@ -1,7 +1,4 @@
-import {
-  AbstractAddJobAdapter,
-  AbstractChapterRepository,
-} from '@core/abstracts';
+import { AbstractChapterRepository } from '@core/abstracts';
 import {
   ISaveChapterInput,
   IUpdatePagesInChapterInput,
@@ -15,8 +12,13 @@ export class ChapterManagerUseCase {
   constructor(
     private readonly chapterRepository: AbstractChapterRepository,
     private readonly chapterFactoryUseCase: ChapterFactoryUseCase,
-    private readonly addJobAdapter: AbstractAddJobAdapter,
-  ) {}
+  ) {
+    // this.handleSaveChapter({
+    //   path: '/truyen-tranh/vo-dich-don-ngo/chapter-103/1518412',
+    //   extraData: ['15-09-2023', '331'],
+    //   mangaPath
+    // });
+  }
 
   async handleSaveChapter(
     saveChapterInput: ISaveChapterInput,

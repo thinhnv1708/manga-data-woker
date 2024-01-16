@@ -9,12 +9,11 @@ export abstract class AbstractChapterRepository {
     pages: IPage[],
     completedCrawler: boolean,
   ): Promise<Chapter>;
-  abstract findTotalNotCompletedMapDependenciesChapters(): Promise<number>;
-  abstract findNotCompletedMapDependenciesChapters(
+  abstract findChaptersByRetryVersion(
+    retryVersion: number,
     page: number,
     limit: number,
   ): Promise<Chapter[]>;
-
   abstract findTotalAndMarkRetryVersion(): Promise<{
     total: number;
     retryVersion: number;
