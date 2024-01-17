@@ -1,12 +1,10 @@
 import { IAppConfig } from '@configurations/interfaces';
 import { COMMONS } from '@constants/index';
 import { AbstractAddJobAdapter } from '@core/abstracts';
-import { ISaveChapterInput } from '@core/dtos/abstracts/chapter';
-import { ISaveMangaInput } from '@core/dtos/abstracts/manga';
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Job, Queue } from 'bull';
+import { Queue } from 'bull';
 const { BULL_QUEUE_NAMES } = COMMONS;
 
 @Injectable()
@@ -28,11 +26,24 @@ export class BullAddJobAdapter implements AbstractAddJobAdapter, OnModuleInit {
   }
 
   async onModuleInit(): Promise<void> {
+    await this.clearMangaQueue();
+    await this.clearChapterQueue();
+  }
+
+  async clearMangaQueue() {
     await this.mangaQueue.empty();
     await this.mangaQueue.clean(0, 'active');
     await this.mangaQueue.clean(0, 'completed');
     await this.mangaQueue.clean(0, 'delayed');
     await this.mangaQueue.clean(0, 'failed');
+  }
+
+  async clearChapterQueue() {
+    await this.chapterQueue.empty();
+    await this.chapterQueue.clean(0, 'active');
+    await this.chapterQueue.clean(0, 'completed');
+    await this.chapterQueue.clean(0, 'delayed');
+    await this.chapterQueue.clean(0, 'failed');
   }
 
   async addMangaJob(jobName: string, data: any): Promise<void> {
@@ -43,7 +54,10 @@ export class BullAddJobAdapter implements AbstractAddJobAdapter, OnModuleInit {
   }
 
   async addChapterJob(jobName: string, data: any): Promise<void> {
-    console.log(jobName, data);
+    this.chapterQueue.add(data, {
+      jobId: jobName + data?.id,
+      removeOnComplete: true,
+    });
   }
 
   // async retrySaveMangaJob(saveMangaInput: ISaveMangaInput): Promise<void> {
