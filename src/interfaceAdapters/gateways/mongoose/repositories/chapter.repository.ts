@@ -166,7 +166,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const skip = (newPage - 1) * limit;
 
     const chapterDocuments = await this.model
-      .find()
+      .find({ completedCrawler: false })
       .select({ path: 1 })
       .skip(skip)
       .limit(newLimit);
