@@ -43,7 +43,6 @@ export class ChapterFactoryUseCase {
 
     const completedMapDependencies =
       this.getCompletedMapDependencies(chapterManga);
-    const retryCount = 0;
 
     const newChapter = new Chapter(
       id,
@@ -55,7 +54,6 @@ export class ChapterFactoryUseCase {
       extraData,
       completedCrawler,
       completedMapDependencies,
-      retryCount,
       retryVerison,
       createdAt,
       updatedAt,
@@ -84,7 +82,6 @@ export class ChapterFactoryUseCase {
     const completedMapDependencies =
       this.getCompletedMapDependencies(chapterManga);
 
-    const retryCount = currentChapter.getRetryCount();
     const retryVersion = currentChapter.getRetryVersion();
 
     return new Chapter(
@@ -97,7 +94,6 @@ export class ChapterFactoryUseCase {
       extraData,
       completedCrawler,
       completedMapDependencies,
-      retryCount + 1,
       retryVersion,
       createdAt,
       updatedAt,

@@ -18,7 +18,6 @@ export class Chapter {
   private extraData: string[];
   private completedCrawler: boolean;
   private completedMapDependencies: boolean;
-  private retryCount: number;
   private retryVersion: number;
   private createdAt: Date;
   private updatedAt: Date;
@@ -33,7 +32,6 @@ export class Chapter {
     extraData: string[],
     completedCrawler: boolean,
     completedMapDependencies: boolean,
-    retryCount: number,
     retryVersion: number,
     createdAt: Date,
     updatedAt: Date,
@@ -47,7 +45,6 @@ export class Chapter {
       .setExtraData(extraData)
       .setCompletedCrawler(completedCrawler)
       .setCompletedMapDependencies(completedMapDependencies)
-      .setRetryCount(retryCount)
       .setRetryVersion(retryVersion)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
@@ -131,15 +128,6 @@ export class Chapter {
 
   setCompletedMapDependencies(completedMapDependencies: boolean): this {
     this.completedMapDependencies = completedMapDependencies;
-    return this;
-  }
-
-  getRetryCount(): number {
-    return this.retryCount;
-  }
-
-  setRetryCount(retryCount: number): this {
-    this.retryCount = retryCount;
     return this;
   }
 

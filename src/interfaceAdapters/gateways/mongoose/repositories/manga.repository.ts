@@ -28,7 +28,6 @@ export class MangaRepository implements AbstractMangaRepository {
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
     const completedMapDependencies = manga.getCompletedMapDependencies();
-    const retryCount = manga.getRetryCount();
     const createdAt = manga.getCreatedAt();
     const updatedAt = manga.getUpdatedAt();
 
@@ -43,7 +42,6 @@ export class MangaRepository implements AbstractMangaRepository {
       genres,
       totalChapter,
       completedMapDependencies,
-      retryCount,
       status,
       createdAt,
       updatedAt,
@@ -63,7 +61,6 @@ export class MangaRepository implements AbstractMangaRepository {
     const totalChapter = manga.getTotalChapter();
     const status = manga.getStatus();
     const completedMapDependencies = manga.getCompletedMapDependencies();
-    const retryCount = manga.getRetryCount();
     const createdAt = manga.getCreatedAt();
     const updatedAt = manga.getUpdatedAt();
 
@@ -80,7 +77,6 @@ export class MangaRepository implements AbstractMangaRepository {
           totalChapter,
           status,
           completedMapDependencies,
-          retryCount,
           createdAt,
           updatedAt,
         },

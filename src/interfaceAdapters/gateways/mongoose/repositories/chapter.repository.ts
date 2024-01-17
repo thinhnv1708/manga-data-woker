@@ -4,8 +4,8 @@ import { ChapterMapper } from '@interfaceAdapters/presenters/mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ChapterDocument, Chapter as MongooseChapter } from '../schemas';
 import { getPageLimit } from 'src/utils';
+import { ChapterDocument, Chapter as MongooseChapter } from '../schemas';
 
 @Injectable()
 export class ChapterRepository implements AbstractChapterRepository {
@@ -25,7 +25,6 @@ export class ChapterRepository implements AbstractChapterRepository {
     const extraData = chapter.getExtraData();
     const completedCrawler = chapter.getCompletedCrawler();
     const completedMapDependencies = chapter.getCompletedMapDependencies();
-    const retryCount = chapter.getRetryCount();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
 
@@ -39,7 +38,6 @@ export class ChapterRepository implements AbstractChapterRepository {
       extraData,
       completedCrawler,
       completedMapDependencies,
-      retryCount,
       createdAt,
       updatedAt,
     });
@@ -52,11 +50,9 @@ export class ChapterRepository implements AbstractChapterRepository {
     const mangaPath = chapter.getMangaPath();
     const manga = chapter.getManga();
     const order = chapter.getOrder();
-    // const pages = chapter.getPages();
     const extraData = chapter.getExtraData();
     const completedCrawler = chapter.getCompletedCrawler();
     const completedMapDependencies = chapter.getCompletedMapDependencies();
-    const retryCount = chapter.getRetryCount();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
 
@@ -67,11 +63,9 @@ export class ChapterRepository implements AbstractChapterRepository {
           mangaPath,
           manga,
           order,
-          // pages,
           extraData,
           completedCrawler,
           completedMapDependencies,
-          retryCount,
           createdAt,
           updatedAt,
         },

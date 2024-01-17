@@ -39,9 +39,6 @@ export class Chapter extends Document {
   completedMapDependencies: boolean;
 
   @Prop({ type: Number })
-  retryCount: number;
-
-  @Prop({ type: Number })
   retryVersion: number;
 
   @Prop({ type: Date })

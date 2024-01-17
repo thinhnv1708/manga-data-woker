@@ -47,16 +47,12 @@ export class MangaFactoryUseCase {
 
     const createdAt = new Date();
     const updatedAt = new Date();
-
     const genres = await this.genreRepository.findGenresByPaths(genrePaths);
-
     const mangaGenres = this.mapGenreEntityToMangaGenre(genres);
-
     const completedMapDependencies = this.getCompletedMapDependencies(
       genrePaths,
       mangaGenres,
     );
-    const retryCount = 0;
     const id = await this.idManagerUseCase.generateId();
 
     return new Manga(
@@ -71,7 +67,6 @@ export class MangaFactoryUseCase {
       totalChapter,
       status,
       completedMapDependencies,
-      retryCount,
       createdAt,
       updatedAt,
     );
@@ -104,8 +99,6 @@ export class MangaFactoryUseCase {
       mangaGenres,
     );
 
-    const retryCount = currentManga.getRetryCount();
-
     return new Manga(
       id,
       path,
@@ -118,7 +111,6 @@ export class MangaFactoryUseCase {
       totalChapter,
       status,
       completedMapDependencies,
-      retryCount + 1,
       createdAt,
       updatedAt,
     );
