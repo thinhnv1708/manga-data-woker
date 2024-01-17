@@ -6,9 +6,7 @@ const { BULL_QUEUE_NAMES } = COMMONS;
 
 @Processor(BULL_QUEUE_NAMES.RETRY_SAVE_CHAPTER)
 export class RetryChapterBullConsumer {
-  constructor(private readonly chapterRetryUseCase: ChapterRetryUseCase) {
-    console.log('vao dayyyyyy');
-  }
+  constructor(private readonly chapterRetryUseCase: ChapterRetryUseCase) {}
 
   @Process()
   async handleChunkChapters(

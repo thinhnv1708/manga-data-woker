@@ -52,7 +52,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const mangaPath = chapter.getMangaPath();
     const manga = chapter.getManga();
     const order = chapter.getOrder();
-    const pages = chapter.getPages();
+    // const pages = chapter.getPages();
     const extraData = chapter.getExtraData();
     const completedCrawler = chapter.getCompletedCrawler();
     const completedMapDependencies = chapter.getCompletedMapDependencies();
@@ -67,7 +67,7 @@ export class ChapterRepository implements AbstractChapterRepository {
           mangaPath,
           manga,
           order,
-          pages,
+          // pages,
           extraData,
           completedCrawler,
           completedMapDependencies,
