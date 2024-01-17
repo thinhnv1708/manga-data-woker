@@ -147,4 +147,30 @@ export class ChapterRepository implements AbstractChapterRepository {
       retryVersion: markNumber,
     };
   }
+
+  async findTotalChaptersMissingPages(): Promise<number> {
+    const totalDocuments = await this.model
+      .countDocuments({
+        completedCrawler: false,
+      })
+      .lean();
+
+    return totalDocuments;
+  }
+
+  async findChapterPathsMissingPages(
+    page: number,
+    limit: number,
+  ): Promise<string[]> {
+    const [newPage, newLimit] = getPageLimit(page, limit);
+    const skip = (newPage - 1) * limit;
+
+    const chapterDocuments = await this.model
+      .find()
+      .select({ path: 1 })
+      .skip(skip)
+      .limit(newLimit);
+
+    return chapterDocuments.map((chapterDocument) => chapterDocument.path);
+  }
 }

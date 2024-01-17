@@ -18,4 +18,9 @@ export abstract class AbstractChapterRepository {
     total: number;
     retryVersion: number;
   }>;
+  abstract findTotalChaptersMissingPages(): Promise<number>;
+  abstract findChapterPathsMissingPages(
+    page: number,
+    limit: number,
+  ): Promise<string[]>;
 }
