@@ -72,15 +72,18 @@ export class ChapterFactoryUseCase {
 
     const id = currentChapter.getId();
     const path = currentChapter.getPath();
-    const pages = currentChapter.getPages();
+    // const pages = currentChapter.getPages();
     const completedCrawler = currentChapter.getCompletedCrawler();
     const createdAt = currentChapter.getCreatedAt();
     const updatedAt = new Date();
 
     const manga = await this.mangaRepository.findMangaByPath(mangaPath);
+
     const chapterManga = this.mapChapterManga(manga);
+
     const completedMapDependencies =
       this.getCompletedMapDependencies(chapterManga);
+
     const retryCount = currentChapter.getRetryCount();
     const retryVersion = currentChapter.getRetryVersion();
 
@@ -90,7 +93,7 @@ export class ChapterFactoryUseCase {
       mangaPath,
       chapterManga,
       order,
-      pages,
+      null,
       extraData,
       completedCrawler,
       completedMapDependencies,

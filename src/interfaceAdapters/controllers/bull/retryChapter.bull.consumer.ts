@@ -10,12 +10,13 @@ export class RetryChapterBullConsumer {
 
   @Process()
   async handleChunkChapters(
-    job: Job<{ page: number; limit: number }>,
+    job: Job<{ retryVersion: number; page: number; limit: number }>,
     done: DoneCallback,
   ): Promise<void> {
-    const { page, limit } = job.data;
+    const { retryVersion, page, limit } = job.data;
+    console.log('nhan queue', job.data);
 
-    // await this.chapterRetryUseCase.handleRetry(page, limit);
+    await this.chapterRetryUseCase.handleRetry(retryVersion, page, limit);
 
     return done();
   }

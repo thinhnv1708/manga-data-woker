@@ -40,7 +40,7 @@ export class HandleMangaDataRabbitmqGatewayAdapter
       ),
     );
 
-    await this.client.emit(RABBITMQ_PATTERN.GENRE_HANDLE_SAVE_DATA, data);
+    this.client.emit(RABBITMQ_PATTERN.GENRE_HANDLE_SAVE_DATA, data);
   }
 
   async handleSaveManga(data: ISaveMangaInput): Promise<void> {
@@ -55,7 +55,7 @@ export class HandleMangaDataRabbitmqGatewayAdapter
       ),
     );
 
-    await this.client.emit(RABBITMQ_PATTERN.MANGA_HANDLE_SAVE_DATA, data);
+    this.client.emit(RABBITMQ_PATTERN.MANGA_HANDLE_SAVE_DATA, data);
   }
 
   async handleSaveChapter(data: ISaveChapterInput): Promise<void> {
@@ -70,7 +70,7 @@ export class HandleMangaDataRabbitmqGatewayAdapter
       ),
     );
 
-    await this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA, data);
+    this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_SAVE_DATA, data);
   }
 
   async handleUpdatePagesInChapter(
@@ -87,9 +87,6 @@ export class HandleMangaDataRabbitmqGatewayAdapter
       ),
     );
 
-    await this.client.emit(
-      RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA,
-      data,
-    );
+    this.client.emit(RABBITMQ_PATTERN.CHAPTER_HANDLE_UPDATE_PAGES_DATA, data);
   }
 }

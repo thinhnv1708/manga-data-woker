@@ -1,11 +1,14 @@
 import {
+  AbstractAddJobAdapter,
   AbstractChapterRepository,
   AbstractIdManagerUseCase,
 } from '@core/abstracts';
 import {
+  AddRetryChunkUseCase,
   ChapterFactoryUseCase,
   ChapterIdManagerUseCase,
   ChapterManagerUseCase,
+  ChapterRetryUseCase,
 } from '@core/useCases';
 import { ChapterControllerRabbitmq } from '@interfaceAdapters/controllers/rabbitmq';
 import { ChapterRepository } from '@interfaceAdapters/gateways/mongoose/repositories/chapter.repository';
@@ -19,6 +22,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BullInitModule } from './bullInit.module';
 import { IdGeneratorModule } from './idGenerator.module';
 import { MangaModule } from './manga.module';
+import { RetryChapterBullConsumer } from '@interfaceAdapters/controllers/bull';
+import { HandleMangaDataAdapterModule } from './handleMangaData.adpter.module';
 
 @Module({
   imports: [
@@ -26,6 +31,7 @@ import { MangaModule } from './manga.module';
     IdGeneratorModule,
     MangaModule,
     BullInitModule,
+    HandleMangaDataAdapterModule,
   ],
   providers: [
     { provide: AbstractIdManagerUseCase, useClass: ChapterIdManagerUseCase },
@@ -33,6 +39,9 @@ import { MangaModule } from './manga.module';
     ChapterMapper,
     ChapterManagerUseCase,
     ChapterFactoryUseCase,
+    ChapterRetryUseCase,
+    AddRetryChunkUseCase,
+    RetryChapterBullConsumer,
   ],
   controllers: [ChapterControllerRabbitmq],
 })

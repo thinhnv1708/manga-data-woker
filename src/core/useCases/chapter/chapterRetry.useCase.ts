@@ -1,5 +1,4 @@
 import {
-  AbstractAddJobAdapter,
   AbstractChapterRepository,
   AbstractHandleMangaDataGatewayAdapter,
 } from '@core/abstracts';
@@ -14,15 +13,20 @@ export class ChapterRetryUseCase {
   ) {}
 
   async handleRetry(
+    retryVersion: number,
     page: number,
     limit: number,
-    retryVersion: number,
   ): Promise<void> {
-    const chapters =
-      await this.chapterRepository.findNotCompletedMapDependenciesChapters(
-        page,
-        limit,
-      );
+    const chapters = await this.chapterRepository.findChaptersByRetryVersion(
+      retryVersion,
+      page,
+      limit,
+    );
+
+    if (chapters.length === 0) {
+      return;
+    }
+    console.log('vao xu ly chapter');
 
     const saveChaptersData: ISaveChapterInput[] = chapters.map((chapter) => {
       const mangaPath = chapter.getMangaPath();
@@ -37,15 +41,12 @@ export class ChapterRetryUseCase {
         extraData,
       };
     });
-  }
-
-  async concurrencyRequest(
-    saveChaptersData: ISaveChapterInput[],
-    maxNum: number,
-    currentIndex: number = 0,
-  ): Promise<void> {
-    if (saveChaptersData.length < currentIndex) {
-      return;
-    }
+    console.log('bat dau gui queue');
+    await Promise.all(
+      saveChaptersData.map((saveChapterData) =>
+        this.handleMangaDataGatewayAdapter.handleSaveChapter(saveChapterData),
+      ),
+    );
+    console.log('gui xong queue');
   }
 }
