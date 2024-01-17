@@ -68,7 +68,7 @@ export class ChapterControllerRabbitmq {
       ),
       buildContextLog(
         LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
-        'handleUpadteChapterData',
+        'handleUpadtePagesInChapter',
       ),
     );
 
@@ -83,7 +83,7 @@ export class ChapterControllerRabbitmq {
         ),
         buildContextLog(
           LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
-          'handleUpadteChapterData',
+          'handleUpadtePagesInChapter',
         ),
       );
       return;
@@ -102,7 +102,7 @@ export class ChapterControllerRabbitmq {
         ),
         buildContextLog(
           LOG_CONTEXT.CHAPTER_CONTROLLER_RABBITMQ,
-          'handleUpadteChapterData',
+          'handleUpadtePagesInChapter',
         ),
       );
     }

@@ -62,7 +62,7 @@ export class ChapterManagerUseCase {
     const chapterId = chapter.getId();
     const completedCrawler = pages?.length > 0;
 
-    await this.chapterRepository.updatePagesInChapter(
+    return this.chapterRepository.updatePagesInChapter(
       chapterId,
       pages,
       completedCrawler,
