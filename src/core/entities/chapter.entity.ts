@@ -19,6 +19,7 @@ export class Chapter {
   private completedCrawler: boolean;
   private completedMapDependencies: boolean;
   private retryVersion: number;
+  private status: string;
   private createdAt: Date;
   private updatedAt: Date;
 
@@ -33,6 +34,7 @@ export class Chapter {
     completedCrawler: boolean,
     completedMapDependencies: boolean,
     retryVersion: number,
+    status: string,
     createdAt: Date,
     updatedAt: Date,
   ) {
@@ -46,6 +48,7 @@ export class Chapter {
       .setCompletedCrawler(completedCrawler)
       .setCompletedMapDependencies(completedMapDependencies)
       .setRetryVersion(retryVersion)
+      .setStatus(status)
       .setCreatedAt(createdAt)
       .setUpdatedAt(updatedAt);
   }
@@ -137,6 +140,15 @@ export class Chapter {
 
   setRetryVersion(retryVersion: number): this {
     this.retryVersion = retryVersion;
+    return this;
+  }
+
+  getStatus(): string {
+    return this.status;
+  }
+
+  setStatus(status: string): this {
+    this.status = status;
     return this;
   }
 

@@ -51,7 +51,7 @@ export class ChapterManagerUseCase {
   async updatePagesInChapter(
     updatePagesChapterInput: IUpdatePagesInChapterInput,
   ): Promise<Chapter> {
-    const { chapterPath, pages } = updatePagesChapterInput;
+    const { chapterPath, pages, status } = updatePagesChapterInput;
 
     const chapter = await this.chapterRepository.findChapterByPath(chapterPath);
 
@@ -66,6 +66,7 @@ export class ChapterManagerUseCase {
       chapterId,
       pages,
       completedCrawler,
+      status,
     );
   }
 }

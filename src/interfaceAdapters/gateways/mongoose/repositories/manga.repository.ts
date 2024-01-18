@@ -108,7 +108,7 @@ export class MangaRepository implements AbstractMangaRepository {
 
     const mangaDocuments = await this.model
       .find({
-        status: { $ne: COMMONS.MANGA_HIDDEN_STATUS },
+        status: { $ne: COMMONS.HIDDEN_STATUS },
         $or: [{ title: { $exists: false } }, { title: { $in: [null, ''] } }],
       })
       .skip(skip)
@@ -122,7 +122,7 @@ export class MangaRepository implements AbstractMangaRepository {
   async findTotalMangaPathsMissingTitle(): Promise<number> {
     const totalDocuments = await this.model
       .countDocuments({
-        status: { $ne: COMMONS.MANGA_HIDDEN_STATUS },
+        status: { $ne: COMMONS.HIDDEN_STATUS },
         $or: [{ title: { $exists: false } }, { title: { $in: [null, ''] } }],
       })
       .lean();

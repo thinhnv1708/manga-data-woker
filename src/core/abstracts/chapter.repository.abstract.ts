@@ -8,6 +8,7 @@ export abstract class AbstractChapterRepository {
     chapterId: number,
     pages: IPage[],
     completedCrawler: boolean,
+    status: string,
   ): Promise<Chapter>;
   abstract findChaptersByRetryVersion(
     retryVersion: number,

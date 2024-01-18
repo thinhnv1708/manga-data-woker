@@ -6,6 +6,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { getPageLimit } from 'src/utils';
 import { ChapterDocument, Chapter as MongooseChapter } from '../schemas';
+import { COMMONS } from '@constants/index';
 
 @Injectable()
 export class ChapterRepository implements AbstractChapterRepository {
@@ -25,6 +26,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const extraData = chapter.getExtraData();
     const completedCrawler = chapter.getCompletedCrawler();
     const completedMapDependencies = chapter.getCompletedMapDependencies();
+    const status = chapter.getStatus();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
 
@@ -38,6 +40,7 @@ export class ChapterRepository implements AbstractChapterRepository {
       extraData,
       completedCrawler,
       completedMapDependencies,
+      status,
       createdAt,
       updatedAt,
     });
@@ -55,6 +58,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const completedMapDependencies = chapter.getCompletedMapDependencies();
     const createdAt = chapter.getCreatedAt();
     const updatedAt = chapter.getUpdatedAt();
+    const status = chapter.getStatus();
 
     const chapterDocument = await this.model
       .findOneAndUpdate(
@@ -66,6 +70,7 @@ export class ChapterRepository implements AbstractChapterRepository {
           extraData,
           completedCrawler,
           completedMapDependencies,
+          status,
           createdAt,
           updatedAt,
         },
@@ -82,10 +87,11 @@ export class ChapterRepository implements AbstractChapterRepository {
     chapterId: number,
     pages: IPage[],
     completedCrawler: boolean,
+    status: string,
   ): Promise<Chapter> {
     const chapterDocument = await this.model.findOneAndUpdate(
       { id: chapterId },
-      { pages, completedCrawler },
+      { pages, completedCrawler, status },
       {
         new: true,
       },
@@ -146,6 +152,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const totalDocuments = await this.model
       .countDocuments({
         completedCrawler: false,
+        status: { $ne: COMMONS.HIDDEN_STATUS },
       })
       .lean();
 
@@ -160,7 +167,7 @@ export class ChapterRepository implements AbstractChapterRepository {
     const skip = (newPage - 1) * limit;
 
     const chapterDocuments = await this.model
-      .find({ completedCrawler: false })
+      .find({ completedCrawler: false, status: { $ne: COMMONS.HIDDEN_STATUS } })
       .select({ path: 1 })
       .skip(skip)
       .limit(newLimit);

@@ -6,4 +6,5 @@ export const updatePagesInChapterJoiSchema =
   Joi.object<IUpdatePagesInChapterInput>({
     chapterPath: Joi.string().required(),
     pages: Joi.array().items(savePageJoiSchema).allow(null, ''),
+    status: Joi.string().allow(null, ''),
   });

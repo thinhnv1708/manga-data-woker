@@ -41,6 +41,9 @@ export class Chapter extends Document {
   @Prop({ type: Number })
   retryVersion: number;
 
+  @Prop({ type: String })
+  status: string;
+
   @Prop({ type: Date })
   updatedAt: Date;
 
